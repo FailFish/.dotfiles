@@ -1,5 +1,18 @@
 " Comments in Vimscript start with a `"`.
 
+""""""""""""""""""""""""""""""""""""""""""""""
+" Vim plug-in list
+" Updated : 23 aug 2020
+"
+" 0. vim-plug
+" 1. ctrlp.vim
+" Candidates : surround.vim / Syntastics / vim-airline / NERD Tree
+" 		Nord colorscheme / commentary.vim / vim-markdown
+"		fzf / vim-multiple-cursors / ALE vs syntastic
+"
+""""""""""""""""""""""""""""""""""""""""""""""
+
+
 " If you open this file in Vim, it'll be syntax highlighted for you.
 
 " Vim is based on Vi. Setting `nocompatible` switches from the default
@@ -27,6 +40,15 @@ set number
 " jump up or down to a particular line, by {count}k to go up or {count}j to go
 " down.
 set relativenumber
+
+" whitespace setup
+" softtab is one way of tabbing w/o pressing real tab key, but only with spaces.
+" i am a hardtab guy
+set shiftwidth=4
+set tabstop=4
+
+" indenting policy
+filetype indent on
 
 " Always show the status line at the bottom, even if you only have one window open.
 set laststatus=2
@@ -78,6 +100,3 @@ inoremap <Left>  <ESC>:echoe "Use h"<CR>
 inoremap <Right> <ESC>:echoe "Use l"<CR>
 inoremap <Up>    <ESC>:echoe "Use k"<CR>
 inoremap <Down>  <ESC>:echoe "Use j"<CR>
-
-let g:ctrlp_map = '<c-p>'
-let g:ctrlp_cmd = 'CtrlP'
