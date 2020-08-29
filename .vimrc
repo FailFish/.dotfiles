@@ -10,6 +10,12 @@
 " 		Nord colorscheme / commentary.vim / vim-markdown
 "		fzf / vim-multiple-cursors / ALE vs syntastic
 "
+call plug#begin('~/.vim/plugged')
+Plug 'morhetz/gruvbox'
+autocmd vimenter * colorscheme gruvbox
+set background=dark
+
+call plug#end()
 """"""""""""""""""""""""""""""""""""""""""""""
 
 
@@ -48,7 +54,7 @@ set shiftwidth=4
 set tabstop=4
 
 " indenting policy
-filetype indent on
+filetype plugin indent on
 
 " Always show the status line at the bottom, even if you only have one window open.
 set laststatus=2
