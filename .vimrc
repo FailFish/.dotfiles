@@ -5,20 +5,33 @@
 " Updated : 23 aug 2020
 "
 " 0. vim-plug
-" 1. ctrlp.vim
-" Candidates : surround.vim / Syntastics / vim-airline / NERD Tree
-" 		Nord colorscheme / commentary.vim / vim-markdown
-"		fzf / vim-multiple-cursors / ALE vs syntastic
+" Candidates : surround.vim / NERD Tree
+"		fzf / ALE / coc.nvim 
+" 		gruvbox/Nord colorscheme / commentary.vim 
 "
 call plug#begin('~/.vim/plugged')
 Plug 'morhetz/gruvbox'
-autocmd vimenter * colorscheme gruvbox
-set background=dark
+	autocmd vimenter * colorscheme gruvbox
+	set background=dark
+
+"" editing
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-commentary'
+
+" browsing file system
+Plug 'scrooloose/nerdtree'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+
+" LSP(coc.nvim) + linter(ale)
+Plug 'w0rp/ale'
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+"" git integration
+Plug 'tpope/vim-fugitive'
 
 call plug#end()
 """"""""""""""""""""""""""""""""""""""""""""""
-
-
 " If you open this file in Vim, it'll be syntax highlighted for you.
 
 " Vim is based on Vi. Setting `nocompatible` switches from the default
@@ -32,6 +45,8 @@ set nocompatible
 
 " Turn on syntax highlighting.
 syntax on
+" Indenting policy
+filetype plugin indent on
 
 " Disable the default Vim startup message.
 set shortmess+=I
@@ -52,9 +67,6 @@ set relativenumber
 " i am a hardtab guy
 set shiftwidth=4
 set tabstop=4
-
-" indenting policy
-filetype plugin indent on
 
 " Always show the status line at the bottom, even if you only have one window open.
 set laststatus=2
