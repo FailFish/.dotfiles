@@ -20,12 +20,28 @@ Plug 'tpope/vim-commentary'
 
 " browsing file system
 Plug 'scrooloose/nerdtree'
+" After install fzf, go installed directory and run ./install script
+" to modify your {bash, zsh, fish}rc file
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
 " LSP(coc.nvim) + linter(ale)
+" \"diagnostics.displayByAle\" : \"true\" in cocconfig
+" ALE enables all available linters by default
+" python : jedi(LSP)
+" c/c++ : clangd(LSP)
+" vimscript : vim-lsp
+" bashscript : bash-lsp
 Plug 'w0rp/ale'
-" Plug 'neoclide/coc.nvim', {'branch': 'release'}
+	let g:ale_disable_lsp = 1
+	" let g:ale_lint_delay = 1000
+	let g:ale_lint_on_text_changed = 'never'
+	" let g:ale_linters = {
+	" 			\	'python' : ['flake8', 'mypy']
+	" 			\	}
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+	let g:coc_global_extensions = ['coc-git', 'coc-python',
+				\	'coc-sh', 'coc-vimlsp', 'coc-clangd']
 
 "" git integration
 Plug 'tpope/vim-fugitive'
