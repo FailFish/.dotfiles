@@ -126,3 +126,11 @@ export PATH=$HOME/gems/bin:$PATH
 set -o vi
 
 # changing basic editor
+export EDITOR=vim
+export VISUAL=vim
+
+# added by fzf install script automatically
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+# custom alias
+alias python=python3
