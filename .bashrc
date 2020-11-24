@@ -133,4 +133,4 @@ export VISUAL=vim
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 # custom alias
-alias python=python3
+# alias python=python3.7

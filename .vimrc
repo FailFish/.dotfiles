@@ -1,8 +1,16 @@
 " Comments in Vimscript start with a `"`.
+"
+" install vim plug if not found
+if empty(glob('~/.vim/autoload/plug.vim'))
+	silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+				\ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+	autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
 
 """"""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""
 " Vim plug-in list
-" Updated : 23 aug 2020
+" Updated : 24 Nov 2020
 "
 " 0. vim-plug
 " Candidates : surround.vim / NERD Tree
@@ -25,6 +33,9 @@ Plug 'scrooloose/nerdtree'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
+" Before using coc, install nodejs
+" curl -sL install-node.now.sh/lts | sudo bash
+"
 " LSP(coc.nvim) + linter(ale)
 " \"diagnostics.displayByAle\" : \"true\" in cocconfig
 " ALE enables all available linters by default
@@ -39,6 +50,10 @@ Plug 'w0rp/ale'
 	" let g:ale_linters = {
 	" 			\	'python' : ['flake8', 'mypy']
 	" 			\	}
+	let g:ale_python_pylint_executable = 'python3.7'
+	let g:ale_python_flake8_executable= 'python3.7'
+	let g:ale_python_mypy_executable = 'python3.7'
+
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 	let g:coc_global_extensions = ['coc-git', 'coc-python',
 				\	'coc-sh', 'coc-vimlsp', 'coc-clangd']
@@ -47,6 +62,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'tpope/vim-fugitive'
 
 call plug#end()
+""""""""""""""""""""""""""""""""""""""""""""""
 """"""""""""""""""""""""""""""""""""""""""""""
 " If you open this file in Vim, it'll be syntax highlighted for you.
 
