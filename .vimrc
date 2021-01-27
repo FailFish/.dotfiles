@@ -7,6 +7,11 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 	autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
+" install node (for nvim.coc plugin) if not found
+if !executable('node')
+	!curl -sL install-node.now.sh/lts | bash
+endif
+
 """"""""""""""""""""""""""""""""""""""""""""""
 """"""""""""""""""""""""""""""""""""""""""""""
 " Vim plug-in list
@@ -50,12 +55,12 @@ Plug 'w0rp/ale'
 	" let g:ale_linters = {
 	" 			\	'python' : ['flake8', 'mypy']
 	" 			\	}
-	let g:ale_python_pylint_executable = 'python3.7'
-	let g:ale_python_flake8_executable= 'python3.7'
-	let g:ale_python_mypy_executable = 'python3.7'
+	" let g:ale_python_pylint_executable = 'python3.7'
+	" let g:ale_python_flake8_executable= 'python3.7'
+	" let g:ale_python_mypy_executable = 'python3.7'
 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-	let g:coc_global_extensions = ['coc-git', 'coc-python',
+	let g:coc_global_extensions = ['coc-git', 'coc-python', 'coc-json',
 				\	'coc-sh', 'coc-vimlsp', 'coc-clangd']
 
 "" git integration
