@@ -31,8 +31,10 @@ Plug 'morhetz/gruvbox'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 
-" browsing file system
-Plug 'scrooloose/nerdtree'
+" extension for built-in file system browser
+" Replacement of NERDTree
+Plug 'tpope/vim-vinegar'
+
 " After install fzf, go installed directory and run ./install script
 " to modify your {bash, zsh, fish}rc file
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -60,8 +62,9 @@ Plug 'w0rp/ale'
 	" let g:ale_python_mypy_executable = 'python3.7'
 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-	let g:coc_global_extensions = ['coc-git', 'coc-python', 'coc-json',
+	let g:coc_global_extensions = ['coc-git', 'coc-pyright', 'coc-json',
 				\	'coc-sh', 'coc-vimlsp', 'coc-clangd']
+	" call coc#config('diagnostic', {'displayByAle': true})
 
 "" git integration
 Plug 'tpope/vim-fugitive'
