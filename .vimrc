@@ -37,7 +37,7 @@ Plug 'tpope/vim-vinegar'
 
 " After install fzf, go installed directory and run ./install script
 " to modify your {bash, zsh, fish}rc file
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all'}
 Plug 'junegunn/fzf.vim'
 
 " Before using coc, install nodejs
