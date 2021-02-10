@@ -23,9 +23,13 @@ super + shift + Escape
 super + Return
 	gnome-terminal
 
-# # program launcher
+### program launcher
 super + @space
 	rofi -show run
+
+### rofi hotkey search
+super + slash
+	~/.config/sxhkd/sxhkd-help
 
 # file manager
 super + f
