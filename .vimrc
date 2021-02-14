@@ -89,8 +89,11 @@ syntax on
 " Indenting policy
 filetype plugin indent on
 
-" Disable the default Vim startup message.
-set shortmess+=I
+" Disable the default Vim startup message
+" Truncate long messages
+" etc
+" see :h shortmess for various flags
+set shortmess+=aITc
 
 " Show line numbers.
 set number
@@ -144,6 +147,34 @@ set noerrorbells visualbell t_vb=
 " Enable mouse support. You should avoid relying on this too much, but it can
 " sometimes be convenient.
 set mouse+=a
+
+" wildmenu is vim commandline tab-completion
+" wildmode option decides how completion suggestions behave
+set wildmenu
+set wildmode=longest:full,full
+
+" automatically refresh the file when it is modified outside of vim
+set autoread
+
+" statusline settings
+function! s:statusline_expr()
+	" left side
+	let mod = "%{&modified ? '[+] ' : !&modifiable ? '[x] ' : ''}"
+	let ro  = "%{&readonly ? '[RO] ' : ''}"
+	let ft  = "%{len(&filetype) ? '['.&filetype.'] ' : ''}"
+	let fug = "%{exists('g:loaded_fugitive') ? fugitive#statusline() : ''}"
+	" right side
+	let sep = ' %= '
+	" Add status line support, for integration with other plugin, checkout `:h coc-status`
+	let coc = " %{coc#status()} %{get(b:, 'coc_current_function', '')} "
+	let pos = ' %-12(%l : %c%V%) '
+	let pct = ' %P'
+
+	" return '[%n] %F %< %m %r %y'.fug.sep.pos.'%*'.pct
+	return '[%n] %F %<'.mod.ro.ft.fug.sep.coc.pos.'%*'.pct
+endfunction
+
+let &statusline = s:statusline_expr()
 
 " Try to prevent bad habits like using the arrow keys for movement. This is
 " not the only possible bad habit. For example, holding down the h/j/k/l keys
@@ -216,8 +247,6 @@ if has_key(g:plugs, 'coc.nvim')
 	" use `:OR` for organize import of current buffer
 	command! -nargs=0 OR   :call CocAction('runCommand', 'editor.action.organizeImport')
 
-	" Add status line support, for integration with other plugin, checkout `:h coc-status`
-	set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
 	" Using CocList
 	" Show all diagnostics
