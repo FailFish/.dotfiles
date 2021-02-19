@@ -20,7 +20,7 @@ endif
 " 0. vim-plug
 " Candidates : surround.vim / vim-vinegar 
 "		fzf / ALE / coc.nvim 
-" 		gruvbox/Nord colorscheme / commentary.vim 
+"		gruvbox/Nord colorscheme / commentary.vim 
 " {{
 call plug#begin('~/.vim/plugged')
 Plug 'morhetz/gruvbox'
@@ -155,6 +155,15 @@ set wildmode=longest:full,full
 
 " automatically refresh the file when it is modified outside of vim
 set autoread
+
+" Always show at least (set scrolloff?) line above/below cursor.
+set scrolloff=2
+
+set list
+set listchars=tab:\|\ ,trail:-,extends:>,precedes:<,nbsp:+
+" set listchars+=,eol:$
+
+set encoding=utf-8
 
 " statusline settings
 function! s:statusline_expr()

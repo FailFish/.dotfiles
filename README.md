@@ -20,7 +20,7 @@ H/W related
 
 WM related
 ---
-- bspwm
+- bspwm: have an issue with firefox[:the post on github issue](https://github.com/baskerville/bspwm/issues/1015)
 - tint2
 - rofi
 - feh

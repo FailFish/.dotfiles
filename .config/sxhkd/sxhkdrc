@@ -23,11 +23,11 @@ super + shift + Escape
 super + Return
 	gnome-terminal
 
-### program launcher
+# program launcher
 super + @space
 	rofi -show run
 
-### rofi hotkey search
+# rofi hotkey search
 super + slash
 	~/.config/sxhkd/sxhkd-help
 
@@ -73,7 +73,7 @@ super + g
 #
 
 # set the window state
-# t: tiled, shift + t: pseudo_tiled, s: floating, f: fullscreen
+# window state - t: tiled, shift + t: pseudo_tiled, s: floating, f: fullscreen
 super + {t,shift + t,s,f}
 	bspc node -t {tiled,pseudo_tiled,floating,fullscreen}
 
@@ -97,8 +97,8 @@ super + {p,b,comma,period}
 super + {_,shift + }c
 	bspc node -f {next,prev}.local.!hidden.window
 
-# focus the next/previous desktop in the current monitor
 # super + {, super + }
+# focus the next/previous desktop in the current monitor
 super + bracket{left,right}
 	bspc desktop -f {prev,next}.local
 
