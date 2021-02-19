@@ -63,7 +63,7 @@ Plug 'w0rp/ale'
 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 	let g:coc_global_extensions = ['coc-git', 'coc-pyright', 'coc-json',
-				\	'coc-sh', 'coc-vimlsp', 'coc-clangd']
+				\	'coc-sh', 'coc-vimlsp', 'coc-clangd', 'coc-cmake']
 	" call coc#config('diagnostic', {'displayByAle': true})
 
 "" git integration
@@ -165,8 +165,8 @@ function! s:statusline_expr()
 	let fug = "%{exists('g:loaded_fugitive') ? fugitive#statusline() : ''}"
 	" right side
 	let sep = ' %= '
-	" Add status line support, for integration with other plugin, checkout `:h coc-status`
-	let coc = " %{coc#status()} %{get(b:, 'coc_current_function', '')} "
+	" coc.nvim statusline integration, see `:h coc-status`
+	let coc = " %{coc#status()} |"
 	let pos = ' %-12(%l : %c%V%) '
 	let pct = ' %P'
 
