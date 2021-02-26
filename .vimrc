@@ -69,6 +69,12 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 "" git integration
 Plug 'tpope/vim-fugitive'
 
+"" LaTeX
+Plug 'lervag/vimtex'
+	let g:tex_flavor='latex'
+	let g:vimtex_view_method='zathura'
+	let g:vimtex_quickfix_mode=0
+
 call plug#end()
 " }}
 """"""""""""""""""""""""""""""""""""""""""""""
