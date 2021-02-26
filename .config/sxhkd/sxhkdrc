@@ -24,7 +24,7 @@ super + Return
 	gnome-terminal
 
 # program launcher
-super + @space
+super + space
 	rofi -show run
 
 # rofi hotkey search
@@ -43,6 +43,8 @@ super + b
 # 	firefox --private-window
 
 # pdf viewer
+super + v
+	zathura
 
 #
 # bspwm hotkeys
