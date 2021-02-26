@@ -6,6 +6,7 @@
 
 feh --no-fehbg --bg-fill ~/.dotfiles/bg.png &
 tint2 &
+redshift -O 3500 &
 pgrep -x sxhkd > /dev/null || sxhkd &
 
 ### monitor setup ###
