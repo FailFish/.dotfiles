@@ -9,7 +9,7 @@ endif
 
 " install node (for nvim.coc plugin) if not found
 if !executable('node')
-	!curl -sL install-node.now.sh/lts | bash
+	!curl -sL install-node.now.sh/lts | sudo bash
 endif
 
 """"""""""""""""""""""""""""""""""""""""""""""
@@ -40,16 +40,9 @@ Plug 'tpope/vim-vinegar'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all'}
 Plug 'junegunn/fzf.vim'
 
-" Before using coc, install nodejs
-" curl -sL install-node.now.sh/lts | sudo bash
-"
-" LSP(coc.nvim) + linter(ale)
-" \"diagnostics.displayByAle\" : \"true\" in cocconfig
+"" LSP(coc.nvim) + linter(ale)
+"" ALE settings
 " ALE enables all available linters by default
-" python : jedi(LSP)
-" c/c++ : clangd(LSP)
-" vimscript : vim-lsp
-" bashscript : bash-lsp
 Plug 'w0rp/ale'
 	let g:ale_disable_lsp = 1
 	" let g:ale_lint_delay = 1000
@@ -61,6 +54,8 @@ Plug 'w0rp/ale'
 	" let g:ale_python_flake8_executable= 'python3.7'
 	" let g:ale_python_mypy_executable = 'python3.7'
 
+"" Coc.nvim settings
+" dependency: git(coc-git), clangd(coc-clangd), cmake(coc-cmake),
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 	let g:coc_global_extensions = ['coc-git', 'coc-pyright', 'coc-json',
 				\	'coc-sh', 'coc-vimlsp', 'coc-clangd', 'coc-cmake']
@@ -70,6 +65,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'tpope/vim-fugitive'
 
 "" LaTeX
+" dependency: zathura and latexmk(vimtex)
 Plug 'lervag/vimtex'
 	let g:tex_flavor='latex'
 	let g:vimtex_view_method='zathura'
