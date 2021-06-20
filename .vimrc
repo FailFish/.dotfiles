@@ -9,7 +9,7 @@ endif
 
 " install node (for nvim.coc plugin) if not found
 if !executable('node')
-	!curl -sL install-node.now.sh/lts | bash
+	!curl -sL install-node.now.sh/lts | sudo bash
 endif
 
 """"""""""""""""""""""""""""""""""""""""""""""
