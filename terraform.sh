@@ -1,6 +1,10 @@
 #!/bin/bash
 
-# sudo pacman -S --needed nvidia-lts reflector pkgfile pacman-contrib xclip zip unzip cmake python python-pip base-devel tmux htop curl intel-ucode sudo firefox alacritty zathura-pdf-mupdf tldr tree fish fzf ripgrep fd exa bat procs xorg xorg-xinit bspwm picom sxhkd tint2 rofi feh lesspipe
+# sudo pacman -S --needed nvidia-lts reflector pkgfile pacman-contrib xclip zip unzip cmake python python-pip base-devel tmux htop wget curl intel-ucode sudo firefox alacritty zathura-pdf-mupdf tldr tree fish fzf ripgrep fd exa bat procs xorg xorg-xinit bspwm picom sxhkd tint2 rofi feh redshift lesspipe adobe-source-han-sans-kr-fonts adobe-source-han-serif-kr-fonts ttf-fira-code ttf-dejavu bluez bluez-utils openssh nnn dolphin qt5ct breeze-icons lxappearance-gtk3 papirus-icon-theme
+
+# paru -S nerd-fonts-inter
+
+# systemctl enable NetworkManager.service bluetooth.service sshd.service
 
 ln -sf $(pwd)/.bashrc $HOME/.bashrc
 ln -sf $(pwd)/.vimrc $HOME/.vimrc

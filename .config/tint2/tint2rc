@@ -323,6 +323,7 @@ launcher_item_app = google-chrome.desktop
 
 #-------------------------------------
 # Clock
+time1_font = Inter Nerd Font Bold 11
 time1_format = %l:%M %P - %a %d %h - %Y
 time2_format = 
 time1_timezone = 
@@ -345,6 +346,7 @@ battery_low_status = 20
 battery_low_cmd = notify-send -u critical "Battery Status" "  Battery low! "
 battery_full_cmd = notify-send -u low "Battery Status" " Battery full! "
 battery_font_color = #d2d7df 100
+bat1_font = Inter Nerd Font 11
 bat1_format =  %p
 bat2_format = 
 battery_padding = 1 0
@@ -361,6 +363,7 @@ ac_disconnected_cmd = notify-send "Battery Status" " Charger disconnected."
 #-------------------------------------
 # Executor 1
 execp = new
+execp_font = Inter Nerd Font 11
 execp_command = df -h | awk '/\/$/ { print " "$3 "/" $2 "  "}'
 execp_interval = 0
 execp_has_icon = 0
@@ -383,6 +386,7 @@ execp_icon_h = 0
 #-------------------------------------
 # Executor 2
 execp = new
+execp_font = Inter Nerd Font 11
 execp_command = free --mega -h | awk '/^Mem:/ { print " " $3 "/" $2}'
 execp_interval = 2
 execp_has_icon = 0
@@ -405,6 +409,7 @@ execp_icon_h = 0
 #-------------------------------------
 # Executor 3
 execp = new
+execp_font = Inter Nerd Font 11
 execp_command = sensors | awk '/Package id 0:/ { print " "$4   }'
 execp_interval = 1
 execp_has_icon = 0
@@ -412,7 +417,7 @@ execp_cache_icon = 1
 execp_continuous = 0
 execp_markup = 1
 execp_tooltip = 
-execp_lclick_command = urxvt -e watch sensors
+execp_lclick_command = alacritty -e watch sensors
 execp_rclick_command = 
 execp_mclick_command = 
 execp_uwheel_command = 
@@ -449,8 +454,9 @@ execp_icon_h = 0
 #-------------------------------------
 # Button 1
 button = new
-button_text = 
-button_lclick_command = rofi -show power-menu -theme powermenu -modi power-menu:~/.config/rofi/rofi-power-menu.sh
+button_text = 
+button_font = Inter Nerd Font 11
+button_lclick_command = rofi -show pm -modi pm:~/.config/rofi/rofi-power-menu.sh
 button_rclick_command = rofi -show drun
 button_mclick_command = 
 button_uwheel_command = bspc desktop -f prev.local
@@ -464,7 +470,8 @@ button_max_icon_size = 0
 #-------------------------------------
 # Button 2
 button = new
-button_text =  !
+button_text = 
+button_font = Inter Nerd Font 11
 button_lclick_command = bash ~/.local/bin/scripts/rofi/rofi-wifi-menu/rofi-wifi-menu.sh
 button_rclick_command = nm-applet
 button_mclick_command = pkill nm-applet

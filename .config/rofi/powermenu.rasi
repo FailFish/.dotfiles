@@ -1,14 +1,14 @@
-@theme "themes/gruvbox-dark-hard"
-
-configuration {
+* {
 	width: 300;
 	lines: 6;
 	columns: 1;
-	font: "mono 14";
+	font: "Hack 14";
 	bw: 1;
 	padding: 5;
 	eh: 2;
 }
+
+@theme "gruvbox-dark"
 
 window {
     background-color: @background;
@@ -20,7 +20,7 @@ window {
 mainbox {
 	border: 0;
 	padding: 0;
-	/* children: [ listview ]; */
+	children: [ listview ];
 }
 
 message {

@@ -28,14 +28,14 @@ texts[reboot]="reboot."
 texts[shutdown]="shut down."
 
 declare -A icons
-icons[lockscreen]=""
+icons[lockscreen]=""
 icons[switchuser]=""
-icons[logout]=""
+icons[logout]=""
 icons[suspend]=""
-icons[hibernate]=""
-icons[reboot]=""
-icons[shutdown]=""
-icons[cancel]="×"
+icons[hibernate]="鈴"
+icons[reboot]=""
+icons[shutdown]=""
+icons[cancel]=""
 
 declare -A actions
 # actions[lockscreen]="i3lock -i ~/Pictures/Wallpapers/debian_dark_blue.png"
