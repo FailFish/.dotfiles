@@ -1,5 +1,10 @@
 ## applications that I manually install and use
 
+Font
+---
+System/UI: Inter Nerd Font
+Terminal: Fira Code
+
 commandline tools
 ---
 - bash
