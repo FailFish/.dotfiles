@@ -317,4 +317,18 @@ if has_key(g:plugs, 'coc.nvim')
 endif
 
 " }}}
+" -----------------------------------------------------------------------------
+" fzf-related keybinds {{{
+" -----------------------------------------------------------------------------
+if has_key(g:plugs, 'fzf.vim')
+	nnoremap <silent> <leader>-        :Files<CR>
+	nnoremap <silent> <leader>B        :Buffers<CR>
+	nnoremap <silent> <leader>L        :Lines<CR>
+	nnoremap <silent> <leader>`        :Marks<CR>
+	" grep visual block
+	xnoremap <silent> <Leader>rg       y:Rg <C-R>"<CR>
+	" nnoremap <silent> <Leader>C        :Colors<CR>
+endif
+
+" }}}
 " ===============================================================================
