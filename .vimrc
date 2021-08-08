@@ -18,9 +18,9 @@ endif
 " Updated : 05 FEB 2021
 "
 " 0. vim-plug
-" Candidates : surround.vim / vim-vinegar 
-"		fzf / ALE / coc.nvim 
-"		gruvbox/Nord colorscheme / commentary.vim 
+" Candidates : surround.vim / vim-vinegar
+"		fzf / ALE / coc.nvim
+"		gruvbox/Nord colorscheme / commentary.vim
 " {{
 call plug#begin('~/.vim/plugged')
 Plug 'morhetz/gruvbox'
@@ -53,6 +53,18 @@ Plug 'w0rp/ale'
 	" let g:ale_python_pylint_executable = 'python3.7'
 	" let g:ale_python_flake8_executable= 'python3.7'
 	" let g:ale_python_mypy_executable = 'python3.7'
+	let g:ale_fix_on_save = 1
+	let g:ale_fixers = {
+				\	'*' : ['remove_trailing_lines', 'trim_whitespace'],
+				\	'python' : ['black', 'autoimport', 'isort'],
+				\	'rust' : ['rustfmt'],
+				\	'c' : ['clang-format'],
+				\	'cpp' : ['clang-format']
+				\	}
+	let g:ale_c_clangformat_style_option = '{
+				\ BasedOnStyle: LLVM,
+				\ IndentWidth: 4,
+				\ }'
 
 "" Coc.nvim settings
 " dependency: git(coc-git), clangd(coc-clangd), cmake(coc-cmake),
