@@ -57,6 +57,20 @@ ex ()
   fi
 }
 
+clipb ()
+{
+	# TODO: port for fish, (maybe) WSL/MAC OS compatible
+	if command -v xclip 1>/dev/null; then
+		if [[ -p /dev/stdin ]] ; then
+			xclip -i -selection clipboard
+		else
+			xclip -o -selection clipboard
+		fi
+	else
+		echo "install xclip"
+	fi
+}
+
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
 HISTCONTROL=ignoreboth
@@ -173,10 +187,10 @@ if ! shopt -oq posix; then
 fi
 
 
-# Ruby exports
+# Ruby & python exports
 
 export GEM_HOME=$HOME/gems
-export PATH=$HOME/gems/bin:$PATH
+export PATH=$HOME/gems/bin:$HOME/.local/bin:$PATH
 
 # vi editing mode
 set -o vi
@@ -190,3 +204,5 @@ export VISUAL=vim
 
 # custom alias
 # alias python=python3.7
+
+export QT_QPA_PLATFORMTHEME="qt5ct"
