@@ -186,12 +186,6 @@ if ! shopt -oq posix; then
   fi
 fi
 
-
-# Ruby & python exports
-
-export GEM_HOME=$HOME/gems
-export PATH=$HOME/gems/bin:$HOME/.local/bin:$PATH
-
 # vi editing mode
 set -o vi
 
@@ -202,7 +196,7 @@ export VISUAL=vim
 # added by fzf install script automatically
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
-# custom alias
-# alias python=python3.7
-
-export QT_QPA_PLATFORMTHEME="qt5ct"
+# custom environment variables & aliases stored at $HOME/.bashrc_local
+if [ -f ~/.bashrc_local ]; then
+	source ~/.bashrc_local
+fi
