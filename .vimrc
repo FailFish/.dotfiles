@@ -23,9 +23,11 @@ endif
 "		gruvbox/Nord colorscheme / commentary.vim
 " {{
 call plug#begin('~/.vim/plugged')
+" Colorschemes
 Plug 'morhetz/gruvbox'
 	autocmd vimenter * colorscheme gruvbox
 	set background=dark
+Plug 'arcticicestudio/nord-vim'
 
 "" editing
 Plug 'tpope/vim-surround'
@@ -75,6 +77,8 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 "" git integration
 Plug 'tpope/vim-fugitive'
+Plug 'junegunn/gv.vim'
+Plug 'rhysd/git-messenger.vim'
 
 "" LaTeX
 " dependency: zathura and latexmk(vimtex)
@@ -215,6 +219,7 @@ inoremap <Right> <ESC>:echoe "Use l"<CR>
 inoremap <Up>    <ESC>:echoe "Use k"<CR>
 inoremap <Down>  <ESC>:echoe "Use j"<CR>
 
+# <C-L> will erase hlsearch
 if maparg('<C-L>', 'n') ==# ''
 	nnoremap <silent> <C-L> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
 endif
