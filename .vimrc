@@ -17,9 +17,8 @@ endif
 " Vim plug-in list
 " Updated : 22 AUG 2021
 "
-" cand: mbbill/undotree, justinmk/vim-gtfo
-" liuchengxu/vista.vim junegunn/vim-easy-align
-" tpope/vim-repeat
+" cand: mbbill/undotree
+" junegunn/vim-easy-align tpope/vim-repeat
 " SirVer/ultisnips honza/vim-snippets
 " some journalism/documentation plugin?
 " {{
@@ -34,9 +33,21 @@ Plug 'arcticicestudio/nord-vim'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 
+"" Browsing
 " extension for built-in file system browser
 " Replacement of NERDTree
 Plug 'tpope/vim-vinegar'
+
+" tagbar equivalent
+Plug 'liuchengxu/vista.vim'
+    let g:vista_default_executive = 'coc'
+    let g:vista_fzf_preview = ['right:50%']
+    nnoremap <silent> <leader>v :Vista!!<CR>
+    nnoremap <silent> <leader>V :Vista finder<CR>
+
+" open current files location in terminal/xdg-open
+Plug 'justinmk/vim-gtfo'
+    let g:gtfo#terminals = { 'unix': 'alacritty --working-directory ' . expand("%:p:h") . ' &' }
 
 " After install fzf, go installed directory and run ./install script
 " to modify your {bash, zsh, fish}rc file
@@ -48,11 +59,12 @@ Plug 'junegunn/fzf.vim'
 " ALE enables all available linters by default
 Plug 'w0rp/ale'
 	let g:ale_disable_lsp = 1
+	let g:ale_linters = {
+				\	'c' : [], 'cpp' : [],
+				\	'python' : ['flake8', 'mypy']
+				\	}
 	" let g:ale_lint_delay = 1000
 	let g:ale_lint_on_text_changed = 'never'
-	" let g:ale_linters = {
-	" 			\	'python' : ['flake8', 'mypy']
-	" 			\	}
 	let g:ale_fix_on_save = 1
 	let g:ale_fixers = {
 				\	'*' : ['remove_trailing_lines', 'trim_whitespace'],
@@ -65,6 +77,8 @@ Plug 'w0rp/ale'
 				\ BasedOnStyle: LLVM,
 				\ IndentWidth: 4,
 				\ }'
+    nnoremap ]a <Plug>(ale_next_wrap)
+    nnoremap [a <Plug>(ale_previous_wrap)
 
 "" Coc.nvim settings
 " dependency: git(coc-git), clangd(coc-clangd), cmake(coc-cmake),
@@ -238,10 +252,7 @@ nnoremap Q @q
 inoremap <C-W> <C-G>u<C-W>
 inoremap <C-U> <C-G>u<C-W>
 
-" next & previous commands; tpope/vim-unimpaired
-" AleNextWrap / AlePreviousWrap (Test)
-nnoremap ]a <Plug>(ale_next_wrap)
-nnoremap [a <Plug>(ale_previous_wrap)
+"" next & previous commands; tpope/vim-unimpaired
 " buffer
 nnoremap ]b :bnext<cr>
 nnoremap [b :bprev<cr>
@@ -374,6 +385,7 @@ if has_key(g:plugs, 'fzf.vim')
 	" grep visual block
 	xnoremap <silent> <Leader>rg       y:Rg <C-R>"<CR>
 	" nnoremap <silent> <Leader>C        :Colors<CR>
+	" nnoremap <silent> <Leader>T        :Tags<CR>
 endif
 
 " }}}
