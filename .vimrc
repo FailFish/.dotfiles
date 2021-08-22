@@ -15,12 +15,13 @@ endif
 """"""""""""""""""""""""""""""""""""""""""""""
 """"""""""""""""""""""""""""""""""""""""""""""
 " Vim plug-in list
-" Updated : 05 FEB 2021
+" Updated : 22 AUG 2021
 "
-" 0. vim-plug
-" Candidates : surround.vim / vim-vinegar
-"		fzf / ALE / coc.nvim
-"		gruvbox/Nord colorscheme / commentary.vim
+" cand: mbbill/undotree, justinmk/vim-gtfo
+" liuchengxu/vista.vim junegunn/vim-easy-align
+" tpope/vim-repeat
+" SirVer/ultisnips honza/vim-snippets
+" some journalism/documentation plugin?
 " {{
 call plug#begin('~/.vim/plugged')
 " Colorschemes
@@ -52,9 +53,6 @@ Plug 'w0rp/ale'
 	" let g:ale_linters = {
 	" 			\	'python' : ['flake8', 'mypy']
 	" 			\	}
-	" let g:ale_python_pylint_executable = 'python3.7'
-	" let g:ale_python_flake8_executable= 'python3.7'
-	" let g:ale_python_mypy_executable = 'python3.7'
 	let g:ale_fix_on_save = 1
 	let g:ale_fixers = {
 				\	'*' : ['remove_trailing_lines', 'trim_whitespace'],
@@ -129,6 +127,8 @@ set relativenumber
 " i am a hardtab guy
 set shiftwidth=4
 set tabstop=4
+" emulate tab with spaces
+set expandtab smarttab
 
 " Always show the status line at the bottom, even if you only have one window open.
 set laststatus=2
@@ -155,10 +155,6 @@ set smartcase
 " Enable searching as you type, rather than waiting till you press enter.
 set incsearch
 
-" Unbind some useless/annoying default key bindings.
-" 'Q' in normal mode enters Ex mode. You almost never want this.
-nmap Q <Nop>
-
 " Disable audible bell because it's annoying.
 set noerrorbells visualbell t_vb=
 
@@ -182,6 +178,13 @@ set listchars=tab:\|\ ,trail:-,extends:>,precedes:<,nbsp:+
 " set listchars+=,eol:$
 
 set encoding=utf-8
+
+" <C-A> for increment, <C-X> for decrement
+set nrformats-=octal
+
+" no autocompletion sourced from included file
+set complete-=i
+
 
 " statusline settings
 function! s:statusline_expr()
@@ -223,6 +226,41 @@ inoremap <Down>  <ESC>:echoe "Use j"<CR>
 if maparg('<C-L>', 'n') ==# ''
 	nnoremap <silent> <C-L> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
 endif
+
+" By default, Y is synonym for yy. Instead, Y behaves like other single Capitals
+nnoremap Y y$
+
+" 'Q' in normal mode enters Ex mode. You almost never want this.
+" qq to record, Q to replay
+nnoremap Q @q
+
+" break undo sequence before it erases word/line
+inoremap <C-W> <C-G>u<C-W>
+inoremap <C-U> <C-G>u<C-W>
+
+" next & previous commands; tpope/vim-unimpaired
+" AleNextWrap / AlePreviousWrap (Test)
+nnoremap ]a <Plug>(ale_next_wrap)
+nnoremap [a <Plug>(ale_previous_wrap)
+" buffer
+nnoremap ]b :bnext<cr>
+nnoremap [b :bprev<cr>
+" quickfix/loclist + centered
+nnoremap ]q :cnext<cr>zz
+nnoremap [q :cprev<cr>zz
+nnoremap ]l :lnext<cr>zz
+nnoremap [l :lprev<cr>zz
+
+" exchanging lines(hoist)
+nnoremap <silent> ]e :move+<cr>
+nnoremap <silent> [e :move-2<cr>
+" exchanging a visual block, keep blocking
+xnoremap <silent> ]e :move'>+<cr>gv
+xnoremap <silent> [e :move-2<cr>gv
+" Indent without losing block
+xnoremap < <gv
+xnoremap > >gv
+
 " -----------------------------------------------------------------------------
 " coc.nvim-related keybinds {{{
 " -----------------------------------------------------------------------------
@@ -248,9 +286,9 @@ if has_key(g:plugs, 'coc.nvim')
 	" Coc only does snippet and additional edit on confirm.
 	inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
-	" Use `[c` and `]c` to navigate diagnostics
-	nmap <silent> [g <Plug>(coc-diagnostic-prev)
-	nmap <silent> ]g <Plug>(coc-diagnostic-next)
+	" Use `[d` and `]d` to navigate diagnostics
+	nmap <silent> [d <Plug>(coc-diagnostic-prev)
+	nmap <silent> ]d <Plug>(coc-diagnostic-next)
 
 	" Remap keys for gotos
 	nmap <silent> gd <Plug>(coc-definition)
@@ -281,7 +319,7 @@ if has_key(g:plugs, 'coc.nvim')
 
 	" Using CocList
 	" Show all diagnostics
-	nnoremap <silent> <space>a :<C-u>CocList diagnostics<cr>
+	nnoremap <silent> <space>d :<C-u>CocList diagnostics<cr>
 	" Manage extensions
 	nnoremap <silent> <space>e :<C-u>CocList extensions<cr>
 	" Show commands
@@ -295,7 +333,7 @@ if has_key(g:plugs, 'coc.nvim')
 	" Do default action for previous item.
 	nnoremap <silent> <space>k :<C-u>CocPrev<CR>
 	" Resume latest coc list
-	nnoremap <silent> <space>p :<C-u>CocListResume<CR>
+	nnoremap <silent> <space>r :<C-u>CocListResume<CR>
 
 	" FROM HERE.. I still dont know the usage -----
 	" Remap for rename current word
