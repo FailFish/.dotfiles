@@ -73,6 +73,7 @@ Plug 'w0rp/ale'
 				\	'c' : ['clang-format'],
 				\	'cpp' : ['clang-format']
 				\	}
+    let g:ale_python_black_options = '-l 80'
 	let g:ale_c_clangformat_style_option = '{
 				\ BasedOnStyle: LLVM,
 				\ IndentWidth: 4,
