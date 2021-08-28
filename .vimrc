@@ -24,7 +24,7 @@ endif
 " {{
 call plug#begin('~/.vim/plugged')
 " Colorschemes
-Plug 'morhetz/gruvbox'
+Plug 'gruvbox-community/gruvbox'
 	autocmd vimenter * colorscheme gruvbox
 	set background=dark
     let g:gruvbox_italic='1'
