@@ -27,6 +27,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'morhetz/gruvbox'
 	autocmd vimenter * colorscheme gruvbox
 	set background=dark
+    let g:gruvbox_italic='1'
 Plug 'arcticicestudio/nord-vim'
 
 "" editing
@@ -200,6 +201,11 @@ set nrformats-=octal
 " no autocompletion sourced from included file
 set complete-=i
 
+if has('termguicolors')
+    let &t_8f = "\<Esc>[38:2:%lu:%lu:%lum"
+    let &t_8b = "\<Esc>[48:2:%lu:%lu:%lum"
+    set termguicolors
+endif
 
 " statusline settings
 function! s:statusline_expr()
