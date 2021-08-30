@@ -213,7 +213,6 @@ set nrformats-=octal
 " no autocompletion sourced from included file
 set complete-=i
 
-<<<<<<< HEAD
 " Setting path for backup and swap files (Linux)
 set backupdir=/tmp//,.
 set directory=/tmp//,.
@@ -222,12 +221,12 @@ set directory=/tmp//,.
 if has("persistent_undo")
     set undodir=/tmp,.
     set undofile
+endif
 
 if has('termguicolors')
     let &t_8f = "\<Esc>[38:2:%lu:%lu:%lum"
     let &t_8b = "\<Esc>[48:2:%lu:%lu:%lum"
     set termguicolors
->>>>>>> c5728962e812adac0378961dd45bf465752eeba7
 endif
 
 " statusline settings
