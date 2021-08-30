@@ -29,3 +29,9 @@ WM related
 - tint2
 - rofi
 - feh
+
+Extra
+---
+- elementary-planner
+  put `database.db` at `~/.local/share/com.github.alainm23.planner/database.db`
+  or `~/.var/app/com.github.alainm23.planner/data/com.github.alainm23.planner/database.db` in the case of flatpak
