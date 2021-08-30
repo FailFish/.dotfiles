@@ -33,6 +33,13 @@ Plug 'arcticicestudio/nord-vim'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 
+Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
+    let g:undotree_WindowLayout = 2
+    nnoremap <leader>U :UndotreeToggle<CR>
+
+" vim-snippets(provider) -> Ultisnips(engine) -> coc-ultisnips(autocomplete)
+Plug 'honza/vim-snippets'
+
 "" Browsing
 " extension for built-in file system browser
 " Replacement of NERDTree
@@ -42,10 +49,11 @@ Plug 'tpope/vim-vinegar'
 Plug 'liuchengxu/vista.vim'
     let g:vista_default_executive = 'coc'
     let g:vista_fzf_preview = ['right:50%']
-    nnoremap <silent> <leader>v :Vista!!<CR>
-    nnoremap <silent> <leader>V :Vista finder<CR>
+    nnoremap <silent> <leader>t :Vista!!<CR>
+    nnoremap <silent> <leader>T :Vista finder<CR>
 
 " open current files location in terminal/xdg-open
+" (bug) got with a current file containing directory doesn't work in alacritty
 Plug 'justinmk/vim-gtfo'
     let g:gtfo#terminals = { 'unix': 'alacritty --working-directory ' . expand("%:p:h") . ' &' }
 
@@ -82,6 +90,7 @@ Plug 'w0rp/ale'
 
 "" Coc.nvim settings
 " dependency: git(coc-git), clangd(coc-clangd), cmake(coc-cmake),
+" Plug 'neoclide/coc.nvim', {'tag': 'v0.0.80'}
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 	let g:coc_global_extensions = ['coc-git', 'coc-pyright', 'coc-json',
 				\	'coc-sh', 'coc-vimlsp', 'coc-clangd', 'coc-cmake']
@@ -89,6 +98,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 "" git integration
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-rhubarb'
 Plug 'junegunn/gv.vim'
 Plug 'rhysd/git-messenger.vim'
 
@@ -199,6 +209,15 @@ set nrformats-=octal
 " no autocompletion sourced from included file
 set complete-=i
 
+" Setting path for backup and swap files (Linux)
+set backupdir=/tmp//,.
+set directory=/tmp//,.
+
+" undotree
+if has("persistent_undo")
+    set undodir=/tmp,.
+    set undofile
+endif
 
 " statusline settings
 function! s:statusline_expr()
@@ -378,14 +397,14 @@ endif
 " fzf-related keybinds {{{
 " -----------------------------------------------------------------------------
 if has_key(g:plugs, 'fzf.vim')
-	nnoremap <silent> <leader>-        :Files<CR>
-	nnoremap <silent> <leader>B        :Buffers<CR>
-	nnoremap <silent> <leader>L        :Lines<CR>
-	nnoremap <silent> <leader>`        :Marks<CR>
-	" grep visual block
-	xnoremap <silent> <Leader>rg       y:Rg <C-R>"<CR>
-	" nnoremap <silent> <Leader>C        :Colors<CR>
-	" nnoremap <silent> <Leader>T        :Tags<CR>
+    nnoremap <silent> <leader>-        :Files<CR>
+    nnoremap <silent> <leader>B        :Buffers<CR>
+    nnoremap <silent> <leader>L        :Lines<CR>
+    nnoremap <silent> <leader>`        :Marks<CR>
+    " grep visual block
+    xnoremap <silent> <Leader>rg       y:Rg <C-R>"<CR>
+    " nnoremap <silent> <Leader>C        :Colors<CR>
+    " nnoremap <silent> <Leader>T        :Tags<CR>
 endif
 
 " }}}
