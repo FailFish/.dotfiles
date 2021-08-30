@@ -24,10 +24,13 @@ endif
 " {{
 call plug#begin('~/.vim/plugged')
 " Colorschemes
-Plug 'morhetz/gruvbox'
+Plug 'gruvbox-community/gruvbox'
 	autocmd vimenter * colorscheme gruvbox
 	set background=dark
-Plug 'arcticicestudio/nord-vim'
+    let g:gruvbox_italic = 1
+Plug 'sainnhe/gruvbox-material'
+    let g:gruvbox_material_background = 'hard'
+    let g:gruvbox_material_enable_italic = 1
 
 "" editing
 Plug 'tpope/vim-surround'
@@ -81,6 +84,7 @@ Plug 'w0rp/ale'
 				\	'c' : ['clang-format'],
 				\	'cpp' : ['clang-format']
 				\	}
+    let g:ale_python_black_options = '-l 80'
 	let g:ale_c_clangformat_style_option = '{
 				\ BasedOnStyle: LLVM,
 				\ IndentWidth: 4,
@@ -209,6 +213,7 @@ set nrformats-=octal
 " no autocompletion sourced from included file
 set complete-=i
 
+<<<<<<< HEAD
 " Setting path for backup and swap files (Linux)
 set backupdir=/tmp//,.
 set directory=/tmp//,.
@@ -217,6 +222,12 @@ set directory=/tmp//,.
 if has("persistent_undo")
     set undodir=/tmp,.
     set undofile
+
+if has('termguicolors')
+    let &t_8f = "\<Esc>[38:2:%lu:%lu:%lum"
+    let &t_8b = "\<Esc>[48:2:%lu:%lu:%lum"
+    set termguicolors
+>>>>>>> c5728962e812adac0378961dd45bf465752eeba7
 endif
 
 " statusline settings
