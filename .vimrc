@@ -27,8 +27,10 @@ call plug#begin('~/.vim/plugged')
 Plug 'gruvbox-community/gruvbox'
 	autocmd vimenter * colorscheme gruvbox
 	set background=dark
-    let g:gruvbox_italic='1'
-Plug 'arcticicestudio/nord-vim'
+    let g:gruvbox_italic = 1
+Plug 'sainnhe/gruvbox-material'
+    let g:gruvbox_material_background = 'hard'
+    let g:gruvbox_material_enable_italic = 1
 
 "" editing
 Plug 'tpope/vim-surround'
