@@ -1,9 +1,9 @@
 configuration {
-/*	modi: "window,run,ssh";*/
+	modi: "window,run,drun,ssh";
 	width: 500;
 /*	lines: 15;*/
 /*	columns: 1;*/
-	font: "Hack 14";
+	font: "mono 14";
 	bw: 1;
 /*	location: 0;*/
 	padding: 5;
