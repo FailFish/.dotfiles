@@ -21,7 +21,7 @@ super + shift + Escape
 
 # terminal emulator
 super + Return
-	gnome-terminal
+	alacritty
 
 # program launcher
 super + space
@@ -33,8 +33,7 @@ super + slash
 
 # file manager
 super + f
-	nautilus
-	# nautilus -w
+	dolphin
 
 # browser
 super + b
