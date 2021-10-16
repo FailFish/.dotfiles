@@ -133,6 +133,8 @@ syntax on
 " Indenting policy
 filetype plugin indent on
 
+autocmd FileType markdown,text,txt setlocal tw=78 keywordprg=dict
+
 " Disable the default Vim startup message
 " Truncate long messages
 " etc
@@ -319,8 +321,16 @@ if has_key(g:plugs, 'coc.nvim')
 		return !col || getline('.')[col - 1]  =~# '\s'
 	endfunction
 
-	" Use <c-space> to trigger completion.
-	inoremap <silent><expr> <c-space> coc#refresh()
+    " inside the parentheses, this will show a floating signatureHelp, but it
+    " doesn't conflict with completion window shift-tab(search up)
+    inoremap <C-p> <C-\><C-O>:call CocActionAsync('showSignatureHelp')<cr>
+
+	" Use <c-space> to trigger completion. <tab> does work for now
+    " if has('nvim')
+    "     inoremap <silent><expr> <c-space> coc#refresh()
+    " else
+    "     inoremap <silent><expr> <c-@> coc#refresh()
+    " endif
 
 	" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
 	" Coc only does snippet and additional edit on confirm.
@@ -342,9 +352,11 @@ if has_key(g:plugs, 'coc.nvim')
 	function! s:show_documentation()
 		if (index(['vim','help'], &filetype) >= 0)
 			execute 'h '.expand('<cword>')
-		else
-			call CocAction('doHover')
-		endif
+        elseif (coc#rpc#ready())
+            call CocActionAsync('doHover')
+        else
+            execute '!' . &keywordprg . " " . expand('<cword>')
+        endif
 	endfunction
 
 	" Use `:Format` to format current buffer
