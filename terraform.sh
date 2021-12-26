@@ -23,3 +23,4 @@ ln -s $(pwd)/.config/rofi $HOME/.config/rofi
 ln -s $(pwd)/.config/sxhkd $HOME/.config/sxhkd
 ln -s $(pwd)/.config/tint2 $HOME/.config/tint2
 ln -s $(pwd)/.config/zathura $HOME/.config/zathura
+ln -s $(pwd)/.config/nvim $HOME/.config/nvim
