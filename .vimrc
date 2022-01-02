@@ -232,7 +232,17 @@ if has('termguicolors')
 endif
 
 " statusline settings
+function! s:colorful_filepath()
+    highlight stlchanged guibg=#504945 guifg=#fb4934
+    " highlight stlhl2 term=bold,reverse cterm=reverse ctermfg=0 ctermbg=223
+    highlight stlunchanged guibg=#504945 guifg=#b8bb26
+    let hl1 = "%#stlchanged#%{&modified ? expand('%:p') : ''}%*"
+    let hl2 = "%#stlunchanged#%{&modified ? '' : expand('%:p')}%*"
+    return hl1.hl2
+endfunction
+
 function! s:statusline_expr()
+    let dyn = s:colorful_filepath()
 	" left side
 	let mod = "%{&modified ? '[+] ' : !&modifiable ? '[x] ' : ''}"
 	let ro  = "%{&readonly ? '[RO] ' : ''}"
@@ -246,7 +256,8 @@ function! s:statusline_expr()
 	let pct = ' %P'
 
 	" return '[%n] %F %< %m %r %y'.fug.sep.pos.'%*'.pct
-	return '[%n] %F %<'.mod.ro.ft.fug.sep.coc.pos.'%*'.pct
+	" return '[%n] %F %<'.mod.ro.ft.fug.sep.coc.pos.'%*'.pct
+	return '[%n] '.dyn.' %<'.mod.ro.ft.fug.sep.coc.pos.'%*'.pct
 endfunction
 
 let &statusline = s:statusline_expr()
