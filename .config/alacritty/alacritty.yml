@@ -166,4 +166,4 @@ schemes:
 
 # Colors (Gruvbox dark)
 colors: *gruvdark
-background_opacity: 1.0
+window_opacity: 1.0

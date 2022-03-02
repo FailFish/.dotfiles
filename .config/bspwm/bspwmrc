@@ -4,9 +4,9 @@
 ### auto start ###
 # ./.config/bspwm/panel.sh &
 
-feh --no-fehbg --bg-fill ~/.dotfiles/bg.png &
+feh --no-fehbg --bg-fill ~/.dotfiles/bg1.jpg &
 tint2 &
-redshift -O 3500 &
+redshift -P -O 3500 &
 pgrep -x sxhkd > /dev/null || sxhkd &
 
 ### monitor setup ###
