@@ -1,110 +1,134 @@
 #!/bin/bash
 
 PKGS=(
-	# SYSTEM
-	# sudo
-	# base-devel
+    # SYSTEM
+    # sudo
+    # base-devel
+    # networkmanager
 
-	# Pacman related
-	reflector
-	pkgfile
-	pacman-contrib
+    # Pacman related
+    reflector
+    pkgfile
+    pkgconf
+    pacman-contrib
 
-	# CLI Utilites
-	vim
-	neovim
-	openssh
-	wget
-	curl
-	rust
-	python
-	python-pip
-	man-pages
-	man-db
-	shellcheck
-	cmake
-	tmux
-	htop
-	tldr
-	tree
-	fish
-	fzf
-	ripgrep
-	fd
-	exa
-	bat
-	procs
-	lesspipe
-	nnn
-	inetutils
-	zip
-	unzip
+    # CLI Utilites
+    git
+    vim
+    neovim
+    openssh
+    wget
+    curl
+    rust
+    python
+    python-pip
+    gdb
+    man-pages
+    man-db
+    shellcheck
+    cmake
+    tmux
+    htop
+    lshw
+    tldr
+    tree
+    bash-completion
+    fish
+    fzf
+    ripgrep
+    fd
+    exa
+    bat
+    procs
+    lesspipe
+    nnn
+    inetutils
+    zip
+    unzip
 
-	# GUI
-	xorg
-	xorg-xinit
-	bspwm
-	sxhkd
-	picom
-	tint2
-	feh
-	redshift
-	rofi
-	alacritty
-	xclip
-	firefox
-	zathura-pdf-mupdf
-	dolphin
-	qt5ct
+    # GUI
+    xorg
+    xorg-xinit
+    bspwm
+    sxhkd
+    picom
+    tint2
+    feh
+    redshift
+    rofi
+    alacritty
+    xclip
+    scrot
+    firefox
+    zathura-pdf-mupdf
+    dolphin
+    qt5ct
 
-	# Appearance (Fonts & Icons)
-	breeze-icons
-	lxappearance-gtk3
-	papirus-icon-theme
-	adobe-source-han-sans-kr-fonts
-	adobe-source-han-serif-kr-fonts
-	ttf-fira-code
-	ttf-dejavu
+    # Appearance (Fonts & Icons)
+    breeze-icons
+    lxappearance-gtk3
+    papirus-icon-theme
+    adobe-source-han-sans-kr-fonts
+    adobe-source-han-serif-kr-fonts
+    ttf-fira-code
+    ttf-dejavu
+    ttf-hack
 
-	# Korean
-	fcitx5-im
-	fcitx5-hangul
+    # Korean
+    fcitx5-im
+    fcitx5-hangul
 
 )
 
 PKGS_HOST=(
-	# Bluetooth
-	bluez
-	bluez-utils
-	blueman
-	pulseaudio-bluetooth
-	# systemctl enable bluetooth.service
+    # Audio
+    pulseaudio
+    pulseaudio-alsa
+    pavucontrol
+    sof-firmware
 
-	# Host Linux Only
-	nvidia-lts
-	intel-ucode
-	docker
-	docker-compose
-	vlc
+    # Bluetooth
+    bluez
+    bluez-utils
+    blueman
+    pulseaudio-bluetooth
+    # systemctl enable bluetooth.service
 
-	# Laptop Only
-	tlp
-	# systemctl enable tlp
+    # Messenger
+    discord
+
+    # documentation
+    obsidian
+
+    # Host Linux Only
+    docker
+    docker-compose
+    vlc
+    # nvidia
+    # intel-ucode
+    # dosfstools
+    # efibootmgr
+    # os-prober
+    # mtools
+
+    # Laptop Only
+    tlp
+    # systemctl enable tlp
 )
 
 
 for PKG in "${PKGS[@]}"; do
-	echo "INSTALLING: ${PKG}"
-	sudo pacman -S "$PKG" --noconfirm --needed
+    echo "INSTALLING: ${PKG}"
+    sudo pacman -S "$PKG" --noconfirm --needed
 done
 
 ## AUR packages
 if ! command -v paru &> /dev/null
 then
-	echo "Installing paru ..."
-	git clone https://aur.archlinux.org/paru.git
-	cd paru
-	mkepkg -si
+    echo "Installing paru ..."
+    git clone https://aur.archlinux.org/paru.git
+    cd paru
+    mkepkg -si
 fi
 
 echo
@@ -112,25 +136,31 @@ echo "Installing AUR packages"
 echo
 
 AURS=(
-	nerd-fonts-inter
-	otf-nerd-fonts-monacob-mono
-	nerd-fonts-roboto-mono
-	nerd-fonts-fira-code
-	# elementary-planner
+    nerd-fonts-inter
+    otf-nerd-fonts-monacob-mono
+    nerd-fonts-roboto-mono
+    nerd-fonts-fira-code
+
+    # Documentation
+    hoffice
+    zotero
+    flow-pomodoro
+    pilorama
 )
 
 AURS_HOST=(
-	zoom
+    zoom
 )
 for AUR in "${AURS[@]}"; do
-	echo "INSTALLING: ${AUR}"
-	sudo paru -S "$AUR" --noconfirm --needed
+    echo "INSTALLING: ${AUR}"
+    sudo paru -S "$AUR" --noconfirm --needed
 done
 
 ln -sf $(pwd)/.bashrc $HOME/.bashrc
 ln -sf $(pwd)/.vimrc $HOME/.vimrc
 ln -sf $(pwd)/.tmux.conf $HOME/.tmux.conf
 ln -sf $(pwd)/.inputrc $HOME/.inputrc
+ln -sf $(pwd)/.xinitrc $HOME/.xinitrc
 
 mkdir $HOME/.config
 ln -s $(pwd)/.config/alacritty $HOME/.config/alacritty
