@@ -5,8 +5,8 @@
 # ./.config/bspwm/panel.sh &
 
 feh --no-fehbg --bg-fill ~/.dotfiles/bg1.jpg &
-tint2 &
 redshift -P -O 3500 &
+pgrep -x tint2 > /dev/null || tint2 &
 pgrep -x sxhkd > /dev/null || sxhkd &
 
 ### monitor setup ###
@@ -17,10 +17,8 @@ pgrep -x sxhkd > /dev/null || sxhkd &
 if [[ $(hostname) == 'ubuntu-desktop' ]]; then
 	bspc monitor DP-2 -n 0 -d I II III IV V
 	bspc monitor DP-4 -n 1 -d VI VII VIII IX X
-elif [[ $(hostname) == 'archlaptop' ]]; then
-	bspc monitor VGA-0 -n 0 -d I II III IV V VI VII VIII IX X
-elif [[ $(hostname) == 'archnew' ]]; then
-	bspc monitor eDP-1 -n 0 -d I II III IV V VI VII VIII IX X
+else
+	bspc monitor -n 0 -d I II III IV V VI VII VIII IX X
 fi
 
 ### bspc configs ###

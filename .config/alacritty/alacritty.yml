@@ -36,12 +36,12 @@ scrolling:
 
 font:
   normal:
-    family: Sauce Code Pro Nerd Font
-    style: Medium
+    # family: Sauce Code Pro Nerd Font
+    # style: Medium
 
     # family: Fira Mono
 
-    # family: RobotoMono Nerd Font
+    family: RobotoMono Nerd Font
 
     # family: MonacoB Nerd Font Mono
 
