@@ -139,7 +139,7 @@ autocmd FileType markdown,text,txt setlocal tw=78 keywordprg=dict
 " Truncate long messages
 " etc
 " see :h shortmess for various flags
-set shortmess+=aITc
+set shortmess+=aIc shortmess-=S
 
 " Show line numbers.
 set number
@@ -281,7 +281,7 @@ nnoremap Q @q
 
 " break undo sequence before it erases word/line
 inoremap <C-W> <C-G>u<C-W>
-inoremap <C-U> <C-G>u<C-W>
+inoremap <C-U> <C-G>u<C-U>
 
 "" next & previous commands; tpope/vim-unimpaired
 " buffer
