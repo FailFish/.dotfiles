@@ -21,18 +21,18 @@ local keymap = vim.api.nvim_set_keymap
 --   command_mode = "c",
 
 -- Better window navigation
--- keymap("n", "<C-h>", "<C-w>h", opts)
--- keymap("n", "<C-j>", "<C-w>j", opts)
--- keymap("n", "<C-k>", "<C-w>k", opts)
--- keymap("n", "<C-l>", "<C-w>l", opts)
+keymap("n", "<C-h>", "<C-w>h", opts)
+keymap("n", "<C-j>", "<C-w>j", opts)
+keymap("n", "<C-k>", "<C-w>k", opts)
+keymap("n", "<C-l>", "<C-w>l", opts)
 
 -- keymap("n", "<leader>e", ":Lex 30<cr>", opts)
 
 -- navigation: 1D motions
 keymap("n", "]b", ":bnext<CR>", opts)
 keymap("n", "[b", ":bprev<CR>", opts)
-keymap("n", "]q", ":qnext<CR>", opts)
-keymap("n", "[q", ":qprev<CR>", opts)
+keymap("n", "]q", ":cnext<CR>", opts)
+keymap("n", "[q", ":cprev<CR>", opts)
 keymap("n", "]l", ":lnext<CR>", opts)
 keymap("n", "[l", ":lprev<CR>", opts)
 
@@ -65,3 +65,7 @@ keymap("t", "<C-h>", "<C-\\><C-N><C-w>h", term_opts)
 keymap("t", "<C-j>", "<C-\\><C-N><C-w>j", term_opts)
 keymap("t", "<C-k>", "<C-\\><C-N><C-w>k", term_opts)
 keymap("t", "<C-l>", "<C-\\><C-N><C-w>l", term_opts)
+
+
+-- after you search the world, enter will clear the highlights
+vim.cmd [[nnoremap <expr> <CR> {-> v:hlsearch ? ":nohl\<CR>" : "\<CR>"}() ]]

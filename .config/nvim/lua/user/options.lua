@@ -8,8 +8,8 @@ vim.opt.shortmess = vim.opt.shortmess
 vim.opt.number = true
 vim.opt.relativenumber = true
 
-vim.opt.shiftwidth = 4                      -- length of an indent
-vim.opt.tabstop = 4                         -- length of a tab
+vim.opt.shiftwidth = 2                      -- length of an indent
+vim.opt.tabstop = 2                         -- length of a tab
 vim.opt.expandtab = true                    -- expand a tab into spaces
 -- vim.opt.smarttab = true                  -- nvim default
 
@@ -80,6 +80,8 @@ vim.opt.completeopt = { "menuone", "noselect" }
 -- vim.opt.formatoptions = vim.opt.formatoptions
 --     + ""
 --     - ""
+
+vim.o.shell = "/usr/bin/fish"
 
 
 -- statusbar setup
