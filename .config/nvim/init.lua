@@ -11,5 +11,6 @@ require "user.git"
 require "user.treesitter"
 require "user.terminal"
 require "user.disable_builtin"
+require "user.feline"
 
 require "impatient".enable_profile()

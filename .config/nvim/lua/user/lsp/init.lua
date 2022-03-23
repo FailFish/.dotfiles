@@ -1,10 +1,10 @@
-local status_ok, lspconfig = pcall(require, "lspconfig")
-if not status_ok then
+local ok1, lspconfig = pcall(require, "lspconfig")
+if not ok1 then
   return
 end
 
-local status_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
-if not status_ok then
+local ok2, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
+if not ok2 then
   return
 end
 
@@ -14,11 +14,14 @@ end
 -- Mappings.
 -- TODO: uapi/util functions and expose nmap and imap?
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
+-- <space>{_,f,q,l}{_,w,W}{object:reference, diagnostic, ...}
 local opts = { noremap=true, silent=true }
-vim.api.nvim_set_keymap("n", "<space>dl", '<cmd>lua vim.diagnostic.open_float(0, { scope = "line" })<CR>', opts)
+vim.api.nvim_set_keymap("n", "<space>d", '<cmd>lua vim.diagnostic.open_float(0, { scope = "line" })<CR>', opts)
 vim.api.nvim_set_keymap("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
 vim.api.nvim_set_keymap("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
-vim.api.nvim_set_keymap("n", "<space>ld", "<cmd>lua vim.diagnostic.setloclist()<CR>", opts)
+vim.api.nvim_set_keymap("n", "<space>ld", "<cmd>lua vim.diagnostic.setloclist()<CR>", opts) -- current buffer diagnostic
+vim.api.nvim_set_keymap("n", "<space>qd", "<cmd>lua vim.diagnostic.setqflist()<CR>", opts) -- workspace(all opened buffer) diagnostic
+vim.api.nvim_set_keymap("n", "<space>fwd", '<cmd>lua require("telescope.builtin").diagnostics()<CR>', opts)
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
@@ -29,19 +32,19 @@ local on_attach = function(bufnr)
   -- Mappings.
   -- See `:help vim.lsp.*` for documentation on any of the below functions
   -- JUMP commands
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts)
   vim.api.nvim_buf_set_keymap(bufnr, "n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>gT", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts)
+  vim.api.nvim_buf_set_keymap(bufnr, "n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts)
+  vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>gt", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts)
 
   -- LIST commands (uses qflist)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>qr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>qi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
+  vim.api.nvim_buf_set_keymap(bufnr, "n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
+  vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
   vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>qs", "<cmd>lua vim.lsp.buf.document_symbol()<CR>", opts) -- list all symbols in the current buffer
   -- LIST command (uses telescope)
   vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>fi", [[<cmd>lua require("telescope.builtin").lsp_implemenetations()<CR>]], opts)
   vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>fs", [[<cmd>lua require("telescope.builtin").lsp_document_symbols()<CR>]], opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>ws", [[<cmd>lua require("telescope.builtin").lsp_workspace_symbols()<CR>]], opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>Ws", [[<cmd>lua require("telescope.builtin").lsp_dynamic_workspace_symbols()<CR>]], opts)
+  vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>fws", [[<cmd>lua require("telescope.builtin").lsp_workspace_symbols()<CR>]], opts)
+  vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>fWs", [[<cmd>lua require("telescope.builtin").lsp_dynamic_workspace_symbols()<CR>]], opts)
 
   -- DISPLAY commands (uses float menu)
   vim.api.nvim_buf_set_keymap(bufnr, "n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
@@ -74,7 +77,6 @@ table.insert(runtime_path, "lua/?/init.lua")
 -- :h lspconfig-server-configuration
 local servers = {
   -- server = config pair
-  clangd = true,
   rust_analyzer = true,
   cmake = true,
   bashls = true,
@@ -104,22 +106,24 @@ local servers = {
       },
     },
   },
-  --   grammarly = true,
-  --   clangd = {
-  --     cmd = {
-  --       "clangd",
-  --       "--background-index",
-  --       "--suggest-missing-includes",
-  --       "--clang-tidy",
-  --       "--header-insertion=iwyu",
-  --     },
-  --     -- Required for lsp-status
-  --     init_options = {
-  --       clangdFileStatus = true,
-  --     },
-  --     handlers = nvim_status.extensions.clangd.setup(),
-  --   },
-  -- 
+  clangd = {
+    cmd = {
+      "clangd",
+      "--background-index",
+      "--suggest-missing-includes",
+      "--clang-tidy",
+      "--header-insertion=iwyu",
+      "--completion-style=detailed",
+      "--malloc-trim",
+      -- "-j=5",
+    },
+    -- Required for lsp-status
+    -- init_options = {
+    --   clangdFileStatus = true,
+    -- },
+    -- handlers = nvim_status.extensions.clangd.setup(),
+  },
+  -- grammarly = true,
   --   rust_analyzer = {
   --     cmd = { "rustup", "run", "nightly", "rust-analyzer" },
   --   },

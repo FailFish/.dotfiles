@@ -135,7 +135,6 @@ return packer.startup(function(use)
   -- }
   -- use "romgrk/barbar.nvim"
   use { "feline-nvim/feline.nvim" }
-  use "nvim-lualine/lualine.nvim"
 
   -- terminals --
   use "akinsho/toggleterm.nvim" -- persist and toggle multiple terminals during an editing session
@@ -187,11 +186,6 @@ return packer.startup(function(use)
   end
 end)
 
---
--- folke/trouble.nvim
--- nvim-bqf
--- nvim-pqf
---
 -- mfussenegger/nvim-dap
 --   Debug Adapter Protocol client implemetentation
 -- rcarriga/nvim-dap-ui
@@ -205,7 +199,6 @@ end)
 -- nvim-autopairs
 --   automatic closing of brackets
 --
---
 -- folke/which-key.nvim
 --   popup with possible key binds
 --
@@ -214,8 +207,6 @@ end)
 --   manages syntax colorscheme
 -- nvim-colorizer.lua
 --   highlight the colorcode text with the corresponding color
--- nvim-web-devicons
---   Icons fro use with some plugins
 -- better-escape.nvim
 -- lukas-reineke/indent-blankline.nvim
 --   Indentation guide to all lines
@@ -224,7 +215,5 @@ end)
 -- iamcco/markdown-preview.nvim
 -- folke/todo-comments.nvim
 
--- voldikss/vim-floaterm
---
 -- kdheepak/lazygit.nvim
 --   plugin for calling lazygit from within neovim (lazygit must be installed)
