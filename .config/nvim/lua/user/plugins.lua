@@ -121,7 +121,7 @@ return packer.startup(function(use)
 
   -- colorschemes --
   use "sainnhe/gruvbox-material"
-  use "folke/tokyonight.nvim"
+  -- use "folke/tokyonight.nvim"
 
   -- appearances --
   use "kyazdani42/nvim-web-devicons"
@@ -173,6 +173,8 @@ return packer.startup(function(use)
     "ahmedkhalf/project.nvim",
     config = function()
       require("project_nvim").setup {
+        exclude_dirs = { "~/.dotfiles/*" },
+        silent_chdir = false, -- verbose directory changing
       }
     end
   }
