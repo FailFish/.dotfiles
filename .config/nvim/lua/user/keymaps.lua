@@ -1,9 +1,9 @@
-local opts = { noremap = true, silent = true }
+local opts = { silent = true }
 
 local term_opts = { silent = true }
 
 -- Shorten function name
-local keymap = vim.api.nvim_set_keymap
+local keymap = vim.keymap.set
 -- nvim_set_keymap('n', ' <NL>', '', { nowait = true })
 -- is equivalent to: nmap <nowait> <Space><NL> <Nop>
 

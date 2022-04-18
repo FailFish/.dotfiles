@@ -1,23 +1,16 @@
-local map_tele = function(key, f, buffer)
+local map_tele = function(key, f)
 
   local mode = "n"
   local rhs = string.format('<cmd>lua require("telescope.builtin")["%s"]()<CR>', f)
 
-  local map_options = {
-    noremap = true,
-    silent = true,
-  }
+  local map_options = { silent = true }
 
-  if not buffer then
-    vim.api.nvim_set_keymap(mode, key, rhs, map_options)
-  else
-    vim.api.nvim_buf_set_keymap(0, mode, key, rhs, map_options)
-  end
+  vim.keymap.set(mode, key, rhs, map_options)
 end
 
-vim.api.nvim_set_keymap("c", "<c-r><c-r>", "<Plug>(TelescopeFuzzyCommandSearch)", { noremap = false, nowait = true })
-vim.api.nvim_set_keymap("n", "<space>fe", ":Telescope file_browser<CR>", { noremap = true })
-vim.api.nvim_set_keymap("n", "<space>fp", ":Telescope projects<CR>", { noremap = true })
+vim.keymap.set("c", "<c-r><c-r>", "<Plug>(TelescopeFuzzyCommandSearch)", { remap = true, nowait = true })
+vim.keymap.set("n", "<space>fe", "<cmd>Telescope file_browser<CR>")
+vim.keymap.set("n", "<space>fp", "<cmd>Telescope projects<CR>")
 
 -- Dotfiles
 -- map_tele("<leader>en", "edit_neovim")

@@ -19,8 +19,8 @@ gitsigns.setup {
 
 gitlinker.setup()
 
-local keymap = vim.api.nvim_set_keymap
-local opts = { noremap = true, silent = true }
+local keymap = vim.keymap.set
+local opts = { silent = true }
 
 neogit.setup {
   integrations = {
@@ -28,6 +28,6 @@ neogit.setup {
   },
 }
 
-keymap("n", "<space>Do", ":DiffviewOpen<CR>", opts)
-keymap("n", "<space>G", ":Neogit<CR>", opts)
-keymap("n", "<space>C", ":Neogit commit<CR>", opts)
+keymap("n", "<space>Do", "<cmd>DiffviewOpen<CR>", opts)
+keymap("n", "<space>G", "<cmd>Neogit<CR>", opts)
+keymap("n", "<space>C", "<cmd>Neogit commit<CR>", opts)

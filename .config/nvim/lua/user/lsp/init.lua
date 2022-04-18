@@ -15,53 +15,59 @@ end
 -- TODO: uapi/util functions and expose nmap and imap?
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
 -- <space>{_,f,q,l}{_,w,W}{object:reference, diagnostic, ...}
-local opts = { noremap=true, silent=true }
-vim.api.nvim_set_keymap("n", "<space>d", '<cmd>lua vim.diagnostic.open_float(0, { scope = "line" })<CR>', opts)
-vim.api.nvim_set_keymap("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
-vim.api.nvim_set_keymap("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
-vim.api.nvim_set_keymap("n", "<space>ld", "<cmd>lua vim.diagnostic.setloclist()<CR>", opts) -- current buffer diagnostic
-vim.api.nvim_set_keymap("n", "<space>qd", "<cmd>lua vim.diagnostic.setqflist()<CR>", opts) -- workspace(all opened buffer) diagnostic
-vim.api.nvim_set_keymap("n", "<space>fwd", '<cmd>lua require("telescope.builtin").diagnostics()<CR>', opts)
+local opts = { silent=true } -- remap = false in default
+vim.keymap.set("n", "<space>d", function ()
+  vim.diagnostic.open_float(0, { scope = "line" })
+end, opts)
+vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
+vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
+vim.keymap.set("n", "<space>ld", vim.diagnostic.setloclist, opts) -- current buffer diagnostic
+vim.keymap.set("n", "<space>qd", vim.diagnostic.setqflist, opts) -- workspace(all opened buffer) diagnostic
+
+vim.keymap.set("n", "<space>fwd", require("telescope.builtin").diagnostics, opts)
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
-local on_attach = function(bufnr)
+local on_attach = function(_, bufnr)
+  local opts = { buffer = bufnr }
   -- Enable completion triggered by <c-x><c-o>
   vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
   -- Mappings.
   -- See `:help vim.lsp.*` for documentation on any of the below functions
   -- JUMP commands
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>gt", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts)
+  vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+  vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
+  vim.keymap.set("n", "<space>gt", vim.lsp.buf.type_definition, opts)
 
   -- LIST commands (uses qflist)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>qs", "<cmd>lua vim.lsp.buf.document_symbol()<CR>", opts) -- list all symbols in the current buffer
+  vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
+  vim.keymap.set("n", "<space>gi", vim.lsp.buf.implementation, opts)
+  vim.keymap.set("n", "<space>qs", vim.lsp.buf.document_symbol, opts) -- list all symbols in the current buffer
   -- LIST command (uses telescope)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>fi", [[<cmd>lua require("telescope.builtin").lsp_implemenetations()<CR>]], opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>fs", [[<cmd>lua require("telescope.builtin").lsp_document_symbols()<CR>]], opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>fws", [[<cmd>lua require("telescope.builtin").lsp_workspace_symbols()<CR>]], opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>fWs", [[<cmd>lua require("telescope.builtin").lsp_dynamic_workspace_symbols()<CR>]], opts)
+  vim.keymap.set("n", "<space>fi", require("telescope.builtin").lsp_implementations, opts)
+  vim.keymap.set("n", "<space>fs", require("telescope.builtin").lsp_document_symbols, opts)
+  vim.keymap.set("n", "<space>fws", require("telescope.builtin").lsp_workspace_symbols, opts)
+  vim.keymap.set("n", "<space>fWs", require("telescope.builtin").lsp_dynamic_workspace_symbols, opts)
 
   -- DISPLAY commands (uses float menu)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>sh", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
-  -- vim.api.nvim_buf_set_keymap(bufnr, "i", "<C-h>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts) -- i_<C-S> for Isurround
+  vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+  vim.keymap.set("n", "<space>sh", vim.lsp.buf.signature_help, opts)
+  -- vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help, opts) -- i_<C-S> for Isurround
 
   -- ACTION commands
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
-  -- vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>ca", [[<cmd>lua require("telescope.builtin").lsp_code_action()<CR>]], opts)
-  vim.cmd [[ command! Format execute "lua vim.lsp.buf.formatting()" ]]
-  -- vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>lf", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+  vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, opts)
+  vim.keymap.set("n", "<space>ca", vim.lsp.buf.code_action, opts)
+  -- vim.keymap.set("n", "<space>ca", require("telescope.builtin").lsp_code_action, opts)
+  vim.api.nvim_create_user_command("Format", vim.lsp.buf.formatting, {})
+  -- vim.keymap.set("n", "<space>lf", vim.lsp.buf.formatting, opts)
 
   -- TODO: do i need this? what is this for project.nvim user?
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>wa", "<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>", opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>wr", "<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>", opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>wl", "<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>", opts)
+  vim.keymap.set("n", "<space>wa", vim.lsp.buf.add_workspace_folder, opts)
+  vim.keymap.set("n", "<space>wr", vim.lsp.buf.remove_workspace_folder, opts)
+  vim.keymap.set("n", "<space>wl", function ()
+    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+  end, opts)
 end
 
 -- Add addtional capabilities supported by nvim-cmp
@@ -82,7 +88,7 @@ local servers = {
   bashls = true,
   pyright = true,
   vimls = true,
-  sumneko_lua = {
+  sumneko_lua = { -- look folke/lua-lsp.lua https://gist.github.com/folke/fe5d28423ea5380929c3f7ce674c41d8
     settings = {
       Lua = {
         runtime = {
@@ -98,7 +104,10 @@ local servers = {
         workspace = {
           -- Make the server aware of Neovim runtime files
           library = vim.api.nvim_get_runtime_file("", true),
+          maxPrelaod = 2000,
+          preloadFileSize = 50000,
         },
+        completion = { callSnippet = "Both" },
         -- Do not send telemetry data containing a randomized but unique identifier
         telemetry = {
           enable = false,
@@ -165,6 +174,7 @@ end
 for server, config in pairs(servers) do
   setup_server(server, config)
 end
+
 
 return {
   on_attach = on_attach,
