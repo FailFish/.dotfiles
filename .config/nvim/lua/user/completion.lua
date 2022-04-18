@@ -23,10 +23,10 @@ cmp.setup({
 
 
 
-  mapping = {
-    ["<C-d>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
-    ["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
-    ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
+  mapping = cmp.mapping.preset.insert({
+    ["<C-d>"] = cmp.mapping.scroll_docs(-4),
+    ["<C-f>"] = cmp.mapping.scroll_docs(4),
+    ["<C-Space>"] = cmp.mapping.complete(),
     ["<C-e>"] = cmp.mapping({
       i = cmp.mapping.abort(),
       c = cmp.mapping.close(),
@@ -36,7 +36,7 @@ cmp.setup({
       select = true,
     }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
     ["<tab>"] = cmp.config.disable,
-  },
+  }),
 
 
 
@@ -104,6 +104,7 @@ cmp.setup.filetype("gitcommit", {
 
 -- Use buffer source for `/` (if you enabled `native_menu`, this won"t work anymore).
 cmp.setup.cmdline("/", {
+  mapping = cmp.mapping.preset.cmdline(),
   sources = ({
     --     { name = "nvim_lsp_document_symbol" },
     -- }, {
@@ -113,6 +114,7 @@ cmp.setup.cmdline("/", {
 
 -- Use cmdline & path source for ":" (if you enabled `native_menu`, this won"t work anymore).
 cmp.setup.cmdline(":", {
+  mapping = cmp.mapping.preset.cmdline(),
   sources = cmp.config.sources({
     { name = "path" }
   }, {
