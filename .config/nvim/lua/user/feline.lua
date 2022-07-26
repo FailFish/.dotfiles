@@ -4,7 +4,7 @@ end
 
 local background = vim.opt.background:get()
 local configuration = vim.fn['gruvbox_material#get_configuration']()
-local palette = vim.fn['gruvbox_material#get_palette'](background, configuration.palette)
+local palette = vim.fn['gruvbox_material#get_palette'](configuration.background, configuration.foreground, configuration.colors_override)
 
 local colors = {
   bg = palette.bg_statusline1[1],
