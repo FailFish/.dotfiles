@@ -126,9 +126,11 @@ done
 if ! command -v paru &> /dev/null
 then
     echo "Installing paru ..."
+    cd $HOME
     git clone https://aur.archlinux.org/paru.git
     cd paru
-    mkepkg -si
+    makepkg -si
+    cd $HOME/.dotfiles
 fi
 
 echo
@@ -153,7 +155,7 @@ AURS_HOST=(
 )
 for AUR in "${AURS[@]}"; do
     echo "INSTALLING: ${AUR}"
-    sudo paru -S "$AUR" --noconfirm --needed
+    paru -S "$AUR" --noconfirm --needed
 done
 
 ln -sf $(pwd)/.bashrc $HOME/.bashrc
@@ -163,10 +165,10 @@ ln -sf $(pwd)/.inputrc $HOME/.inputrc
 ln -sf $(pwd)/.xinitrc $HOME/.xinitrc
 
 mkdir $HOME/.config
-ln -s $(pwd)/.config/alacritty $HOME/.config/alacritty
-ln -s $(pwd)/.config/bspwm $HOME/.config/bspwm
-ln -s $(pwd)/.config/rofi $HOME/.config/rofi
-ln -s $(pwd)/.config/sxhkd $HOME/.config/sxhkd
-ln -s $(pwd)/.config/tint2 $HOME/.config/tint2
-ln -s $(pwd)/.config/zathura $HOME/.config/zathura
-ln -s $(pwd)/.config/nvim $HOME/.config/nvim
+ln -sf $(pwd)/.config/alacritty $HOME/.config/alacritty
+ln -sf $(pwd)/.config/bspwm $HOME/.config/bspwm
+ln -sf $(pwd)/.config/rofi $HOME/.config/rofi
+ln -sf $(pwd)/.config/sxhkd $HOME/.config/sxhkd
+ln -sf $(pwd)/.config/tint2 $HOME/.config/tint2
+ln -sf $(pwd)/.config/zathura $HOME/.config/zathura
+ln -sf $(pwd)/.config/nvim $HOME/.config/nvim
