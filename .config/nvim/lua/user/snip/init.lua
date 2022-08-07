@@ -19,11 +19,11 @@ ls.config.set_config {
         virt_text = { { "<-", "Error" } },
       },
     },
-    [types.insertNode] = {
-      active = {
-        virt_text = {{"[I]", "Blue"}}
-      }
-    }
+    -- [types.insertNode] = {
+    --   active = {
+    --     virt_text = {{"[I]", "Blue"}}
+    --   }
+    -- }
   },
 }
 
@@ -33,17 +33,16 @@ require("luasnip/loaders/from_vscode").lazy_load()
 -- vim.keymap is added 0.7 version --
 -- equivalent of vim.cmd line right above.
 
--- <c-k> is my expansion key
 -- this will expand the current item or jump to the next item within the snippet.
-vim.keymap.set({ "i", "s" }, "<c-k>", function()
+-- Snippet Node Jump Forward
+vim.keymap.set({ "i", "s" }, "<c-j>", function()
   if ls.expand_or_jumpable() then
     ls.expand_or_jump()
   end
 end, { silent = true })
 
--- -- <c-j> is my jump backwards key.
--- -- this always moves to the previous item within the snippet
-vim.keymap.set({ "i", "s" }, "<c-j>", function()
+-- Snippet Node Jump Backward
+vim.keymap.set({ "i", "s" }, "<c-k>", function()
   if ls.jumpable(-1) then
     ls.jump(-1)
   end
