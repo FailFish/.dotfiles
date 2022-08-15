@@ -19,7 +19,8 @@ PKGS=(
     openssh
     wget
     curl
-    rust
+    rustup
+    rust-analyzer
     python
     python-pip
     gdb
@@ -78,6 +79,9 @@ PKGS=(
     fcitx5-im
     fcitx5-hangul
 
+    # synctex-zathura requirements
+    texlive-most
+    xdotool
 )
 
 PKGS_HOST=(

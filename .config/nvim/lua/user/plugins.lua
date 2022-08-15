@@ -179,6 +179,12 @@ return packer.startup(function(use)
     end
   }
 
+  use { "lervag/vimtex",
+    config = function ()
+      vim.api.nvim_set_var("vimtex_view_method", "zathura")
+    end
+  }
+
 
 
   -- Automatically set up your configuration after cloning packer.nvim
