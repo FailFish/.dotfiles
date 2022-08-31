@@ -81,7 +81,7 @@ vim.opt.completeopt = { "menuone", "noselect" }
 --     + ""
 --     - ""
 
-vim.o.shell = "/usr/bin/fish"
+-- vim.o.shell = "/usr/bin/fish"
 
 
 -- statusbar setup
