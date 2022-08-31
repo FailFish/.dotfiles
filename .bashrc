@@ -200,3 +200,9 @@ export VISUAL=vim
 if [ -f ~/.bashrc_local ]; then
 	source ~/.bashrc_local
 fi
+
+
+# press n instead of nnn, ctrl-g for cd & quit
+if [ -f /usr/share/nnn/quitcd/quitcd.bash_zsh ]; then
+    source /usr/share/nnn/quitcd/quitcd.bash_zsh
+fi
