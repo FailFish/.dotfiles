@@ -181,7 +181,7 @@ return packer.startup(function(use)
 
   use { "lervag/vimtex",
     config = function ()
-      vim.api.nvim_set_var("vimtex_view_method", "zathura")
+      require("user/latex")
     end
   }
 
