@@ -64,13 +64,7 @@ return packer.startup(function(use)
 
   use "simrat39/symbols-outline.nvim" -- Similar to Vista.vim, listing Tags
 
-  use {
-    "jose-elias-alvarez/null-ls.nvim",
-    config = function ()
-      require("null-ls").setup({ sources = require("user/lsp/null_ls") })
-    end,
-    requires = { "nvim-lua/plenary.nvim" },
-  }
+  use "jose-elias-alvarez/null-ls.nvim"
   -- use "rmagatti/goto-preview" -- preview function definitions in popups
 
   use {

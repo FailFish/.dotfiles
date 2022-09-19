@@ -3,37 +3,46 @@ if not status_ok then
   return
 end
 
+local null_fmt = null_ls.builtins.formatting
+local null_diag = null_ls.builtins.diagnostics
+local null_act = null_ls.builtins.code_actions
 local sources = {
-
   -- lua
-  null_ls.builtins.formatting.stylua,
+  null_fmt.stylua,
 
   -- shell
-  null_ls.builtins.formatting.shfmt,
-  null_ls.builtins.diagnostics.shellcheck,
+  null_fmt.shfmt,
+  null_diag.shellcheck,
 
   -- python
-  null_ls.builtins.formatting.black,
-  null_ls.builtins.diagnostics.flake8,
+  null_fmt.black,
+  null_fmt.isort,
+  null_diag.flake8,
 
   -- english writing (tex, markdown)
-  -- null_ls.builtins.code_actions.proselint,
-  -- null_ls.builtins.diagnostics.proselint,
-  null_ls.builtins.diagnostics.chktex,
-  null_ls.builtins.formatting.latexindent,
+  -- null_act.proselint,
+  -- null_diag.proselint,
+  null_diag.chktex,
+  null_fmt.latexindent,
 
   -- etc
-  null_ls.builtins.formatting.trim_newlines.with({
+  null_fmt.trim_newlines.with({
     disabled_filetypes = { "rust" }, -- use rustfmt
   }),
-  null_ls.builtins.formatting.trim_whitespace.with({
+  null_fmt.trim_whitespace.with({
     disabled_filetypes = { "rust" }, -- use rustfmt
   }),
-  null_ls.builtins.formatting.prettier.with({
+  null_fmt.prettier.with({
     filetypes = { "html", "css", "yaml", "markdown", "json" },
   }),
 }
---
--- null_ls.setup({ sources = sources })
 
-return sources
+local M = {}
+M.setup = function (on_attach)
+  null_ls.setup({
+    sources = sources,
+    on_attach = on_attach,
+  })
+end
+
+return M

@@ -8,8 +8,6 @@ if not ok2 then
   return
 end
 
--- require("user.lsp.lsp-installer")
--- require("user.lsp.handlers").setup()
 
 -- Mappings.
 -- TODO: uapi/util functions and expose nmap and imap?
@@ -174,6 +172,9 @@ end
 for server, config in pairs(servers) do
   setup_server(server, config)
 end
+
+-- null-ls setup
+require("user.lsp.null_ls").setup(on_attach)
 
 
 return {
