@@ -10,7 +10,7 @@ tsconfig.setup {
     "cpp",
     "cmake",
     "fish",
-    "latex",
+    -- "latex",
     "llvm",
     "lua",
     "make",

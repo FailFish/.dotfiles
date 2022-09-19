@@ -28,8 +28,12 @@ vim.keymap.set("n", "<space>fwd", require("telescope.builtin").diagnostics, opts
 -- after the language server attaches to the current buffer
 local on_attach = function(_, bufnr)
   local opts = { buffer = bufnr }
-  -- Enable completion triggered by <c-x><c-o>
-  vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
+  -- if vimtex has set omnifunc for completion, leave it at that
+  -- It might be better to overwrite it via 'after/ftplugins/latex.lua'
+  if vim.api.nvim_buf_get_option(bufnr, "omnifunc") == "" then
+    -- This makes i_<c-x><c-o> also trigger completion provided lsp
+    vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
+  end
 
   -- Mappings.
   -- See `:help vim.lsp.*` for documentation on any of the below functions
@@ -86,6 +90,7 @@ local servers = {
   bashls = true,
   pyright = true,
   vimls = true,
+  texlab = true,
   sumneko_lua = { -- look folke/lua-lsp.lua https://gist.github.com/folke/fe5d28423ea5380929c3f7ce674c41d8
     settings = {
       Lua = {

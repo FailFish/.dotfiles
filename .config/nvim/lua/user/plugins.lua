@@ -182,7 +182,7 @@ return packer.startup(function(use)
 
   use { "lervag/vimtex",
     config = function ()
-      require("user/latex")
+      require("user.latex")
     end
   }
 

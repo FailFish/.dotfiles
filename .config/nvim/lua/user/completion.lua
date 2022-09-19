@@ -58,6 +58,7 @@ cmp.setup({
         nvim_lua = "[API]",
         path = "[Path]",
         luasnip = "[Snip]",
+        omni = "[Omni]",
         -- tn = "[T9]",
       },
     }),
