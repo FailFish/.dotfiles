@@ -1,4 +1,5 @@
-if not pcall(require, "feline") then
+local status_ok, feline = pcall(require, "feline")
+if not status_ok then
   return
 end
 
@@ -255,8 +256,7 @@ local components = {
   },
 }
 
--- require"feline".setup {}
-require"feline".setup {
+feline.setup {
   theme = { bg = colors.bg, fg = colors.fg },
   components = components,
   vi_mode_colors = vi_mode_colors,

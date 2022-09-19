@@ -63,8 +63,15 @@ return packer.startup(function(use)
   use "nvim-lua/lsp-status.nvim" -- statusline components from LSP
 
   use "simrat39/symbols-outline.nvim" -- Similar to Vista.vim, listing Tags
+
+  use {
+    "jose-elias-alvarez/null-ls.nvim",
+    config = function ()
+      require("null-ls").setup({ sources = require("user/lsp/null_ls") })
+    end,
+    requires = { "nvim-lua/plenary.nvim" },
+  }
   -- use "rmagatti/goto-preview" -- preview function definitions in popups
-  -- use "jose-elias-alvarez/null-ls.nvim"
 
   use {
     "ray-x/lsp_signature.nvim",
