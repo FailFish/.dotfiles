@@ -137,6 +137,7 @@ local servers = {
       "--header-insertion=iwyu",
       "--completion-style=detailed",
       "--malloc-trim",
+      "--offset-encoding=utf-16",
       -- "-j=5",
     },
     -- Required for lsp-status

@@ -66,6 +66,11 @@ keymap("t", "<C-j>", "<C-\\><C-N><C-w>j", term_opts)
 keymap("t", "<C-k>", "<C-\\><C-N><C-w>k", term_opts)
 keymap("t", "<C-l>", "<C-\\><C-N><C-w>l", term_opts)
 
+keymap("n", "<CR>", function ()
+  return vim.v.hlsearch == 1 and ":nohl<CR>" or "<CR>"
+end, { expr = true, silent = true, desc = "reset highlights" })
 
 -- after you search the world, enter will clear the highlights
-vim.cmd [[nnoremap <expr> <CR> {-> v:hlsearch ? ":nohl\<CR>" : "\<CR>"}() ]]
+-- vim.cmd [[nnoremap <expr> <CR> {-> v:hlsearch ? ":nohl\<CR>" : "\<CR>"}() ]]
+
+

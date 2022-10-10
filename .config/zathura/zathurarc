@@ -20,9 +20,9 @@ set index-fg                    "#ebdbb2" # fg
 set index-active-bg             "#83a598" # bright:blue
 set index-active-fg             "#504945" # bg2
 
-# set inputbar-bg                 "#282828" # bg this doesn't work
-# set inputbar-fg                 "#ebdbb2" # fg
-set inputbar-fg                 "#3c3836" # fg
+set inputbar-bg                 "#282828" # bg this doesn't work
+set inputbar-fg                 "#ebdbb2" # fg
+# set inputbar-fg                 "#3c3836" # fg
 
 set statusbar-bg                "#504945" # bg2
 set statusbar-fg                "#ebdbb2" # fg
