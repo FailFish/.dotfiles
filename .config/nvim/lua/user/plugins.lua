@@ -62,7 +62,12 @@ return packer.startup(function(use)
   use "williamboman/nvim-lsp-installer"
   use "nvim-lua/lsp-status.nvim" -- statusline components from LSP
 
-  use "simrat39/symbols-outline.nvim" -- Similar to Vista.vim, listing Tags
+  use {
+    "simrat39/symbols-outline.nvim",
+    config = function ()
+      require("symbols-outline").setup {}
+    end,
+  } -- Similar to Vista.vim, listing Tagst/hover
 
   use "jose-elias-alvarez/null-ls.nvim"
   -- use "rmagatti/goto-preview" -- preview function definitions in popups
