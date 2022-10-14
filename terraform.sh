@@ -34,7 +34,6 @@ PKGS=(
     tldr
     tree
     bash-completion
-    fish
     fzf
     ripgrep
     fd
@@ -46,6 +45,11 @@ PKGS=(
     inetutils
     zip
     unzip
+    zoxide
+    broot
+    git-delta
+    sd
+    tokei
 
     # GUI
     xorg
