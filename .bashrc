@@ -5,6 +5,7 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
+# Commands
 colors() {
 	local fgc bgc vals seq0
 
@@ -71,6 +72,102 @@ clipb ()
 	fi
 }
 
+# Theme
+# Credit to https://github.com/sapegin/dotfiles
+
+RED="$(tput setaf 1)"
+GREEN="$(tput setaf 2)"
+YELLOW="$(tput setaf 3)"
+BLUE="$(tput setaf 4)"
+MAGENTA="$(tput setaf 5)"
+CYAN="$(tput setaf 6)"
+WHITE="$(tput setaf 7)"
+GRAY="$(tput setaf 8)"
+BOLD="$(tput bold)"
+UNDERLINE="$(tput sgr 0 1)"
+INVERT="$(tput sgr 1 0)"
+NOCOLOR="$(tput sgr0)"
+
+
+# set variable identifying the chroot you work in (can be used in the prompt below)
+if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
+  debian_chroot=$(cat /etc/debian_chroot) # "${debian_chroot:+($debian_chroot)}"
+fi
+
+# User color
+case $(id -u) in
+  0) user_color="$RED" ;;  # root
+  *) user_color="$YELLOW" ;;
+esac
+
+# Symbols
+prompt_symbol="❯"
+
+function prompt_command() {
+  # Local or SSH session?
+  local remote=
+  [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ] && remote=1
+
+  # Only show username if not default
+  local user_prompt=
+  [ "$USER" != "$local_username" ] && user_prompt="$user_color$USER$NOCOLOR"
+
+  # Show hostname inside SSH session
+  local host_prompt=
+  [ -n "$remote" ] && host_prompt="@$YELLOW$HOSTNAME$NOCOLOR"
+
+  # Show delimiter if user or host visible
+  local login_delimiter=
+  [ -n "$user_prompt" ] || [ -n "$host_prompt" ] && login_delimiter=":"
+
+  # # Git branch name and work tree status (only when we are inside Git working tree)
+  # local git_prompt=
+  # if [[ "true" = "$(git rev-parse --is-inside-work-tree 2>/dev/null)" ]]; then
+  #   # Branch name
+  #   local branch="$(git symbolic-ref HEAD 2>/dev/null)"
+  #   branch="${branch##refs/heads/}"
+  #
+  # # Working tree status (red when dirty)
+  # local dirty=
+  # # Modified files
+  # git diff --no-ext-diff --quiet --exit-code --ignore-submodules 2>/dev/null || dirty=1
+  # # Untracked files
+  # [ -z "$dirty" ] && test -n "$(git status --porcelain)" && dirty=1
+  #
+  # # Format Git info
+  # if [ -n "$dirty" ]; then
+  #   git_prompt=" $RED$prompt_dirty_symbol$branch$NOCOLOR"
+  # else
+  #   git_prompt=" $GREEN$prompt_clean_symbol$branch$NOCOLOR"
+  # fi
+  # fi
+
+  # Virtualenv
+  # local venv_prompt=
+  # if [ -n "$VIRTUAL_ENV" ]; then
+  #   venv_prompt=" $BLUE$prompt_venv_symbol$(basename $VIRTUAL_ENV)$NOCOLOR"
+  # fi
+
+  # Format prompt
+  first_line="$user_prompt$host_prompt$login_delimiter$BOLD$CYAN\w$NOCOLOR"
+  # Text (commands) inside \[...\] does not impact line length calculation which fixes stange bug when looking through the history
+  # $? is a status of last command, should be processed every time prompt prints
+  second_line="\`if [ \$? = 0 ]; then echo \[\$GREEN\]; else echo \[\$RED\]; fi\`\$prompt_symbol\[\$NOCOLOR\] "
+  PS1="\n$first_line\n$second_line"
+
+  # Multiline command
+  PS2="\[$CYAN\]$prompt_symbol\[$NOCOLOR\] "
+
+  # Terminal title
+  local title="$(basename "$PWD")"
+  [ -n "$remote" ] && title="$title \xE2\x80\x94 $HOSTNAME"
+  echo -ne "\033]0;$title"; echo -ne "\007"
+}
+
+PROMPT_COMMAND=prompt_command
+
+# ETC
+
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
 HISTCONTROL=ignoreboth
@@ -92,48 +189,6 @@ shopt -s checkwinsize
 
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
-
-# set variable identifying the chroot you work in (used in the prompt below)
-if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
-    debian_chroot=$(cat /etc/debian_chroot)
-fi
-
-# set a fancy prompt (non-color, unless we know we "want" color)
-case "$TERM" in
-    xterm-color|*-256color) color_prompt=yes;;
-esac
-
-# uncomment for a colored prompt, if the terminal has the capability; turned
-# off by default to not distract the user: the focus in a terminal window
-# should be on the output of commands, not on the prompt
-#force_color_prompt=yes
-
-if [ -n "$force_color_prompt" ]; then
-    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
-	# We have color support; assume it's compliant with Ecma-48
-	# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
-	# a case would tend to support setf rather than setaf.)
-	color_prompt=yes
-    else
-	color_prompt=
-    fi
-fi
-
-if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
-else
-    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
-fi
-unset color_prompt force_color_prompt
-
-# If this is an xterm set the title to user@host:dir
-case "$TERM" in
-xterm*|rxvt*)
-    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
-    ;;
-*)
-    ;;
-esac
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
@@ -192,6 +247,21 @@ set -o vi
 # changing basic editor
 export EDITOR=vim
 export VISUAL=vim
+
+# Prepend $PATH without duplicates
+function _prepend_path() {
+	if ! $( echo "$PATH" | tr ":" "\n" | grep -qx "$1" ) ; then
+		PATH="$1:$PATH"
+	fi
+}
+
+# Construct $PATH
+# PATH='/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin'
+[ -d /usr/local/bin ] && _prepend_path "/usr/local/bin"
+[ -d ~/.local/bin ] && _prepend_path "$HOME/.local/bin"
+[ -d ~/.cargo/bin ] && _prepend_path "$HOME/.cargo/bin"
+# command -v brew >/dev/null 2>&1 && _prepend_path "$(brew --prefix coreutils)/libexec/gnubin"
+export PATH
 
 # added by fzf install script automatically
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
