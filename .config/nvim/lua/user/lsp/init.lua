@@ -67,7 +67,7 @@ local on_attach = function(client, bufnr)
   vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, bufopts)
   vim.keymap.set("n", "<space>ca", vim.lsp.buf.code_action, bufopts)
   -- vim.keymap.set("n", "<space>ca", require("telescope.builtin").lsp_code_action, opts)
-  vim.api.nvim_create_user_command("Format", function () vim.lsp.buf.formatting() end, {})
+  vim.api.nvim_create_user_command("Format", function () vim.lsp.buf.format({ async = true }) end, {})
   -- vim.keymap.set("n", "<space>lf", vim.lsp.buf.formatting, opts)
 
   -- TODO: do i need this? what is this for project.nvim user?
