@@ -84,7 +84,7 @@ end
 
 -- Add addtional capabilities supported by nvim-cmp
 local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = cmp_nvim_lsp.update_capabilities(capabilities)
+capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
 
 -- sumneko_lua runtime path setting
 local runtime_path = vim.split(package.path, ';')
