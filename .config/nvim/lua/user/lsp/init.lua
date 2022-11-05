@@ -152,8 +152,6 @@ local servers = {
   --   },
 }
 
-local lsp_installer = require("nvim-lsp-installer")
-
 local setup_server = function(server, config)
   if not config then
     return
@@ -161,13 +159,6 @@ local setup_server = function(server, config)
 
   if type(config) ~= "table" then
     config = {}
-  end
-
-  -- retrieve Server object from lsp_installer
-  local ok, server_instance = lsp_installer.get_server(server)
-  if not ok then
-    vim.api.nvim_echo({{"error", "Error"}}, true, {})
-    return
   end
 
   -- merging server specific config with default config,
@@ -178,11 +169,9 @@ local setup_server = function(server, config)
     -- flags = {
     --   debounce_text_changes = nil,
     -- },
-    cmd_env = server_instance:get_default_options().cmd_env,
   }, config)
 
   lspconfig[server].setup(config)
-  -- server_instance:setup_lsp(config)
 end
 
 for server, config in pairs(servers) do
