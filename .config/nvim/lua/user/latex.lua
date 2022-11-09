@@ -9,5 +9,5 @@ end
 vim.keymap.set("n", "<localleader>ld", "<plug>(vimtex-doc-package)", { buffer = true }) -- avoid overriding w/ lsp.hover
 
 vim.g.vimtex_compiler_latexmk = {
-  build_dir = "build",
+  build_dir = 'build',
 }

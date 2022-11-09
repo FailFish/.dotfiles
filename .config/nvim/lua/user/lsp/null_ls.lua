@@ -20,10 +20,11 @@ local sources = {
   null_diag.flake8,
 
   -- english writing (tex, markdown)
-  -- null_act.proselint,
-  -- null_diag.proselint,
+  null_act.proselint,
+  null_diag.proselint,
+  null_diag.write_good,
   null_diag.chktex,
-  null_fmt.latexindent,
+  -- null_fmt.latexindent,
 
   -- etc
   null_fmt.trim_newlines.with({
