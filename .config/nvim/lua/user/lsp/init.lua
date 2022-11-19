@@ -102,6 +102,7 @@ local servers = {
   vimls = true,
   texlab = true,
   ltex = true,
+  nil_ls = true,
   sumneko_lua = { -- look folke/lua-lsp.lua https://gist.github.com/folke/fe5d28423ea5380929c3f7ce674c41d8
     settings = {
       Lua = {

@@ -19,6 +19,10 @@ local sources = {
   null_fmt.isort,
   null_diag.flake8,
 
+  -- nix
+  null_diag.statix,
+  null_act.statix,
+
   -- english writing (tex, markdown)
   null_act.proselint,
   null_diag.proselint,
