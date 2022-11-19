@@ -168,11 +168,11 @@ done
 
 ln -sf $(pwd)/.bashrc $HOME/.bashrc
 ln -sf $(pwd)/.vimrc $HOME/.vimrc
-ln -sf $(pwd)/.tmux.conf $HOME/.tmux.conf
 ln -sf $(pwd)/.inputrc $HOME/.inputrc
 ln -sf $(pwd)/.xinitrc $HOME/.xinitrc
 
 mkdir $HOME/.config
+ln -sf $(pwd)/.config/tmux $HOME/.config/tmux
 ln -sf $(pwd)/.config/alacritty $HOME/.config/alacritty
 ln -sf $(pwd)/.config/bspwm $HOME/.config/bspwm
 ln -sf $(pwd)/.config/rofi $HOME/.config/rofi
