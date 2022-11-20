@@ -91,11 +91,53 @@ local runtime_path = vim.split(package.path, ';')
 table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
 
+-- rust specific setting (rust-tools.nvim + project local)
+local rust_analyzer = nil
+local rust_analyzer_init = function (client)
+  local path = client.workspace_folders[1].name
+  if path == vim.fs.normalize("~/rust") then
+    client.config.settings["rust_analyzer"].checkOnSave.overrideCommand = { "python3", "x.py", "check", "--json-output" }
+  else
+    client.config.settings["rust_analyzer"].checkOnSave.overrideCommand = { "cargo", "check" }
+  end
+
+  client.notify("workspace/didChangeConfiguration", { settings = client.config.settings })
+end
+local has_rt, rt = pcall(require, "rust-tools")
+if has_rt then
+  -- local extension_path = vim.fn.expand "~/.vscode/extensions/sadge-vscode/extension/"
+  -- local codelldb_path = extension_path .. "adapter/codelldb"
+  -- local liblldb_path = extension_path .. "lldb/lib/liblldb.so"
+
+  rt.setup {
+    server = {
+      init = rust_analyzer_init,
+      capabilities = capabilities,
+      on_attach = on_attach,
+      settings = {
+        ['rust-analyzer'] = { checkOnSave = { overrideCommand = {} } } -- explicit call out
+      }
+    },
+    -- dap = {
+    --   adapter = require("rust-tools.dap").get_codelldb_adapter(codelldb_path, liblldb_path),
+    -- },
+    tools = {
+      inlay_hints = {
+        auto = false,
+      },
+    },
+  }
+else
+  rust_analyzer = {
+    init = rust_analyzer_init,
+  }
+end
+
 -- lspserver specific configuration
 -- :h lspconfig-server-configuration
 local servers = {
   -- server = config pair
-  rust_analyzer = true,
+  rust_analyzer = rust_analyzer,
   cmake = true,
   bashls = true,
   pyright = true,

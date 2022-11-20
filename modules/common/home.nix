@@ -171,6 +171,7 @@ in
       neorg
       vimtex
       vim-nix
+      rust-tools-nvim
 
     ];
   };
