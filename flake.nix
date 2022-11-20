@@ -83,11 +83,13 @@
 
           modules = [
             ./modules/common/home.nix
-            ({ _ }: {
+            ({ ... }: {
+              programs.nix-index.enable = true;
               home = {
                 username = "${user}";
                 homeDirectory = "/home/${user}";
               };
+              targets.genericLinux.enable = true;
             })
           ];
         };
