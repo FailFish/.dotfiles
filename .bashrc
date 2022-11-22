@@ -153,6 +153,10 @@ function prompt_command() {
   local login_delimiter=
   [ -n "$user_prompt" ] || [ -n "$host_prompt" ] && login_delimiter=":"
 
+  # Show delimiter if user or host visible
+  local nix_prompt=
+  [ -n "$IN_NIX_SHELL" ] && nix_prompt="[nix]"
+
   # # Git branch name and work tree status (only when we are inside Git working tree)
   # local git_prompt=
   # if [[ "true" = "$(git rev-parse --is-inside-work-tree 2>/dev/null)" ]]; then
@@ -182,7 +186,7 @@ function prompt_command() {
   # fi
 
   # Format prompt
-  first_line="$user_prompt$host_prompt$login_delimiter$BOLD$CYAN\w$NOCOLOR"
+  first_line="$user_prompt$host_prompt$login_delimiter$BOLD$CYAN\w$NOCOLOR$nix_prompt"
   # Text (commands) inside \[...\] does not impact line length calculation which fixes stange bug when looking through the history
   # $? is a status of last command, should be processed every time prompt prints
   second_line="\`if [ \$? = 0 ]; then echo \[\$GREEN\]; else echo \[\$RED\]; fi\`\$prompt_symbol\[\$NOCOLOR\] "
