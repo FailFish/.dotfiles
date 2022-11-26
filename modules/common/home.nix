@@ -99,7 +99,7 @@ in
       statix
 
       # general writting
-      # writegood
+      nodePackages.write-good
 
       # etc
       nodePackages.vim-language-server
@@ -117,14 +117,34 @@ in
       popup-nvim
       impatient-nvim
 
+      # navigation
+      vim-matchup
+      # leap-nvim
+
       # editing
       comment-nvim
+      splitjoin-vim
+      vim-abolish
       vim-surround
+
+      # lsp
       nvim-lspconfig
       lsp-status-nvim
       symbols-outline-nvim
       null-ls-nvim
       lsp_signature-nvim
+      nvim-code-action-menu
+      clangd_extensions-nvim
+      rust-tools-nvim
+
+      # debug
+      # nvim-gdb
+      nvim-dap
+      nvim-dap-ui
+      nvim-dap-virtual-text
+      telescope-dap-nvim
+      nvim-dap-python
+      # one-small-step-for-vimkind # not supported
 
       # completion-related
       nvim-cmp
@@ -156,6 +176,7 @@ in
       git-messenger-vim
       committia-vim
       gitlinker-nvim
+      # lazygit-nvim
 
       # appearance
       gruvbox-material
@@ -171,8 +192,6 @@ in
       neorg
       vimtex
       vim-nix
-      rust-tools-nvim
-
     ];
   };
 
@@ -200,12 +219,13 @@ in
     ];
   };
 
-#   programs.firefox = {
-#     enable = true;
-#     extensions = with pkgs.nur.repos.rycee.firefox-addons; [
-#       https-everywhere
-#       privacy-badger
-#     ];
-#   };
+  # Issues: not supported in aarch64-darwin
+  # programs.firefox = {
+  #   enable = true;
+  #   extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+  #     https-everywhere
+  #     privacy-badger
+  #   ];
+  # };
 
 }

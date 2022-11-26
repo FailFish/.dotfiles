@@ -20,6 +20,7 @@ in {
       "skim"
       "vmware-fusion-tech-preview" # from cask-versions
       "zotero"
+      "firefox"
     ];
     masApps = {
       "Slack" = 803453959;
