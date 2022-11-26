@@ -3,11 +3,11 @@ if not status_ok then
   return
 end
 
-local actions = require "telescope.actions"
-local actions_layout = require "telescope.actions.layout"
-local sorters = require "telescope.sorters"
+local actions = require("telescope.actions")
+local actions_layout = require("telescope.actions.layout")
+local sorters = require("telescope.sorters")
 
-telescope.setup {
+telescope.setup({
   defaults = {
     mappings = {
       i = {
@@ -85,7 +85,6 @@ telescope.setup {
         -- quicklist integration
         ["<C-q>"] = actions.send_to_qflist + actions.open_qflist,
         ["<M-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
-
       },
     },
   },
@@ -104,14 +103,14 @@ telescope.setup {
       only_sort_text = true,
       layout_strategy = "vertical",
       sorter = sorters.get_fzy_sorter(),
-    }
+    },
   },
   extensions = {
     fzf = {
-      fuzzy = true,                    -- false will only do exact matching
-      override_generic_sorter = true,  -- override the generic sorter
-      override_file_sorter = true,     -- override the file sorter
-      case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
+      fuzzy = true, -- false will only do exact matching
+      override_generic_sorter = true, -- override the generic sorter
+      override_file_sorter = true, -- override the file sorter
+      case_mode = "smart_case", -- or "ignore_case" or "respect_case"
       -- the default case_mode is "smart_case"
     },
     file_browser = {
@@ -122,11 +121,11 @@ telescope.setup {
       winblend = 10,
     },
   },
-}
+})
 
 require("user.telescope.keymaps")
-require("telescope").load_extension "file_browser"
-require("telescope").load_extension "fzf"
-require("telescope").load_extension "projects"
-require("telescope").load_extension "dap"
+require("telescope").load_extension("file_browser")
+require("telescope").load_extension("fzf")
+require("telescope").load_extension("projects")
+require("telescope").load_extension("dap")
 -- require("telescope").load_extension "notify"

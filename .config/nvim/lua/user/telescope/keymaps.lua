@@ -1,5 +1,4 @@
 local map_tele = function(key, f)
-
   local mode = "n"
   local rhs = string.format('<cmd>lua require("telescope.builtin")["%s"]()<CR>', f)
 
@@ -8,7 +7,12 @@ local map_tele = function(key, f)
   vim.keymap.set(mode, key, rhs, map_options)
 end
 
-vim.keymap.set("c", "<c-r><c-r>", "<Plug>(TelescopeFuzzyCommandSearch)", { remap = true, nowait = true })
+vim.keymap.set(
+  "c",
+  "<c-r><c-r>",
+  "<Plug>(TelescopeFuzzyCommandSearch)",
+  { remap = true, nowait = true }
+)
 vim.keymap.set("n", "<space>fe", "<cmd>Telescope file_browser<CR>")
 vim.keymap.set("n", "<space>fp", "<cmd>Telescope projects<CR>")
 

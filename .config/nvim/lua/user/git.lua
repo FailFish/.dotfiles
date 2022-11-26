@@ -13,20 +13,20 @@ if not ok then
   return
 end
 
-gitsigns.setup {
+gitsigns.setup({
   numhl = true,
-}
+})
 
 gitlinker.setup()
 
 local keymap = vim.keymap.set
 local opts = { silent = true }
 
-neogit.setup {
+neogit.setup({
   integrations = {
     diffview = true,
   },
-}
+})
 
 keymap("n", "<space>Do", "<cmd>DiffviewOpen<CR>", opts)
 keymap("n", "<space>G", "<cmd>Neogit<CR>", opts)

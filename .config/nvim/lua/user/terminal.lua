@@ -3,7 +3,7 @@ if not ok then
   return
 end
 
-toggleterm.setup {
+toggleterm.setup({
   -- size can be a number or function which is passed the current terminal
   size = 20,
   -- size = function(term)
@@ -30,16 +30,16 @@ toggleterm.setup {
     -- border = 'single' | 'double' | 'shadow' | 'curved' | ... other options supported by win open
     winblend = 5,
   },
-}
+})
 
 function _G.set_terminal_keymaps()
   local opts = { buffer = 0 }
-  vim.keymap.set('t', '<esc>', [[<C-\><C-n>]], opts)
+  vim.keymap.set("t", "<esc>", [[<C-\><C-n>]], opts)
   -- vim.keymap.set('t', 'jk', [[<C-\><C-n>]], opts)
-  vim.keymap.set('t', '<C-h>', [[<C-\><C-n><C-W>h]], opts)
-  vim.keymap.set('t', '<C-j>', [[<C-\><C-n><C-W>j]], opts)
-  vim.keymap.set('t', '<C-k>', [[<C-\><C-n><C-W>k]], opts)
-  vim.keymap.set('t', '<C-l>', [[<C-\><C-n><C-W>l]], opts)
+  vim.keymap.set("t", "<C-h>", [[<C-\><C-n><C-W>h]], opts)
+  vim.keymap.set("t", "<C-j>", [[<C-\><C-n><C-W>j]], opts)
+  vim.keymap.set("t", "<C-k>", [[<C-\><C-n><C-W>k]], opts)
+  vim.keymap.set("t", "<C-l>", [[<C-\><C-n><C-W>l]], opts)
 end
 
-vim.cmd('autocmd! TermOpen term://* lua set_terminal_keymaps()')
+vim.cmd("autocmd! TermOpen term://* lua set_terminal_keymaps()")

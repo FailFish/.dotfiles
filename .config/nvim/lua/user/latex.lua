@@ -1,6 +1,6 @@
 vim.g.vimtex_view_forward_search_on_start = 0
 vim.g.vimtex_view_method = "zathura"
-if vim.fn.has("macunix") then
+if vim.fn.has("macunix") == 1 then
   vim.g.vimtex_view_method = "skim"
 end
 -- if vim.fn.executable("pplatex") == 1 then -- error handling
@@ -9,7 +9,5 @@ end
 vim.keymap.set("n", "<localleader>ld", "<plug>(vimtex-doc-package)", { buffer = true }) -- avoid overriding w/ lsp.hover
 
 vim.g.vimtex_compiler_latexmk = {
-  build_dir = 'build',
+  build_dir = "build",
 }
-vim.g.matchup_override_vimtex = 1
-vim.g.matchup_matchparen_deferred = 1

@@ -1,9 +1,9 @@
 -- vim.opt.nocompatible = true -- this feature is removed as it becomes default
 vim.opt.shortmess = vim.opt.shortmess
-    + "a"   -- compilation of multiple options :h shortmess
-    + "I"   -- remove vim intro
-    + "c"   -- remove ins-completion-menu msgs
-    - "S"   -- show search count msgs
+  + "a"   -- compilation of multiple options :h shortmess
+  + "I"   -- remove vim intro
+  + "c"   -- remove ins-completion-menu msgs
+  - "S"   -- show search count msgs
 
 vim.opt.number = true
 vim.opt.relativenumber = true
@@ -31,7 +31,7 @@ vim.opt.visualbell = true
 vim.opt.mouse = "a"                         -- enable mouse
 
 -- vim.opt.wildmenu = true                  -- nvim default
-vim.opt.wildmode = {"longest:full", "full"}
+vim.opt.wildmode = { "longest:full", "full" }
 
 -- vim.opt.autoread = true                  -- nvim default
 

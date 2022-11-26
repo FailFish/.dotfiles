@@ -1,7 +1,7 @@
-local ls = require "luasnip"
-local types = require "luasnip.util.types"
+local ls = require("luasnip")
+local types = require("luasnip.util.types")
 
-ls.config.set_config {
+ls.config.set_config({
   -- This tells LuaSnip to remember to keep around the last snippet.
   -- You can jump back into it even if you move outside of the selection
   -- history = true,
@@ -25,7 +25,7 @@ ls.config.set_config {
     --   }
     -- }
   },
-}
+})
 
 -- load vscode-type snippets
 require("luasnip/loaders/from_vscode").lazy_load()

@@ -7,7 +7,7 @@ local parser_install_dir = vim.fn.stdpath("data") .. "/treesitters"
 vim.fn.mkdir(parser_install_dir, "p")
 vim.opt.runtimepath:append(parser_install_dir)
 
-tsconfig.setup {
+tsconfig.setup({
   parser_install_dir = parser_install_dir,
   ensure_installed = {
     "bash",
@@ -35,4 +35,4 @@ tsconfig.setup {
     enable = true,
     disable = { "" },
   },
-}
+})

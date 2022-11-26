@@ -4,8 +4,12 @@ if not status_ok then
 end
 
 local background = vim.opt.background:get()
-local configuration = vim.fn['gruvbox_material#get_configuration']()
-local palette = vim.fn['gruvbox_material#get_palette'](configuration.background, configuration.foreground, configuration.colors_override)
+local configuration = vim.fn["gruvbox_material#get_configuration"]()
+local palette = vim.fn["gruvbox_material#get_palette"](
+  configuration.background,
+  configuration.foreground,
+  configuration.colors_override
+)
 
 local colors = {
   bg = palette.bg_statusline1[1],
@@ -33,7 +37,7 @@ local vi_mode_colors = {
   COMMAND = colors.green,
   SHELL = colors.green,
   TERM = colors.green,
-  NONE = colors.yellow
+  NONE = colors.yellow,
 }
 
 local function file_osinfo()
@@ -49,14 +53,14 @@ local function file_osinfo()
   return icon .. os
 end
 
-local lsp = require "feline.providers.lsp"
-local vi_mode_utils = require "feline.providers.vi_mode"
+local lsp = require("feline.providers.lsp")
+local vi_mode_utils = require("feline.providers.vi_mode")
 
 local comps = {
   vi_mode = {
     left = {
       provider = function()
-        return --[["  " ]] " " .. vi_mode_utils.get_vim_mode()
+        return  --[["  " ]]" " .. vi_mode_utils.get_vim_mode()
       end,
       hl = function()
         local val = {
@@ -66,7 +70,7 @@ local comps = {
         }
         return val
       end,
-      right_sep = " "
+      right_sep = " ",
     },
   },
   file = {
@@ -85,31 +89,31 @@ local comps = {
           -- file_modified_icon = "",
           -- file_modified_icon = "",
           -- file_modified_icon = "",
-        }
+        },
       },
       hl = {
         fg = colors.blue,
-        style = "bold"
-      }
+        style = "bold",
+      },
     },
     encoding = {
       provider = "file_encoding",
       left_sep = " ",
       hl = {
         fg = colors.violet,
-        style = "bold"
-      }
+        style = "bold",
+      },
     },
     type = {
-      provider = "file_type"
+      provider = "file_type",
     },
     os = {
       provider = file_osinfo,
       left_sep = " ",
       hl = {
         fg = colors.violet,
-        style = "bold"
-      }
+        style = "bold",
+      },
     },
     position = {
       provider = "position",
@@ -117,62 +121,72 @@ local comps = {
       hl = {
         fg = colors.cyan,
         -- style = "bold"
-      }
+      },
     },
   },
   left_end = {
-    provider = function() return "" end,
+    provider = function()
+      return ""
+    end,
     hl = {
       fg = colors.bg,
       bg = colors.blue,
-    }
+    },
   },
   line_percentage = {
     provider = "line_percentage",
     left_sep = " ",
     hl = {
-      style = "bold"
-    }
+      style = "bold",
+    },
   },
   scroll_bar = {
     provider = "scroll_bar",
     left_sep = " ",
     hl = {
       fg = colors.blue,
-      style = "bold"
-    }
+      style = "bold",
+    },
   },
   diagnos = {
     err = {
       provider = "diagnostic_errors",
       -- left_sep = " ",
-      enabled = function() return lsp.diagnostics_exist("Error") end,
+      enabled = function()
+        return lsp.diagnostics_exist("Error")
+      end,
       hl = {
-        fg = colors.red
-      }
+        fg = colors.red,
+      },
     },
     warn = {
       provider = "diagnostic_warnings",
       -- left_sep = " ",
-      enabled = function() return lsp.diagnostics_exist("Warn") end,
+      enabled = function()
+        return lsp.diagnostics_exist("Warn")
+      end,
       hl = {
-        fg = colors.yellow
-      }
+        fg = colors.yellow,
+      },
     },
     info = {
       provider = "diagnostic_info",
       -- left_sep = " ",
-      enabled = function() return lsp.diagnostics_exist("Info") end,
+      enabled = function()
+        return lsp.diagnostics_exist("Info")
+      end,
       hl = {
-        fg = colors.blue
-      }
+        fg = colors.blue,
+      },
     },
     hint = {
       provider = "diagnostic_hints", -- lsp.diagnostic_hints(),
       -- left_sep = " ",
-      enabled = function() return lsp.diagnostics_exist("Hint") end,
+      enabled = function()
+        return lsp.diagnostics_exist("Hint")
+      end,
       hl = {
-        fg = colors.cyan
+        fg = colors.cyan,
       },
       icon = "  ",
     },
@@ -185,9 +199,9 @@ local comps = {
       icon = "  ",
       -- icon = "慎",
       hl = {
-        fg = colors.yellow
-      }
-    }
+        fg = colors.yellow,
+      },
+    },
   },
   git = {
     branch = {
@@ -197,28 +211,28 @@ local comps = {
       left_sep = " ",
       hl = {
         fg = colors.violet,
-        style = "bold"
+        style = "bold",
       },
     },
     add = {
       provider = "git_diff_added",
       hl = {
-        fg = colors.green
-      }
+        fg = colors.green,
+      },
     },
     change = {
       provider = "git_diff_changed",
       hl = {
-        fg = colors.orange
-      }
+        fg = colors.orange,
+      },
     },
     remove = {
       provider = "git_diff_removed",
       hl = {
-        fg = colors.red
-      }
-    }
-  }
+        fg = colors.red,
+      },
+    },
+  },
 }
 
 local components = {
@@ -231,7 +245,7 @@ local components = {
       comps.git.change,
       comps.git.remove,
     },
-    { },
+    {},
     {
       comps.diagnos.err,
       comps.diagnos.warn,
@@ -249,14 +263,14 @@ local components = {
     {
       comps.file.info,
     },
-    { },
+    {},
     {
       comps.file.position,
     },
   },
 }
 
-feline.setup {
+feline.setup({
   theme = { bg = colors.bg, fg = colors.fg },
   components = components,
   vi_mode_colors = vi_mode_colors,
@@ -266,7 +280,7 @@ feline.setup {
       "^Neogit",
       "^help$",
     },
-    buftypes = {"terminal"},
-    bufnames = {}
-  }
-}
+    buftypes = { "terminal" },
+    bufnames = {},
+  },
+})

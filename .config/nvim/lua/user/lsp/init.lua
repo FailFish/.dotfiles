@@ -10,12 +10,12 @@ end
 
 -- filetype specific mappings
 local filetype_attach = setmetatable({
-  tex = function ()
+  tex = function()
     vim.bo.omnifunc = "vimtex#complete#omnifunc"
-  end
+  end,
 }, {
-  __index = function ()
-    return function () end
+  __index = function()
+    return function() end
   end,
 })
 
@@ -23,8 +23,8 @@ local filetype_attach = setmetatable({
 -- TODO: uapi/util functions and expose nmap and imap?
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
 -- <space>{_,f,q,l}{_,w,W}{object:reference, diagnostic, ...}
-local opts = { silent=true } -- remap = false in default
-vim.keymap.set("n", "<space>d", function ()
+local opts = { silent = true } -- remap = false in default
+vim.keymap.set("n", "<space>d", function()
   vim.diagnostic.open_float(0, { scope = "line" })
 end, vim.tbl_extend("force", { desc = "lsp: diagnostics in a current line" }, opts))
 vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
@@ -56,7 +56,12 @@ local on_attach = function(client, bufnr)
   vim.keymap.set("n", "<space>fi", require("telescope.builtin").lsp_implementations, bufopts)
   vim.keymap.set("n", "<space>fs", require("telescope.builtin").lsp_document_symbols, bufopts)
   vim.keymap.set("n", "<space>fws", require("telescope.builtin").lsp_workspace_symbols, bufopts)
-  vim.keymap.set("n", "<space>fWs", require("telescope.builtin").lsp_dynamic_workspace_symbols, bufopts)
+  vim.keymap.set(
+    "n",
+    "<space>fWs",
+    require("telescope.builtin").lsp_dynamic_workspace_symbols,
+    bufopts
+  )
 
   -- DISPLAY commands (uses float menu)
   vim.keymap.set("n", "K", vim.lsp.buf.hover, bufopts)
@@ -67,13 +72,15 @@ local on_attach = function(client, bufnr)
   vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, bufopts)
   vim.keymap.set("n", "<space>ca", vim.lsp.buf.code_action, bufopts)
   -- vim.keymap.set("n", "<space>ca", require("telescope.builtin").lsp_code_action, opts)
-  vim.api.nvim_create_user_command("Format", function () vim.lsp.buf.format({ async = true }) end, {})
+  vim.api.nvim_create_user_command("Format", function()
+    vim.lsp.buf.format({ async = true })
+  end, {})
   -- vim.keymap.set("n", "<space>lf", vim.lsp.buf.formatting, opts)
 
   -- TODO: do i need this? what is this for project.nvim user?
   vim.keymap.set("n", "<space>wa", vim.lsp.buf.add_workspace_folder, bufopts)
   vim.keymap.set("n", "<space>wr", vim.lsp.buf.remove_workspace_folder, bufopts)
-  vim.keymap.set("n", "<space>wl", function ()
+  vim.keymap.set("n", "<space>wl", function()
     print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
   end, vim.tbl_extend("force", { desc = "lsp: prompt a list of workspace folders" }, bufopts))
 
@@ -87,16 +94,17 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
 
 -- sumneko_lua runtime path setting
-local runtime_path = vim.split(package.path, ';')
+local runtime_path = vim.split(package.path, ";")
 table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
 
 -- rust specific setting (rust-tools.nvim + project local)
 local rust_analyzer = nil
-local rust_analyzer_init = function (client)
+local rust_analyzer_init = function(client)
   local path = client.workspace_folders[1].name
   if path == vim.fs.normalize("~/rust") then
-    client.config.settings["rust_analyzer"].checkOnSave.overrideCommand = { "python3", "x.py", "check", "--json-output" }
+    client.config.settings["rust_analyzer"].checkOnSave.overrideCommand =
+      { "python3", "x.py", "check", "--json-output" }
   else
     client.config.settings["rust_analyzer"].checkOnSave.overrideCommand = { "cargo", "check" }
   end
@@ -109,14 +117,14 @@ if has_rt then
   -- local codelldb_path = extension_path .. "adapter/codelldb"
   -- local liblldb_path = extension_path .. "lldb/lib/liblldb.so"
 
-  rt.setup {
+  rt.setup({
     server = {
       init = rust_analyzer_init,
       capabilities = capabilities,
       on_attach = on_attach,
       settings = {
-        ['rust-analyzer'] = { checkOnSave = { overrideCommand = {} } } -- explicit call out
-      }
+        ["rust-analyzer"] = { checkOnSave = { overrideCommand = {} } }, -- explicit call out
+      },
     },
     -- dap = {
     --   adapter = require("rust-tools.dap").get_codelldb_adapter(codelldb_path, liblldb_path),
@@ -126,7 +134,7 @@ if has_rt then
         auto = true,
       },
     },
-  }
+  })
 else
   rust_analyzer = {
     init = rust_analyzer_init,
@@ -150,13 +158,13 @@ local servers = {
       Lua = {
         runtime = {
           -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-          version = 'LuaJIT',
+          version = "LuaJIT",
           -- Setup your lua path
           path = runtime_path,
         },
         diagnostics = {
           -- Get the language server to recognize the `vim` global
-          globals = {'vim'},
+          globals = { "vim" },
         },
         workspace = {
           -- Make the server aware of Neovim runtime files
@@ -223,7 +231,6 @@ end
 
 -- null-ls setup
 require("user.lsp.null_ls").setup(on_attach)
-
 
 return {
   on_attach = on_attach,

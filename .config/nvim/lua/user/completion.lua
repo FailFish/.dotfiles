@@ -21,8 +21,6 @@ cmp.setup({
     end,
   },
 
-
-
   mapping = cmp.mapping.preset.insert({
     ["<C-d>"] = cmp.mapping.scroll_docs(-4),
     ["<C-f>"] = cmp.mapping.scroll_docs(4),
@@ -37,8 +35,6 @@ cmp.setup({
     }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
     ["<tab>"] = cmp.config.disable,
   }),
-
-
 
   sources = cmp.config.sources({
     { name = "nvim_lua" },
@@ -71,8 +67,8 @@ cmp.setup({
       cmp.config.compare.score,
       -- copied from luka-reineke/cmp-under-comparator
       function(entry1, entry2)
-        local _, entry1_under = entry1.completion_item.label:find "^_+"
-        local _, entry2_under = entry2.completion_item.label:find "^_+"
+        local _, entry1_under = entry1.completion_item.label:find("^_+")
+        local _, entry2_under = entry2.completion_item.label:find("^_+")
         entry1_under = entry1_under or 0
         entry2_under = entry2_under or 0
         if entry1_under > entry2_under then
@@ -100,25 +96,25 @@ cmp.setup.filetype("gitcommit", {
     { name = "cmp_git" }, -- You can specify the `cmp_git` source if you were installed it.
   }, {
     { name = "buffer" },
-  })
+  }),
 })
 
 -- Use buffer source for `/` (if you enabled `native_menu`, this won"t work anymore).
 cmp.setup.cmdline("/", {
   mapping = cmp.mapping.preset.cmdline(),
-  sources = ({
+  sources = {
     --     { name = "nvim_lsp_document_symbol" },
     -- }, {
     { name = "buffer" },
-  })
+  },
 })
 
 -- Use cmdline & path source for ":" (if you enabled `native_menu`, this won"t work anymore).
 cmp.setup.cmdline(":", {
   mapping = cmp.mapping.preset.cmdline(),
   sources = cmp.config.sources({
-    { name = "path" }
+    { name = "path" },
   }, {
-    { name = "cmdline" }
-  })
+    { name = "cmdline" },
+  }),
 })
