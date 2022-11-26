@@ -123,7 +123,7 @@ if has_rt then
     -- },
     tools = {
       inlay_hints = {
-        auto = false,
+        auto = true,
       },
     },
   }
