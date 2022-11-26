@@ -11,3 +11,5 @@ vim.keymap.set("n", "<localleader>ld", "<plug>(vimtex-doc-package)", { buffer = 
 vim.g.vimtex_compiler_latexmk = {
   build_dir = 'build',
 }
+vim.g.matchup_override_vimtex = 1
+vim.g.matchup_matchparen_deferred = 1

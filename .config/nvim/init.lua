@@ -32,4 +32,6 @@ require("project_nvim").setup {
   exclude_dirs = { "~/.dotfiles/*" },
   silent_chdir = false, -- verbose directory changing
 }
+vim.g.matchup_surround_enabled = 1
+-- vim.g.matchup_matchparen_enabled = 0
 require("user.latex")
