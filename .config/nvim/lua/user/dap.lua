@@ -23,26 +23,26 @@ dap.listeners.before.event_exited["dapui_config"] = function()
 end
 
 local opts = { noremap = true }
-keymap("n", "<F1>", dap.continue(), opts)
-keymap("n", "<F2>", dap.step_over(), opts)
-keymap("n", "<F3>", dap.step_into(), opts)
-keymap("n", "<F4>", dap.step_out(), opts)
-keymap("n", "<leader>db", dap.toggle_breakpoint(), opts)
+keymap("n", "<F1>", require("dap").continue, opts)
+keymap("n", "<F2>", require("dap").step_over, opts)
+keymap("n", "<F3>", require("dap").step_into, opts)
+keymap("n", "<F4>", require("dap").step_out, opts)
+keymap("n", "<leader>db", require("dap").toggle_breakpoint, opts)
 keymap("n", "<leader>dB", function()
-  dap.set_breakpoint(vim.fn.input("[DAP] condition: "))
+  require("dap").set_breakpoint(vim.fn.input("[DAP] condition: "))
 end, { noremap = true, desc = "conditional breakpoint" })
-keymap("n", "<leader>dr", dap.repl.toggle(), opts)
-keymap("n", "<leader>dl", dap.run_last(), opts)
--- keymap("n", "<leader>dL", dap.set_breakpoint(nil, nil, vim.fn.input('[DAP] Log point message: ')), opts)
+keymap("n", "<leader>dr", require("dap").repl.toggle, opts)
+keymap("n", "<leader>dl", require("dap").run_last, opts)
+-- keymap("n", "<leader>dL", require("dap").set_breakpoint(nil, nil, vim.fn.input('[DAP] Log point message: ')), opts)
 -- keymap("n", "<??>", require("dap.ui.widgets").hover(), opts)
 
 -- language-specific setting
 -- PYTHON(debugpy)
 dap_python.setup("python")
 dap_python.test_runner = "pytest"
-keymap("n", "<leader>dm", dap_python.test_method(), opts)
-keymap("n", "<leader>dc", dap_python.test_class(), opts)
-keymap("n", "<leader>ds", dap_python.debug_selection(), opts)
+keymap("n", "<leader>dm", require("dap-python").test_method, opts)
+keymap("n", "<leader>dc", require("dap-python").test_class, opts)
+keymap("n", "<leader>ds", require("dap-python").debug_selection, opts)
 
 -- LUA(osv)
 dap.adapters.nlua = function(callback, config) -- this `config` is `dap.configurations.<lang>`.
@@ -58,7 +58,7 @@ dap.configurations.lua = {
     port = 54321,
   },
 }
--- keymap("n", "<??>", require("osv").launch({ port = 54321 }), opts)
+-- keymap("n", "<??>", function() require("osv").launch({ port = 54321 }) end, opts)
 
 -- C, CPP, RUST(lldb)
 dap.adapters.lldb = {
