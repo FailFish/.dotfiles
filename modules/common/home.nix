@@ -4,6 +4,13 @@ let
   cfgdir = rootdir + "/.config";
 in
 {
+  nix = {
+    package = pkgs.nix; # this is not default in home-manager only
+    extraOptions = ''
+      experimental-features = nix-command flakes
+    '';
+  };
+
   home = {
     stateVersion = "22.05";
     packages = pkgs.callPackage ./packages.nix {};
