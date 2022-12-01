@@ -226,6 +226,11 @@ in
     ];
   };
 
+  programs.direnv = {
+    enable = true;
+    nix-direnv.enable = true;
+  };
+
   # Issues: not supported in aarch64-darwin
   # programs.firefox = {
   #   enable = true;
