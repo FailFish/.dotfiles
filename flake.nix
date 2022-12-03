@@ -84,6 +84,12 @@
           modules = [
             ./modules/common/home.nix
             ({ ... }: {
+              nix = {
+                package = pkgs.nix; # this is not default in home-manager only
+                extraOptions = ''
+                  experimental-features = nix-command flakes
+                '';
+              };
               programs.nix-index.enable = true;
               home = {
                 username = "${user}";
