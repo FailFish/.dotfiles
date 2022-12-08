@@ -19,7 +19,7 @@ in {
       # static-only = true; # show running apps only
     };
     finder = {
-      AppleShowAllExtensions = true; 
+      AppleShowAllExtensions = true;
     };
     NSGlobalDomain = {
       ApplePressAndHoldEnabled = false;
@@ -34,6 +34,22 @@ in {
       NSNavPanelExpandedStateForSaveMode = true;
       NSNavPanelExpandedStateForSaveMode2 = true;
     };
+  };
+  system.keyboard = {
+    enableKeyMapping = true;
+    remapCapsLockToEscape = true;
+    userKeyMapping =
+      let
+        rcmd_keycode = 30064771303;
+        f18_keycode = 30064771181;
+      in [
+        {
+          # f18: manually set as input source switcher via macOS
+          # remap right command to f18
+          HIDKeyboardModifierMappingSrc = rcmd_keycode;
+          HIDKeyboardModifierMappingDst = f18_keycode;
+        }
+      ];
   };
 
   # user-specific setting (for home-manager)
