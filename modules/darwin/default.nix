@@ -137,14 +137,14 @@ in {
     enable = true;
     package = pkgs.skhd;
     skhdConfig = let
-      baseMod = "alt";
+      baseMod = "cmd";
       moveMod = "shift + ${baseMod}";
       sizeMod = "ctrl + ${baseMod}";
     in ''
       # Apps
       # alacritty-yabai issue: https://github.com/koekeishiya/yabai/issues/1250
       ${baseMod} - return : open -na ${pkgs.alacritty}/Applications/Alacritty.app
-      ${baseMod} - b : open -n -a /Applications/Safari.app
+      ${baseMod} - b : open -n -a /Applications/Firefox.app
 
       # close the focused window
       ${baseMod} - x : yabai -m window --close
