@@ -25,6 +25,7 @@ in {
     masApps = {
       "Slack" = 803453959;
       "Mattermost" = 1614666244;
+      "Kakaotalk" = 869223134;
     };
     onActivation.cleanup = "zap";
   };
