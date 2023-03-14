@@ -34,6 +34,8 @@ nix --experimental-features "nix-command flakes" build ".#homeConfigurations.blu
 
 # updates
 home-manager switch --flake .#homeConfigurations.blurry
+# or
+home-manager switch --flake .#blurry
 ```
 
 ## NixOS
