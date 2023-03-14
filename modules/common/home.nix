@@ -97,6 +97,7 @@ in
       # nix
       nil
       statix
+      nixpkgs-fmt
 
       # general writting
       nodePackages.write-good
