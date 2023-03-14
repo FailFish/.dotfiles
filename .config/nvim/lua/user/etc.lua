@@ -1,5 +1,6 @@
 require("Comment").setup()
 require("symbols-outline").setup({})
+vim.keymap.set("n", "<space>st", ":SymbolsOutline<CR>", { desc = "SymbolTree", silent = true })
 require("lsp_signature").setup({})
 require("trouble").setup({
   auto_preview = false,

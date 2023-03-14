@@ -75,7 +75,8 @@ local on_attach = function(client, bufnr)
   vim.api.nvim_create_user_command("Format", function()
     vim.lsp.buf.format({ async = true })
   end, {})
-  -- vim.keymap.set("n", "<space>lf", vim.lsp.buf.formatting, opts)
+  vim.keymap.set("n", "<space>cf", function () vim.lsp.buf.formatting({async = true}) end, opts)
+  vim.keymap.set("v", "<space>cf", function () vim.lsp.buf.range_formatting({async = true}) end, opts)
 
   -- TODO: do i need this? what is this for project.nvim user?
   vim.keymap.set("n", "<space>wa", vim.lsp.buf.add_workspace_folder, bufopts)
