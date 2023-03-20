@@ -20,6 +20,7 @@ tsconfig.setup({
     "lua",
     "make",
     "nix",
+    "norg",
     "python",
     "rust",
     "zig",

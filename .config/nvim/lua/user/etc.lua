@@ -14,6 +14,18 @@ require("project_nvim").setup({
   silent_chdir = false, -- verbose directory changing
 })
 
+require("neorg").setup({
+  load = {
+    ["core.defaults"] = {},
+    ["core.norg.completion"] = {
+      config = {
+        engine = "nvim-cmp",
+      }
+    },
+    ["core.norg.concealer"] = {},
+  }
+})
+
 -- vim-matchup
 vim.g.matchup_surround_enabled = 1
 vim.g.matchup_override_vimtex = 1
