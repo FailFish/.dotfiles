@@ -10,12 +10,13 @@ with pkgs; [
   exa
   fd
   fzf
-  gcc
+  # gcc
   git
   glow
   htop
   jq
   lazygit
+  nix-template
   nnn
   openssh
   procs
