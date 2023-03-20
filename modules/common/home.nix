@@ -169,6 +169,7 @@ in
 
       # treesitter
       nvim-treesitter
+      nvim-treesitter-textobjects
 
       # git-related
       neogit
