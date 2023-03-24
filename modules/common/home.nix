@@ -170,6 +170,7 @@ in
       # treesitter
       nvim-treesitter
       nvim-treesitter-textobjects
+      nvim-treesitter-context
 
       # git-related
       neogit
