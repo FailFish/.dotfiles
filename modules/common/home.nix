@@ -190,11 +190,14 @@ in
       alpha-nvim
       # nnn-nvim
       project-nvim
+      twilight-nvim
+      zen-mode-nvim
 
       # etc
       neorg
       vimtex
       vim-nix
+      firenvim
     ];
   };
 
@@ -207,6 +210,8 @@ in
 
   programs.zathura.enable = true;
   xdg.configFile."zathura".source = cfgdir + "/zathura";
+
+  programs.sioyek.enable = true;
 
   programs.git = {
     enable = true;

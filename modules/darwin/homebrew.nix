@@ -21,6 +21,7 @@ in {
       "vmware-fusion-tech-preview" # from cask-versions
       "zotero"
       "firefox"
+      "google-chrome"
     ];
     masApps = {
       "Slack" = 803453959;
