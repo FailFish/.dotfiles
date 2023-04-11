@@ -162,7 +162,7 @@ local servers = {
       },
     },
   },
-  sumneko_lua = { -- look folke/lua-lsp.lua https://gist.github.com/folke/fe5d28423ea5380929c3f7ce674c41d8
+  lua_ls = { -- look folke/lua-lsp.lua https://gist.github.com/folke/fe5d28423ea5380929c3f7ce674c41d8
     settings = {
       Lua = {
         runtime = {
