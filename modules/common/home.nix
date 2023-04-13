@@ -130,7 +130,6 @@ in
 
       # lsp
       nvim-lspconfig
-      lsp-status-nvim
       symbols-outline-nvim
       null-ls-nvim
       lsp_signature-nvim
@@ -166,6 +165,7 @@ in
       telescope-nvim
       telescope-file-browser-nvim
       telescope-fzf-native-nvim
+      # cder-nvim
 
       # treesitter
       nvim-treesitter
@@ -189,7 +189,6 @@ in
       trouble-nvim
       alpha-nvim
       # nnn-nvim
-      project-nvim
       twilight-nvim
       zen-mode-nvim
 
@@ -202,10 +201,9 @@ in
   };
 
   # excluding nvim/plugin
-  xdg.configFile."nvim/init.lua".source = cfgdir + "/nvim/init.lua";
-  xdg.configFile."nvim/lua" = {
+  xdg.configFile."nvim" = {
     recursive = true;
-    source = cfgdir + "/nvim/lua";
+    source = cfgdir + "/nvim";
   };
 
   programs.zathura.enable = true;

@@ -9,11 +9,6 @@ require("trouble").setup({
 
 require("alpha").setup(require("alpha.themes.startify").config)
 
-require("project_nvim").setup({
-  exclude_dirs = { "~/.dotfiles/*" },
-  silent_chdir = false, -- verbose directory changing
-})
-
 require("neorg").setup({
   load = {
     ["core.defaults"] = {},
