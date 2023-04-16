@@ -71,7 +71,6 @@ return {
         "nvim-telescope/telescope-fzf-native.nvim",
         build = "make",
       },
-      "zane-/cder.nvim",
     },
     version = false, -- telescope did only one release, so use HEAD for now
     keys = {
@@ -292,7 +291,6 @@ return {
       telescope.setup(opts)
 
       telescope.load_extension("fzf")
-      telescope.load_extension("cder")
       -- telescope.load_extension "notify"
     end,
   },
@@ -316,6 +314,17 @@ return {
     },
     config = function()
       require("telescope").load_extension("dap")
+    end,
+  },
+  {
+    "zane-/cder.nvim",
+    cmd = "Telescope cder",
+    dependencies = "nvim-telescope/telescope.nvim",
+    keys = {
+      { "<leader>fc", "<cmd>Telescope cder<cr>", desc = "Fast CD" },
+    },
+    config = function()
+      require("telescope").load_extension("cder")
     end,
   },
 }
