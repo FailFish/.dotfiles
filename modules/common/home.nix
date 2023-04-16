@@ -28,22 +28,18 @@ in
 
   programs.tmux = {
     enable = true;
-    /*
-    plugins = with pkgs; [
-      tmuxPlugins.cpu
-      {
-        plugin = tmuxPlugins.resurrect;
-        extraConfig = "set -g @resurrect-strategy-nvim 'session'";
-      }
-      {
-        plugin = tmuxPlugins.continuum;
-        extraConfig = ''
-          set -g @continuum-restore 'on'
-          set -g @continuum-save-interval '60' # minutes
-        '';
-      }
-    ];
-    */
+    # BUG: https://github.com/nix-community/home-manager/issues/3555
+    # TODO: https://github.com/nix-community/home-manager/pull/3801
+    # extraConfig = builtins.readFile (cfgdir + "/tmux/tmux.conf");
+    # plugins = with pkgs.tmuxPlugins; [
+    #   cpu
+    #   prefix-highlight
+    #   tmux-fzf
+    #   yank
+    #   tmux-thumbs
+    #   resurrect
+    #   continuum
+    # ];
   };
   xdg.configFile."tmux".source = cfgdir + "/tmux";
 
@@ -112,7 +108,7 @@ in
     ];
 
 
-    plugins = with pkgs.vimPlugins; [
+    plugins = with pkgs.vimPlugins; if true then [ ] else [
       # dev
       plenary-nvim
       popup-nvim
@@ -203,8 +199,12 @@ in
   # excluding nvim/plugin
   xdg.configFile."nvim" = {
     recursive = true;
-    source = cfgdir + "/nvim";
+    source = cfgdir + "/nvim_lazy";
   };
+  # xdg.configFile."nvim" = {
+  #   recursive = true;
+  #   source = cfgdir + "/nvim";
+  # };
 
   programs.zathura.enable = true;
   xdg.configFile."zathura".source = cfgdir + "/zathura";
