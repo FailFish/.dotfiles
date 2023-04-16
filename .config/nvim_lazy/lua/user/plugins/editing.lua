@@ -25,7 +25,7 @@ return {
     "L3MON4D3/LuaSnip",
     build = (not jit.os:find("Windows"))
         and "echo -e 'NOTE: jsregexp is optional, so not a big deal if it fails to build\n'; make install_jsregexp"
-      or nil,
+        or nil,
     dependencies = {
       "rafamadriz/friendly-snippets",
       config = function()
@@ -33,44 +33,44 @@ return {
       end,
     },
     keys = {
-        {
-          "<c-j>",
-          function()
-            if require("luasnip").expand_or_jumpable() then
-              require("luasnip").expand_or_jump()
-            end
-          end,
-          mode = { "i", "s" },
-          desc = "LuaSnip: snippetNode jump forward",
-          silent = true,
-        },
-        {
-          "<c-k>",
-          function()
-            if require("luasnip").jumpable(-1) then
-              require("luasnip").jump(-1)
-            end
-          end,
-          mode = { "i", "s" },
-          desc = "LuaSnip: snippetNode jump backward",
-          silent = true,
-        },
-        {
-          "<c-l>",
-          function()
-            if require("luasnip").choice_active() then
-              require("luasnip").change_choice(1)
-            end
-          end,
-          mode = "i",
-          desc = "LuaSnip: change choices for the choiceNode",
-        },
-        -- {
-        --   "<leader><leader>s",
-        --   "<cmd>source ~/.config/nvim/after/plugin/luasnip.lua<CR>",
-        --   desc = "LuaSnip: Reload my snippets"
-        -- },
+      {
+        "<c-j>",
+        function()
+          if require("luasnip").expand_or_jumpable() then
+            require("luasnip").expand_or_jump()
+          end
+        end,
+        mode = { "i", "s" },
+        desc = "LuaSnip: snippetNode jump forward",
+        silent = true,
       },
+      {
+        "<c-k>",
+        function()
+          if require("luasnip").jumpable(-1) then
+            require("luasnip").jump(-1)
+          end
+        end,
+        mode = { "i", "s" },
+        desc = "LuaSnip: snippetNode jump backward",
+        silent = true,
+      },
+      {
+        "<c-l>",
+        function()
+          if require("luasnip").choice_active() then
+            require("luasnip").change_choice(1)
+          end
+        end,
+        mode = "i",
+        desc = "LuaSnip: change choices for the choiceNode",
+      },
+      -- {
+      --   "<leader><leader>s",
+      --   "<cmd>source ~/.config/nvim/after/plugin/luasnip.lua<CR>",
+      --   desc = "LuaSnip: Reload my snippets"
+      -- },
+    },
     opts = function()
       local types = require("luasnip.util.types")
       return {
@@ -91,6 +91,7 @@ return {
     "hrsh7th/nvim-cmp",
     version = false, -- last release is way too old
     event = { "InsertEnter", "CmdlineEnter" },
+
     dependencies = {
       "hrsh7th/cmp-buffer",
       "hrsh7th/cmp-cmdline",
@@ -98,9 +99,18 @@ return {
       "hrsh7th/cmp-nvim-lsp-document-symbol",
       "hrsh7th/cmp-nvim-lua",
       "hrsh7th/cmp-path",
-      "onsails/lspkind-nvim",
       "saadparwaiz1/cmp_luasnip",
+      "onsails/lspkind-nvim",
+      {
+        "zbirenbaum/copilot-cmp",
+        dependencies = "zbirenbaum/copilot.lua",
+        config = function(_, opts)
+          vim.api.nvim_set_hl(0, "CmpItemKindCopilot", { fg = "#6CC644" })
+          require("copilot_cmp").setup(opts)
+        end,
+      },
     },
+
     opts = function()
       local cmp = require("cmp")
       return {
@@ -123,19 +133,20 @@ return {
           ["<C-y>"] = cmp.mapping.confirm({
             behavior = cmp.ConfirmBehavior.Replace, -- default is Insert
             select = true,
-          }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+          }),                                       -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
           ["<tab>"] = cmp.config.disable,
         }),
         sources = cmp.config.sources({
           { name = "nvim_lua" },
           { name = "nvim_lsp" },
-          { name = "path" },
           { name = "luasnip" },
-          { name = "buffer", keyword_length = 5 },
+          { name = "copilot" },
+          { name = "path" },
+          { name = "buffer",  keyword_length = 5 },
         }),
         formatting = {
           format = require("lspkind").cmp_format({
-            with_text = true,
+            mode = "symbol_text",
             menu = {
               buffer = "[B]",
               nvim_lsp = "[LSP]",
@@ -143,8 +154,10 @@ return {
               path = "[Path]",
               luasnip = "[Snip]",
               omni = "[Omni]",
+              copilot = "[AI]",
               -- tn = "[T9]",
             },
+            symbol_map = { Copilot = "" },
           }),
         },
         sorting = {
@@ -178,7 +191,6 @@ return {
         },
       }
     end,
-
     config = function(_, opts)
       local cmp = require("cmp")
       cmp.setup(opts)
@@ -205,5 +217,15 @@ return {
         sources = cmp.config.sources({ { name = "path" } }, { { name = "cmdline" } }),
       })
     end,
+  },
+
+  {
+    "zbirenbaum/copilot.lua",
+    cmd = "Copilot",
+    -- build = ":Copilot auth",
+    opts = {
+      suggestion = { enabled = false },
+      panel = { enabled = false },
+    },
   },
 }
