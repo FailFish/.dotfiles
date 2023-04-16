@@ -61,29 +61,22 @@ return {
     "saecki/crates.nvim",
     event = { "BufRead Cargo.toml" },
     keys = {
-      { "<leader>ct", "<cmd>lua require(\"crates\").toggle()<cr>" },
-      -- { "<leader>cr", require("crates").reload() },
-      --
-      -- { "<leader>cv", require("crates").show_versions_popup() },
-      -- { "<leader>cf", require("crates").show_features_popup },
-      -- { "<leader>cd", require("crates").show_dependencies_popup },
-      --
-      -- { "<leader>cu", require("crates").update_crate },
-      -- { "<leader>cu", require("crates").update_crates },
-      -- { "<leader>ca", require("crates").update_all_crates },
-      -- { "<leader>cU", require("crates").upgrade_crate },
-      -- { "<leader>cU", require("crates").upgrade_crates },
-      -- { "<leader>cA", require("crates").upgrade_all_crates },
-      --
-      -- { "<leader>cH", require("crates").open_homepage },
-      -- { "<leader>cR", require("crates").open_repository },
-      -- { "<leader>cD", require("crates").open_documentation },
-      -- { "<leader>cC", require("crates").open_crates_io },
+      -- stylua: ignore start
+      { "<leader>ct", function() require("crates").toggle() end, desc = "Crates Toggle" },
+      { "<leader>cr", function() require("crates").reload() end , desc = "Crates Reload" },
+      { "<leader>cv", function() require("crates").show_versions_popup() end, desc = "Crates: Show Versions" },
+      { "<leader>cd", function() require("crates").show_dependencies_popup() end, desc = "Crates: Show Dependencies" },
+      { "<leader>cF", function() require("crates").show_features_popup() end, desc = "Crates: Show Features" },
+      { "<leader>cR", function() require("crates").open_repository() end, desc = "Crates: Open Repo"   },
+      { "<leader>cD", function() require("crates").open_documentation() end, desc = "Crates: Open Docs"   },
+      { "<leader>cC", function() require("crates").open_crates_io() end, desc = "Crates: Open crates.io"   },
+      -- Code Action: update/upgrade (single/multiple) crates
+      -- stylua: ignore end
     },
     opts = {
       null_ls = {
-        enable = true,
-        name = "Crates",
+        enabled = true,
+        name = "crates.nvim",
       },
     },
     config = function(_, opts)

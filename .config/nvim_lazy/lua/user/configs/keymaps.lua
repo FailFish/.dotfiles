@@ -56,8 +56,7 @@ function M.on_attach(client, bufnr)
   vim.api.nvim_create_user_command("Format", function()
     vim.lsp.buf.format({ async = true })
   end, {})
-  vim.keymap.set("n", "<space>cf", function () vim.lsp.buf.formatting({async = true}) end, opts("Format Document"))
-  vim.keymap.set("v", "<space>cf", function () vim.lsp.buf.range_formatting({async = true}) end, opts("Format Range"))
+  vim.keymap.set({"n", "v"}, "<space>cf", function () vim.lsp.buf.format({async = true}) end, opts("Format Document"))
 
   -- ACTION commands
   vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, opts("Rename Symbol"))
