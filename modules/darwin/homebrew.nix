@@ -22,6 +22,7 @@ in {
       "zotero"
       "firefox"
       "google-chrome"
+      "openvpn-connect"
     ];
     masApps = {
       "Slack" = 803453959;

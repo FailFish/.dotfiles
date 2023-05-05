@@ -104,6 +104,7 @@ M.servers = {
   vimls = {},
   texlab = {},
   ltex = {},
+  gopls = {},
   nil_ls = {
     settings = {
       ["nil"] = {

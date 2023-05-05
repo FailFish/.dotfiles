@@ -94,7 +94,7 @@ return {
         end
       end
 
-      vim.keymap.set("n", "K", show_documentation, { silent = true }) -- TODO: how about 'keys'?
+      vim.keymap.set("n", "K", show_documentation, { noremap = true, silent = true }) -- TODO: how about 'keys'?
 
       vim.api.nvim_create_autocmd("BufRead Cargo.toml", {
         group = vim.api.nvim_create_augroup("CmpSourceCargo", { clear = true }),
