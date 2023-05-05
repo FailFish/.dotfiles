@@ -41,6 +41,7 @@ return {
   },
   {
     "lervag/vimtex",
+    ft = { "tex" },
     keys = {
       -- avoid overriding w/ lsp.hover
       { "<localleader>ld", "<plug>(vimtex-doc-package)", buffer = true },
