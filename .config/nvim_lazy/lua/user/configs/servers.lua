@@ -52,6 +52,28 @@ M.setup = {
           { buffer = buffer, desc = "Code Action (Rust)" }
           )
         end,
+
+        settings = {
+          ["rust-analyzer"] = {
+            cargo = {
+              features = "all",
+            },
+            -- Add clippy lints for Rust.
+            check = {
+              features = "all",
+              command = "clippy",
+              extraArgs = { "--no-deps" },
+            },
+            procMacro = {
+              enable = true,
+              ignored = {
+                ["async-trait"] = { "async_trait" },
+                ["napi-derive"] = { "napi" },
+                ["async-recursion"] = { "async_recursion" },
+              },
+            },
+          },
+        },
       },
 
       tools = {
@@ -62,30 +84,6 @@ M.setup = {
 
       dap = {
         adapter = require("rust-tools.dap").get_codelldb_adapter(codelldb_path, liblldb_path),
-      },
-
-      settings = {
-        ["rust-analyzer"] = {
-          cargo = {
-            allFeatures = true,
-            loadOutDirsFromCheck = true,
-            runBuildScripts = true,
-          },
-          -- Add clippy lints for Rust.
-          checkOnSave = {
-            allFeatures = true,
-            command = "clippy",
-            extraArgs = { "--no-deps" },
-          },
-          procMacro = {
-            enable = true,
-            ignored = {
-              ["async-trait"] = { "async_trait" },
-              ["napi-derive"] = { "napi" },
-              ["async-recursion"] = { "async_recursion" },
-            },
-          },
-        },
       },
     })
     require("rust-tools").setup(rust_tools_opt)
