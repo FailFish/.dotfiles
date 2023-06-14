@@ -54,6 +54,7 @@ in
     withNodeJs = true;
     withPython3 = true;
     withRuby = true;
+    defaultEditor = true;
 
     # extraConfig = '' '';
 

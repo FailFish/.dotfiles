@@ -107,4 +107,19 @@ return {
       require("crates").setup(opts)
     end,
   },
+  {
+    "mickael-menu/zk-nvim",
+    cmd = { "ZkNew", "ZkNotes" },
+    ft = "markdown",
+    keys = {
+      { "<leader>zn", "<cmd>ZkNew { title = vim.fn.input('Title: ') }<CR>", desc = "Zk: New Note" },
+      { "<leader>zo", "<cmd>ZkNotes { sort = { 'modified' } }<CR>", desc = "Zk: Open Notes" },
+    },
+    opts = {
+      picker = "telescope",
+    },
+    config = function(_, opts)
+      require("zk").setup(opts)
+    end
+  },
 }

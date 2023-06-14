@@ -31,6 +31,7 @@ with pkgs; [
   vim
   wget
   zip
+  zk
   zoxide
 ]
 # ++ lib.optionals (pkgs.stdenv.isDarwin) [
