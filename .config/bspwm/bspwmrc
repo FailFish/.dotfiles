@@ -15,6 +15,7 @@ pgrep -x sxhkd > /dev/null || sxhkd &
 # done
 # 'hostname' command needs 'inetutils' package
 if [ "$(hostname)" = 'archlinux' ]; then
+  kime
   ~/.screenlayout/second_vertical.sh
   feh --no-fehbg --bg-fill ~/.dotfiles/images/bg1.jpg --bg-fill ~/.dotfiles/images/vertbg.png
 	bspc monitor DP-2 -n 0 -d I II III IV V
