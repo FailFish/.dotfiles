@@ -123,7 +123,9 @@ return {
           -- english writing (tex, markdown)
           null_act.proselint,
           null_diag.proselint,
-          null_diag.write_good,
+          null_diag.write_good.with({
+            extra_args = { "--no-passive" },
+          }),
           null_diag.chktex,
           -- null_fmt.latexindent,
 
