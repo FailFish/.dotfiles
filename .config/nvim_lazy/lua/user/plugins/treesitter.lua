@@ -1,6 +1,6 @@
-local parser_install_dir = vim.fn.stdpath("data") .. "/treesitters"
-vim.fn.mkdir(parser_install_dir, "p")
-vim.opt.runtimepath:append(parser_install_dir)
+-- local parser_install_dir = vim.fn.stdpath("data") .. "/treesitters"
+-- vim.fn.mkdir(parser_install_dir, "p")
+-- vim.opt.runtimepath:append(parser_install_dir)
 
 return {
   {
@@ -11,7 +11,10 @@ return {
       { "nvim-treesitter/nvim-treesitter-context" },
     },
     opts = {
-      parser_install_dir = parser_install_dir,
+      -- <lang>.so parser precedence issue: https://github.com/nvim-treesitter/nvim-treesitter/issues/3092
+      -- neovim >8.0 bundles {c, lua, help, vim} ts parsers.
+      -- If you set the your own parser path, then plugin's parsers are preceded by neovim's.
+      -- parser_install_dir = parser_install_dir,
       ensure_installed = {
         "bash",
         "c",

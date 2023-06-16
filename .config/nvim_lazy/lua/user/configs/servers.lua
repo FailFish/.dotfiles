@@ -103,6 +103,16 @@ M.servers = {
   texlab = {},
   ltex = {},
   gopls = {},
+  jsonls = {
+    settings = {
+      json = {
+        format = {
+          enable = true,
+        },
+        validate = { enable = true },
+      },
+    },
+  },
   nil_ls = {
     settings = {
       ["nil"] = {
