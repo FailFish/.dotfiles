@@ -5,7 +5,7 @@ let
 in
 {
   home = {
-    stateVersion = "22.05";
+    stateVersion = "23.05";
     packages = pkgs.callPackage ./packages.nix {};
   };
 
@@ -101,6 +101,7 @@ in
 
       # etc
       nodePackages.vim-language-server
+      # nodePackages.vscode-langservers-extracted
       nodePackages.prettier
 
     ] ++ lib.optionals pkgs.stdenv.isLinux [

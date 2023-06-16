@@ -38,6 +38,15 @@
           inherit system;
           modules = [
           { networking.hostName = hostname; }
+          {
+            # https://github.com/nix-community/home-manager/issues/2942#issuecomment-1378627909
+            nixpkgs = {
+              # vscode requires unfree
+              config.allowUnfree = true;
+              # unsupported packages in aarch64 sometimes work well
+              config.allowUnsupportedSystem = true;
+            };
+          }
           homeManagerModules
           {
             home-manager.useGlobalPkgs = true;
@@ -56,7 +65,7 @@
         hostname = "noahMBA";
         system = "aarch64-darwin";
         extraModules = [ ./modules/darwin ];
-        /* inputs = { inherit nixpkgs darwin home-manager }; */
+        # inputs = { inherit nixpkgs darwin home-manager; };
       };
     };
 
