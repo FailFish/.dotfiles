@@ -114,6 +114,9 @@ return {
     keys = {
       { "<leader>zn", "<cmd>ZkNew { title = vim.fn.input('Title: ') }<CR>", desc = "Zk: New Note" },
       { "<leader>zo", "<cmd>ZkNotes { sort = { 'modified' } }<CR>", desc = "Zk: Open Notes" },
+      {"<leader>zt", "<Cmd>ZkTags<CR>", desc = "Zk: Open Tagged Notes" },
+      {"<leader>zf", "<Cmd>ZkNotes { sort = { 'modified' }, match = { vim.fn.input('Search: ') } }<CR>", desc = "Zk: Search Word" },
+      {"<leader>zf", ":'<,'>ZkMatch<CR>", desc = "Zk: Search Visual Selection" },
     },
     opts = {
       picker = "telescope",
