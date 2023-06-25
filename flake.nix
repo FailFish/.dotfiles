@@ -5,7 +5,7 @@
     # https://nixos.wiki/wiki/Nix_channels
     # https://discourse.nixos.org/t/differences-between-nix-channels/13998
     nixpkgs.url = "github:nixos/nixpkgs";
-    nixpkgs-stable.url = "github:nixos/nixpkgs/release-22.05";
+    nixpkgs-stable.url = "github:nixos/nixpkgs/release-23.05";
     darwin = {
       url = "github:lnl7/nix-darwin/master";
       # this line makes darwin uses same version of `nixpkgs` with nixpkgs flake.
@@ -69,17 +69,6 @@
       };
     };
 
-    /*
-    nixosConfigurations = {
-      intel = mkSystem {
-        hostname = "noahLinux";
-        system = "x86_64-linux";
-        extraModules = [ ./modules/linux ];
-        # specialArgs = { inherit inputs; };
-      };
-    };
-    */
-
     # standalone home-manager for non-nixos/darwin
     homeConfigurations =
       let
@@ -109,13 +98,5 @@
           ];
         };
       };
-
-    # packages.<system>.<name> is executed by `nix build .#<name>`
-    # packages.aarch64-darwin.hello = nixpkgs.legacyPackages.aarch64-darwin.hello;
-    # packages.<system>.default is executed by `nix build .`
-    # packages.aarch64-darwin.default = self.packages.aarch64-darwin.hello;
-
-    # apps.<system>.<name> is executed by `nix run .#<name>`
-    # apps.<system>.default is executed by `nix run .`
   };
 }
