@@ -59,10 +59,58 @@
     config.allowUnfree = true;
   };
 
+  # Non-privileged users reboot/poweroff
+  security.polkit.extraConfig = ''
+    polkit.addRule(function(action, subject) {
+      if (
+        subject.isInGroup("users")
+          && (
+            action.id == "org.freedesktop.login1.reboot" ||
+            action.id == "org.freedesktop.login1.reboot-multiple-sessions" ||
+            action.id == "org.freedesktop.login1.power-off" ||
+            action.id == "org.freedesktop.login1.power-off-multiple-sessions" ||
+          )
+        )
+      {
+        return polkit.Result.YES;
+      }
+    })
+  '';
+
+  # authentication agent config from https://nixos.wiki/wiki/Polkit
+  systemd = {
+    user.services.polkit-gnome-authentication-agent-1 = {
+      description = "polkit-gnome-authentication-agent-1";
+      wantedBy = [ "graphical-session.target" ];
+      wants = [ "graphical-session.target" ];
+      after = [ "graphical-session.target" ];
+      serviceConfig = {
+        Type = "simple";
+        ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
+        Restart = "on-failure";
+        RestartSec = 1;
+        TimeoutStopSec = 10;
+      };
+    };
+  };
+
+  environment.shells = [ pkgs.bashInteractive ];
+
   environment.systemPackages = with pkgs; [
     vim
     wget
     git
+
+    # wayland specific
+    wl-clipboard
+    swaybg
+    wofi
+    mako
+    wlogout # powermenu
+
+    flameshot
+    firefox
+    nyxt
   ];
 
   services.openssh = {
@@ -71,6 +119,32 @@
       PasswordAuthentication = false; # key only
       PermitRootLogin = "no";
     };
+  };
+
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    pulse.enable = true;
+    wireplumber.enable = true;
+  };
+
+  programs.waybar.enable = true;
+  programs.hyprland = {
+    enable = true;
+    xwayland = {
+      enable = true;
+      hidpi = false;
+    };
+    nvidiaPatches = true;
+  };
+
+  services.dbus.enable = true;
+  xdg.portal = {
+    enable = true;
+    extraPortals = [
+      pkgs.xdg-desktop-portal-gtk
+      # other XDPs cause conflict with hyprland
+    ];
   };
 
   system.stateVersion = "23.05";
