@@ -93,6 +93,7 @@ in
 
       # nix
       nil
+      rnix-lsp
       statix
       nixpkgs-fmt
 

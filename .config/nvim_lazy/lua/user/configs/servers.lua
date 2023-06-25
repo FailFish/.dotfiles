@@ -113,6 +113,8 @@ M.servers = {
       },
     },
   },
+  -- nixd = {},
+  rnix = {},
   nil_ls = {
     settings = {
       ["nil"] = {
