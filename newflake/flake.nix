@@ -22,9 +22,9 @@
       # https://github.com/Misterio77/nix-starter-configs/issues/29#issuecomment-1516881655
       # instead of passing `overlays`
       inherit (self) outputs;
-      mkNixos = { extraModules }: nixpkgs.lib.nixosSystem {
+      mkNixos = extraModules : nixpkgs.lib.nixosSystem {
         modules = [
-          inputs.home-manager.nixosModules.home-mananger
+          inputs.home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
@@ -34,12 +34,12 @@
             # arguments to home.nix
           }
         ] ++ extraModules;
-        speicalArgs = { inherit inputs outputs; };
+        specialArgs = { inherit inputs outputs; };
       };
-      mkDarwin = { extraModules }: darwin.lib.darwinSystem {
+      mkDarwin = extraModules : darwin.lib.darwinSystem {
         inherit inputs;
         modules = [
-          inputs.home-manager.darinModules.home-mananger
+          inputs.home-manager.darinModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;

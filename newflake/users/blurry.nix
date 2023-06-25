@@ -1,5 +1,5 @@
 { inputs, ... }: {
-  import = [
+  imports = [
     ./common/home.nix
   ];
   home = {

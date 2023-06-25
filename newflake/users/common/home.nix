@@ -1,6 +1,6 @@
 { pkgs, lib, ... }:
 let
-  rootdir = ./../..;
+  rootdir = ./../../..;
   cfgdir = rootdir + "/.config";
 in
 {
