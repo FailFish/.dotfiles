@@ -67,6 +67,8 @@
     config.allowUnfree = true;
   };
 
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
   # Non-privileged users reboot/poweroff
   security.polkit.extraConfig = ''
     polkit.addRule(function(action, subject) {

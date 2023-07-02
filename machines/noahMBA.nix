@@ -71,7 +71,10 @@ in {
 
   # Auto upgrade nix packages and the daemon services.
   services.nix-daemon.enable = true;
-  nix.package = pkgs.nix;
+  nix = {
+    package = pkgs.nix;
+    settings.experimental-features = [ "nix-command" "flakes" ];
+  };
 
   # A list of permissible shells
   environment.shells = [ pkgs.bashInteractive ];
