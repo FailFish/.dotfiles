@@ -36,10 +36,11 @@
         ] ++ extraModules;
         specialArgs = { inherit inputs outputs; };
       };
-      mkDarwin = extraModules : darwin.lib.darwinSystem {
+      mkDarwin = extraModules: darwin.lib.darwinSystem {
         inherit inputs;
+        system = "aarch64-darwin"; # FIXME: option for intel macs
         modules = [
-          inputs.home-manager.darinModules.home-manager
+          inputs.home-manager.darwinModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
