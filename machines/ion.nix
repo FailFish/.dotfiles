@@ -54,6 +54,7 @@
       (nerdfonts.override { fonts = [ "RobotoMono" "JetBrainsMono" ]; })
       font-awesome
       material-design-icons
+      nanum
     ];
   };
 
