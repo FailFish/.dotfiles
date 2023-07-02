@@ -28,7 +28,7 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.users.noah = import ./users/noah.nix;
+            home-manager.users.noah = import ./users/noah-nixos.nix;
 
             # Optionally, use home-manager.extraSpecialArgs to pass
             # arguments to home.nix

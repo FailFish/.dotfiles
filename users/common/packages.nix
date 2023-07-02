@@ -10,7 +10,7 @@ with pkgs; [
   exa
   fd
   fzf
-  # gcc
+  gcc
   git
   glow
   htop
