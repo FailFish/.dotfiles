@@ -71,6 +71,14 @@
 
   # https://github.com/nix-community/home-manager/issues/2942#issuecomment-1378627909
   nixpkgs = {
+    overlays = [
+      # https://github.com/nixos/nixpkgs/issues/157101
+      (final: prev: {
+        waybar = prev.waybar.overrideAttrs (oldAttrs: {
+          mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
+        });
+      })
+    ];
     # vscode requires unfree
     config.allowUnfree = true;
   };

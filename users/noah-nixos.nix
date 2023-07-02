@@ -10,4 +10,5 @@ in
 
   # NixOS-only
   xdg.configFile."hypr".source = cfgdir + "/hypr";
+  xdg.configFile."waybar".source = cfgdir + "/waybar";
 }
