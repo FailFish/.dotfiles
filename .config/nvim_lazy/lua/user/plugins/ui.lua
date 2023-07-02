@@ -200,15 +200,8 @@ return {
               name = "file_info",
               opts = {
                 type = "relative-short",
-                file_readonly_icon = "  ",
-                -- file_readonly_icon = "  ",
-                -- file_readonly_icon = "  ",
-                -- file_readonly_icon = "  ",
-                -- file_modified_icon = "",
-                -- file_modified_icon = "",
-                file_modified_icon = "ﱐ",
-                -- file_modified_icon = "",
-                -- file_modified_icon = "",
+                file_readonly_icon = "  ",
+                file_modified_icon = "",
                 -- file_modified_icon = "",
               },
             },
@@ -279,6 +272,7 @@ return {
             hl = {
               fg = colors.red,
             },
+            icon = " ",
           },
           warn = {
             provider = "diagnostic_warnings",
@@ -289,6 +283,7 @@ return {
             hl = {
               fg = colors.yellow,
             },
+            icon = " ",
           },
           info = {
             provider = "diagnostic_info",
@@ -299,6 +294,7 @@ return {
             hl = {
               fg = colors.blue,
             },
+            icon = " ",
           },
           hint = {
             provider = "diagnostic_hints", -- lsp.diagnostic_hints(),
@@ -309,7 +305,7 @@ return {
             hl = {
               fg = colors.cyan,
             },
-            icon = "  ",
+            icon = " ",
           },
         },
         lsp = {
@@ -318,7 +314,6 @@ return {
             left_sep = " ",
             right_sep = " ",
             icon = "  ",
-            -- icon = "慎",
             hl = {
               fg = colors.yellow,
             },
@@ -346,6 +341,7 @@ return {
             hl = {
               fg = colors.orange,
             },
+            icon = " 󰝤 ",
           },
           remove = {
             provider = "git_diff_removed",
