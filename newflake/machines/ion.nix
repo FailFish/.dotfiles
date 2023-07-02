@@ -42,6 +42,14 @@
     xkbVariant = "";
   };
 
+  fonts = {
+    fontDir.enable = true;
+    fonts = with pkgs; [
+      # https://nixos.wiki/wiki/Fonts
+      (nerdfonts.override { fonts = [ "RobotoMono" "JetBrainsMono" ]; })
+    ];
+  };
+
   users.users.noah = {
     isNormalUser = true;
     description = "noah";
