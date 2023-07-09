@@ -143,7 +143,6 @@
     wl-clipboard
     swaybg
     wofi
-    mako
     wlogout # powermenu
 
     flameshot
@@ -166,7 +165,6 @@
     wireplumber.enable = true;
   };
 
-  programs.waybar.enable = true;
   programs.hyprland = {
     enable = true;
     xwayland = {
@@ -176,7 +174,11 @@
     nvidiaPatches = true;
   };
 
-  services.dbus.enable = true;
+  services = {
+    dbus.packages = [ pkgs.gcr ];
+    udev.packages = [ pkgs.gnome.gnome-settings-daemon ];
+  };
+
   xdg.portal = {
     enable = true;
     extraPortals = [
