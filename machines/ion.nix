@@ -52,10 +52,22 @@
     fonts = with pkgs; [
       # https://nixos.wiki/wiki/Fonts
       (nerdfonts.override { fonts = [ "RobotoMono" "JetBrainsMono" ]; })
-      font-awesome
       material-design-icons
       nanum
+
+      # Xorg defaults
+      noto-fonts
+      noto-fonts-cjk
+      noto-fonts-emoji
+      font-awesome
+      source-han-sans
+      source-han-sans-japanese
+      source-han-serif-japanese
     ];
+    fontconfig.defaultFonts = {
+      serif = [ "Noto Serif" "Source Han Serif" ];
+      sansSerif = [ "Noto Sans" "Source Han Sans" ];
+    };
   };
 
   users.users.noah = {
