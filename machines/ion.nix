@@ -10,11 +10,18 @@
   networking.hostName = "ion";
   networking.wireless = {
     enable = true;
+    environmentFile = "/run/wireless.env";
     userControlled.enable = true;
 
     networks = {
       KT_GiGA_5G_BC36 = {
-        psk = "dzc60jz637";
+        psk = "@PSK_HOME@";
+      };
+      SSLAB-5G = {
+        psk = "@PSK_LAB@";
+      };
+      Nobody-5G = {
+        psk = "@PSK_MIRROR@";
       };
     };
   };
@@ -38,6 +45,10 @@
 
   services.keyd = {
     enable = true;
+    ids = [
+      "*"
+      "-1d50:615e"
+    ];
     settings = {
       main = {
         capslock = "esc";
@@ -75,6 +86,7 @@
     description = "noah";
     openssh.authorizedKeys.keys = [
       # TODO: Add OpenSSH key(s) here, if you plan on using SSH to connect
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBxvfY93G6+OsoEUyWzNBfhgPx8c5H84qSEJ3CbC7YX3 noah@noahMBA"
     ];
     extraGroups = [ "wheel" ];
     shell = pkgs.bashInteractive;
@@ -186,6 +198,9 @@
       # other XDPs cause conflict with hyprland
     ];
   };
+
+  hardware.bluetooth.enable = true;
+  services.blueman.enable = true;
 
   system.stateVersion = "23.05";
 }
