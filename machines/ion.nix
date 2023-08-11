@@ -4,13 +4,18 @@
     ./ion-hardware-configuration.nix
   ];
 
-  boot.loader.systemd-boot.enable = true;
+  # boot.loader.systemd-boot.enable = true;
+  boot.loader.grub = {
+    enable = true;
+    efiSupport = true;
+    device = "nodev";
+  };
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = "ion";
   networking.wireless = {
     enable = true;
-    environmentFile = "/run/wireless.env";
+    environmentFile = "/run/secrets/wireless.env";
     userControlled.enable = true;
 
     networks = {
@@ -88,7 +93,7 @@
       # TODO: Add OpenSSH key(s) here, if you plan on using SSH to connect
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBxvfY93G6+OsoEUyWzNBfhgPx8c5H84qSEJ3CbC7YX3 noah@noahMBA"
     ];
-    extraGroups = [ "wheel" ];
+    extraGroups = [ "video" "wheel" ];
     shell = pkgs.bashInteractive;
     packages = with pkgs; [];
   };
@@ -156,7 +161,9 @@
     swaybg
     wofi
     wlogout # powermenu
+    wev
 
+    brightnessctl
     flameshot
     firefox
     nyxt
