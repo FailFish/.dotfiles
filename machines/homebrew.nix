@@ -17,7 +17,6 @@ in {
       "aldente"
       "spotify"
       "iterm2"
-      "skim"
       "vmware-fusion-tech-preview" # from cask-versions
       "zotero"
       "firefox"
