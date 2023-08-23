@@ -8,6 +8,7 @@
   boot.loader.grub = {
     enable = true;
     efiSupport = true;
+    useOSProber = true;
     device = "nodev";
   };
   boot.loader.efi.canTouchEfiVariables = true;
@@ -15,7 +16,7 @@
   networking.hostName = "ion";
   networking.wireless = {
     enable = true;
-    environmentFile = "/run/secrets/wireless.env";
+    environmentFile = "/home/noah/wireless.env";
     userControlled.enable = true;
 
     networks = {
@@ -208,6 +209,14 @@
 
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
+
+  virtualisation.podman = {
+    enable = true;
+    enableNvidia = true;
+    defaultNetwork.settings = {
+      dns_enabled = true;
+    };
+  };
 
   system.stateVersion = "23.05";
 }
