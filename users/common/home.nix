@@ -234,6 +234,12 @@ in
     nix-direnv.enable = true;
   };
 
+  programs.exa = {
+    enable = true;
+    enableAliases = true;
+    extraOptions = [ "--group-directories-first" "--header" ];
+  };
+
   # Issues: not supported in aarch64-darwin
   # programs.firefox = {
   #   enable = true;

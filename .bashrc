@@ -264,10 +264,13 @@ alias df='df -h'                          # human-readable sizes
 alias free='free -m'                      # show sizes in MB
 alias np='nano -w PKGBUILD'
 alias more=less
-# some more ls aliases
-alias ll='ls -alF'
-alias la='ls -A'
-alias l='ls -CF'
+# some manual ls aliases when exa is not installed
+if ! grep exa <(type ls); then
+  alias ll='ls -alF'
+  alias la='ls -A'
+  alias l='ls -CF'
+fi
+alias lg='lazygit'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert

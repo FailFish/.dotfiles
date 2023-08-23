@@ -7,7 +7,6 @@ with pkgs; [
   broot
   coreutils
   curl
-  exa
   fd
   fzf
   gcc
