@@ -265,7 +265,7 @@ alias free='free -m'                      # show sizes in MB
 alias np='nano -w PKGBUILD'
 alias more=less
 # some manual ls aliases when exa is not installed
-if ! grep exa <(type ls); then
+if ! grep exa <(type ls) 1>/dev/null; then
   alias ll='ls -alF'
   alias la='ls -A'
   alias l='ls -CF'

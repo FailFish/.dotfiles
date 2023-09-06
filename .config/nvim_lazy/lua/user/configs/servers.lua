@@ -103,6 +103,7 @@ M.servers = {
   texlab = {},
   ltex = {},
   gopls = {},
+  zls = {},
   jsonls = {
     settings = {
       json = {
