@@ -21,8 +21,16 @@ in
         source "$(fzf-share)/completion.bash"
       fi
 
+      # hello for testing
       # :help vimtex-faq-zathura-macos
       export DBUS_SESSION_BUS_ADDRESS="unix:path=$DBUS_LAUNCHD_SESSION_BUS_SOCKET"
+
+    '' + lib.optionals pkgs.stdenv.isDarwin ''
+      # Issue: https://discourse.nixos.org/t/brew-not-on-path-on-m1-mac/26770/4
+      # make sure brew is on the path for M1
+      if [[ $(uname -m) == 'arm64' ]]; then
+        eval "$(/opt/homebrew/bin/brew shellenv)"
+      fi
     '';
   };
   # home.file.".bashrc".source = rootdir + "/.bashrc";
