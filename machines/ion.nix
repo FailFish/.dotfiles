@@ -20,15 +20,22 @@
     userControlled.enable = true;
 
     networks = {
-      KT_GiGA_5G_BC36 = {
-        psk = "@PSK_HOME@";
-      };
       SSLAB-5G = {
         psk = "@PSK_LAB@";
       };
       Nobody-5G = {
         psk = "@PSK_MIRROR@";
       };
+      KT_GiGA_5G_89B3 = {
+        psk = "@PSK_HOMEKT@";
+      };
+      SKKU.auth = ''
+        ssid="SKKU"
+        eap=TTLS
+        identity="dove0255@skku.edu"
+        password="@PSK_SKKU_PUBLIC@"
+        phase2="auth=PAP"
+      '';
     };
   };
 
@@ -39,9 +46,6 @@
 
   i18n = {
     defaultLocale = "en_US.UTF-8";
-    inputMethod = {
-      enabled = "kime";
-    };
   };
 
   services.xserver = {
@@ -133,6 +137,10 @@
     })
   '';
 
+  security.pam.services.swaylock.text = ''
+    auth include login
+  '';
+
   # authentication agent config from https://nixos.wiki/wiki/Polkit
   systemd = {
     user.services.polkit-gnome-authentication-agent-1 = {
@@ -163,6 +171,7 @@
     # wayland specific
     wl-clipboard
     swaybg
+    swaylock
     wofi
     wlogout # powermenu
     wev
