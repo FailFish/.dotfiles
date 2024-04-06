@@ -97,6 +97,7 @@
     openssh.authorizedKeys.keys = [
       # TODO: Add OpenSSH key(s) here, if you plan on using SSH to connect
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBxvfY93G6+OsoEUyWzNBfhgPx8c5H84qSEJ3CbC7YX3 noah@noahMBA"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEBuydnea67JVePf4Y9nAxu+G/fwIJxyAkAAt3QWNoha noah@admin"
     ];
     extraGroups = [ "video" "wheel" ];
     shell = pkgs.bashInteractive;
