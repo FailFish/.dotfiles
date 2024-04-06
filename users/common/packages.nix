@@ -15,6 +15,7 @@ with pkgs; [
   htop
   jq
   lazygit
+  libnotify # notify-send
   nix-template
   nnn
   openssh
