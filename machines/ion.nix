@@ -38,6 +38,25 @@
       '';
     };
   };
+  # I found systemd.link's WOL does not work on wireless interfaces.
+  # networking.interfaces.wlo1.wakeOnLan.enable = true;
+
+  # NOTE: https://github.com/NixOS/nixpkgs/pull/135063
+  systemd.services.customWowlan =
+    let phy = "phy0";
+    in {
+      description = "Enable WoWLAN through `iw` for a physical interface ${phy}";
+      requires = [ "network.target" ];
+      after = [ "network.target" ];
+      wantedBy = [ "multi-user.target" ];
+      serviceConfig = {
+        Type = "oneshot";
+      };
+      environment.IW = "${pkgs.iw}/bin/iw";
+      script = ''
+        $IW phy ${phy} wowlan enable magic-packet disconnect
+      '';
+    };
 
   # Set your time zone.
   time.timeZone = "Asia/Seoul";
@@ -46,6 +65,22 @@
 
   i18n = {
     defaultLocale = "en_US.UTF-8";
+  };
+
+  # power management settings
+  services.tlp = {
+    enable = true;
+    settings = {
+       START_CHARGE_THRESH_BAT0 = 40;
+       STOP_CHARGE_THRESH_BAT0 = 60;
+       WOL_DISABLE = "N";
+    };
+  };
+
+  services.logind = {
+    lidSwitch = "suspend";
+    lidSwitchDocked = "ignore";
+    lidSwitchExternalPower = "ignore";
   };
 
   services.xserver.xkb = {
