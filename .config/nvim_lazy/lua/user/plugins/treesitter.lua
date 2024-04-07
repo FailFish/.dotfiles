@@ -16,14 +16,20 @@ return {
       -- If you set the your own parser path, then plugin's parsers are preceded by neovim's.
       -- parser_install_dir = parser_install_dir,
       ensure_installed = {
-        "bash",
+        -- neovim-bundled parsers
         "c",
+        "lua",
+        "vim",
+        "vimdoc",
+        "query",
+        -- non-bundled
+        "bash",
         "cpp",
         "cmake",
         "fish",
         -- "latex",
+        "jsonc",
         "llvm",
-        "lua",
         "make",
         "nix",
         "norg",

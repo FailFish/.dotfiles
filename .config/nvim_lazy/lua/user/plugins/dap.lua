@@ -8,6 +8,7 @@ return {
         config = function(_, opts)
           require("dapui").setup(opts)
         end,
+        dependencies = { "nvim-neotest/nvim-nio" },
       },
       { "theHamsta/nvim-dap-virtual-text" },
       -- { "jbyuki/one-small-step-for-vimkind" },
