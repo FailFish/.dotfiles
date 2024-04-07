@@ -48,29 +48,33 @@
     defaultLocale = "en_US.UTF-8";
   };
 
-  services.xserver = {
+  services.xserver.xkb = {
     layout = "us";
-    xkbVariant = "";
+    variant = "";
   };
 
   services.keyd = {
     enable = true;
-    ids = [
-      "*"
-      "-1d50:615e"
-    ];
-    settings = {
-      main = {
-        capslock = "esc";
-        leftmeta = "layer(alt)";
-        leftalt = "layer(meta)";
+    keyboards = {
+      default = {
+        ids = [
+          "*"
+          "-1d50:615e"
+        ];
+        settings = {
+          main = {
+            capslock = "esc";
+            leftmeta = "layer(alt)";
+            leftalt = "layer(meta)";
+          };
+        };
       };
     };
   };
 
   fonts = {
     fontDir.enable = true;
-    fonts = with pkgs; [
+    packages = with pkgs; [
       # https://nixos.wiki/wiki/Fonts
       (nerdfonts.override { fonts = [ "RobotoMono" "JetBrainsMono" ]; })
       material-design-icons
@@ -203,9 +207,7 @@
     enable = true;
     xwayland = {
       enable = true;
-      hidpi = false;
     };
-    nvidiaPatches = true;
   };
 
   services = {
@@ -224,9 +226,11 @@
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
 
+  # This option will expose GPUs on containers with the `--device` CLI option.
+  # supported by Docker >= 25, Podman >= 3.2.0
+  virtualisation.containers.cdi.dynamic.nvidia.enable = true;
   virtualisation.podman = {
     enable = true;
-    enableNvidia = true;
     defaultNetwork.settings = {
       dns_enabled = true;
     };

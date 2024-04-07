@@ -94,7 +94,6 @@ in
 
       # nix
       nil
-      rnix-lsp
       statix
       nixpkgs-fmt
 
@@ -103,7 +102,7 @@ in
 
       # etc
       nodePackages.vim-language-server
-      # nodePackages.vscode-langservers-extracted
+      nodePackages.vscode-langservers-extracted
       nodePackages.prettier
 
     ] ++ lib.optionals pkgs.stdenv.isLinux [
@@ -234,10 +233,11 @@ in
     nix-direnv.enable = true;
   };
 
-  programs.exa = {
+  programs.eza = {
     enable = true;
-    enableAliases = true;
     extraOptions = [ "--group-directories-first" "--header" ];
+    git = true;
+    icons = true;
   };
 
   # Issues: not supported in aarch64-darwin

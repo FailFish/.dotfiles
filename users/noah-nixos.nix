@@ -13,6 +13,21 @@ in
   xdg.configFile."hypr".source = cfgdir + "/hypr";
   xdg.configFile."waybar".source = cfgdir + "/waybar";
 
+  i18n = {
+    inputMethod = {
+      enabled = "kime";
+      kime.extraConfig = "
+        daemon:
+          modules: [Wayland, Indicator]
+        indicator:
+          icon_color: White
+        engine:
+          hangul:
+            layout: dubeolsik
+      ";
+    };
+  };
+
   services.kanshi = {
     enable = true;
     systemdTarget = "graphical-session.target";
