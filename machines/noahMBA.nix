@@ -94,6 +94,8 @@ in {
     ];
   };
 
+  services.tailscale.enable = true;
+
   # yabai / skhd settings
   services.yabai = {
     enable = true;
