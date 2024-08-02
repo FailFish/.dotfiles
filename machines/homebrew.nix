@@ -21,7 +21,8 @@ in {
       "zotero"
       "firefox"
       "google-chrome"
-      "openvpn-connect"
+      "zerotier-one"
+      "betterdisplay"
     ];
     masApps = {
       "Slack" = 803453959;
