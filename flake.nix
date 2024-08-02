@@ -82,6 +82,11 @@
             inherit pkgs;
             extraSpecialArgs = { inherit inputs outputs; };
           };
+          taehyun = home-manager.lib.homeManagerConfiguration {
+            modules = [ ./users/taehyun.nix ];
+            inherit pkgs;
+            extraSpecialArgs = { inherit inputs outputs; };
+          };
         };
     };
 }

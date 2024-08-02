@@ -38,7 +38,6 @@ with pkgs; [
 # ]
 ++ lib.optionals (pkgs.stdenv.isLinux) [
   webcord-vencord
-  discord
   zotero
   gnome-network-displays
   wpa_supplicant_gui

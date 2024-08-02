@@ -25,7 +25,7 @@ in
       # :help vimtex-faq-zathura-macos
       export DBUS_SESSION_BUS_ADDRESS="unix:path=$DBUS_LAUNCHD_SESSION_BUS_SOCKET"
 
-    '' + lib.optionals pkgs.stdenv.isDarwin ''
+    '' + lib.optionalString pkgs.stdenv.isDarwin ''
       # Issue: https://discourse.nixos.org/t/brew-not-on-path-on-m1-mac/26770/4
       # make sure brew is on the path for M1
       if [[ $(uname -m) == 'arm64' ]]; then
