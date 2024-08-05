@@ -46,6 +46,7 @@
               gnumake
               cmake
               bear
+              ninja
 
               # debugger
               llvm.lldb
@@ -74,6 +75,7 @@
           # pc.buildPackages.clang; x86-64-linux -> aarch64-linux
           # pc.clang; aarch64-linux -> aarch64-linux
           linux-cross = pc.mkShell rec {
+            packages = [ pc.buildPackages.universal-ctags ];
             # This decides CC, but still CC will not be aarch64-*-cc
             depsBuildBuild = [ pc.buildPackages.clangStdenv.cc ];
             # depsBuildBuild = [ pc.buildPackages.stdenv.cc ];
@@ -98,6 +100,32 @@
             # Issue: `clang` causes `arm_neon.h` not found error, but aarch64-*-clang does not
             # Linux should be built with
             # make -j$(nproc) ARCH=arm64 LLVM=1 CC=aarch64-unknown-linux-gnu-clang
+          };
+
+          llvm-dev = p.mkShell.override { stdenv = p.clang17Stdenv; } rec {
+            packages = with p; [
+              # builder
+              cmake
+              ninja
+
+              # fix headers not found
+              clang-tools
+
+              # other tools
+              cppcheck
+              valgrind
+              llvm.libllvm
+
+              tcl
+
+              # custom make
+              mymake
+
+              # runner
+              qemu
+            ];
+            # https://github.com/NixOS/nixpkgs/issues/18995
+            hardeningDisable = [ "all" ];
           };
         };
       }
