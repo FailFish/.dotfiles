@@ -15,10 +15,10 @@ M.setup = {
   -- end,
   -- Specify * to use this function as a fallback for any server
   -- ["*"] = function(server, opts) end,
-  clangd = function(_, opts)
-    require("clangd_extensions").setup({ server = opts })
-    return true
-  end,
+  -- clangd = function(_, opts)
+  --   require("clangd_extensions").setup({ server = opts })
+  --   return true
+  -- end,
   rust_analyzer = function(_, opts)
     local extension_path = vim.fn.expand("~/.vscode/extensions/sadge-vscode/extension/")
     local codelldb_path = extension_path .. "adapter/codelldb"
