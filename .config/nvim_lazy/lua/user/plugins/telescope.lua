@@ -295,17 +295,6 @@ return {
     end,
   },
   {
-    "nvim-telescope/telescope-file-browser.nvim",
-    cmd = "Telescope file_browser",
-    keys = {
-      { "<leader>fe", "<cmd>Telescope file_browser<cr>", desc = "File Browser" },
-    },
-    dependencies = "nvim-telescope/telescope.nvim",
-    config = function()
-      require("telescope").load_extension("file_browser")
-    end,
-  },
-  {
     "nvim-telescope/telescope-dap.nvim",
     cmd = "Telescope dap",
     dependencies = {

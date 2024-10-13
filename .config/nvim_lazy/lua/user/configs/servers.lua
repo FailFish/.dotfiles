@@ -19,6 +19,19 @@ M.setup = {
   --   require("clangd_extensions").setup({ server = opts })
   --   return true
   -- end,
+  jsonls = function(_, opts)
+    -- Use setup instead of opts.
+    -- This makes sure lazy-loaded "schemastore" is ready before we setup jsonls.
+    require("lspconfig").jsonls.setup({
+      settings = {
+        json = {
+          schemas = require("schemastore").json.schemas(),
+          format = { enable = true, },
+          validate = { enable = true },
+        },
+      },
+    })
+  end,
   rust_analyzer = function(_, opts)
     local extension_path = vim.fn.expand("~/.vscode/extensions/sadge-vscode/extension/")
     local codelldb_path = extension_path .. "adapter/codelldb"
@@ -95,36 +108,6 @@ M.setup = {
 
 M.servers = {
   -- server = config pair
-  rust_analyzer = {},
-  cmake = {},
-  bashls = {},
-  pyright = {},
-  vimls = {},
-  texlab = {},
-  ltex = {},
-  gopls = {},
-  zls = {},
-  jsonls = {
-    settings = {
-      json = {
-        format = {
-          enable = true,
-        },
-        validate = { enable = true },
-      },
-    },
-  },
-  -- nixd = {},
-  rnix = {},
-  nil_ls = {
-    settings = {
-      ["nil"] = {
-        formatting = {
-          command = { "nixpkgs-fmt" },
-        },
-      },
-    },
-  },
   lua_ls = {
     -- look folke/lua-lsp.lua https://gist.github.com/folke/fe5d28423ea5380929c3f7ce674c41d8
     settings = {
@@ -170,6 +153,17 @@ M.servers = {
     -- },
     -- handlers = nvim_status.extensions.clangd.setup(),
   },
+  cmake = {},
+  rust_analyzer = {},
+  bashls = {},
+  pyright = {},
+  texlab = {},
+  ltex = {},
+  nixd = {},
+  zls = {},
+  gopls = {},
+  vimls = {},
+  jsonls = {},
   -- grammarly = true,
 }
 

@@ -70,12 +70,12 @@ in
     extraPackages = with pkgs; [
 
       # lua
-      sumneko-lua-language-server
+      lua-language-server
       stylua
 
       # C/C++
       clang-tools
-      # cmake-language-server
+      cmake-language-server
 
       # Rust
       rust-analyzer
@@ -101,7 +101,7 @@ in
       python3Packages.pygments # texlive - minted
 
       # nix
-      nil
+      nixd
       statix
       nixpkgs-fmt
 
@@ -109,8 +109,10 @@ in
       nodePackages.write-good
 
       # etc
-      nodePackages.vim-language-server
-      nodePackages.vscode-langservers-extracted
+      zls
+      gopls
+      vscode-langservers-extracted
+      vim-language-server
       nodePackages.prettier
 
     ] ++ lib.optionals pkgs.stdenv.isLinux [
@@ -195,7 +197,6 @@ in
       toggleterm-nvim
       trouble-nvim
       alpha-nvim
-      # nnn-nvim
       twilight-nvim
       zen-mode-nvim
 
@@ -212,10 +213,6 @@ in
     recursive = true;
     source = cfgdir + "/nvim_lazy";
   };
-  # xdg.configFile."nvim" = {
-  #   recursive = true;
-  #   source = cfgdir + "/nvim";
-  # };
 
   programs.zathura.enable = true;
   xdg.configFile."zathura".source = cfgdir + "/zathura";
@@ -246,6 +243,34 @@ in
     extraOptions = [ "--group-directories-first" "--header" ];
     git = true;
     icons = true;
+  };
+
+  # accounts.email.accounts = {
+  #   utmail = {
+  #     address = "taehyun@utexas.edu";
+  #     flavor = "gmail";
+  #     folders = { };
+  #   };
+  #   utcsmail = {
+  #     address = "taehyun@cs.utexas.edu";
+  #     flavor = "plain";
+  #     folders = { };
+  #   };
+  #   gmail-kr = {
+  #     address = "likeinstein42@gmail.com";
+  #     flavor = "gmail";
+  #     folders = { };
+  #   };
+  #   gmail-us = {
+  #     address = "this.taehyun@gmail.com";
+  #     flavor = "gmail";
+  #     folders = { };
+  #   };
+  # };
+  #
+  programs.neomutt = {
+    enable = true;
+    vimKeys = true;
   };
 
   # Issues: not supported in aarch64-darwin

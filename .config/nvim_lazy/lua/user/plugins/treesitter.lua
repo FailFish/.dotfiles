@@ -22,76 +22,38 @@ return {
         "vim",
         "vimdoc",
         "query",
+        "markdown",
+        "markdown_inline",
         -- non-bundled
         "bash",
-        "cpp",
         "cmake",
+        "cpp",
         "fish",
+        "json",
         -- "latex",
-        "jsonc",
         "llvm",
         "make",
         "nix",
         "norg",
         "python",
         "rust",
+        "toml",
         "zig",
       },
       sync_install = false,
       ignore_install = { "" }, -- List of parsers to ignore installing
       highlight = {
         enable = true, -- false will disable the whole extension
-        disable = { "" }, -- list of language that will be disabled
-        additional_vim_regex_highlighting = true,
+        disable = function(lang, buf)
+          local max_filesize = 100 * 1024 -- 100 KB
+          local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+          if ok and stats and stats.size > max_filesize then
+            return true
+          end
+        end,
+        additional_vim_regex_highlighting = false,
       },
-      matchup = {
-        enable = true,
-        disable = { "" },
-      },
-      textobjects = {
-        move = {
-          enable = true,
-          set_jumps = true,
-
-          goto_next_start = {
-            ["]p"] = "@parameter.inner",
-            ["]m"] = "@function.outer",
-            ["]]"] = "@class.outer",
-          },
-          goto_next_end = {
-            ["]M"] = "@function.outer",
-            ["]["] = "@class.outer",
-          },
-          goto_previous_start = {
-            ["[p"] = "@parameter.inner",
-            ["[m"] = "@function.outer",
-            ["[["] = "@class.outer",
-          },
-          goto_previous_end = {
-            ["[M"] = "@function.outer",
-            ["[]"] = "@class.outer",
-          },
-        },
-        select = {
-          enable = true,
-          lookahead = true,
-
-          keymaps = {
-            ["af"] = "@function.outer",
-            ["if"] = "@function.inner",
-
-            ["ac"] = "@conditional.outer",
-            ["ic"] = "@conditional.inner",
-
-            ["aa"] = "@parameter.outer",
-            ["ia"] = "@parameter.inner",
-
-            ["av"] = "@variable.outer",
-            ["iv"] = "@variable.inner",
-          },
-        },
-        -- swap keybinds?
-      },
+      textobjects = { enable = false },
     },
     config = function(_, opts)
       require("nvim-treesitter.configs").setup(opts)

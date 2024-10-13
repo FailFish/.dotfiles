@@ -15,13 +15,24 @@ return {
     "neovim/nvim-lspconfig",
     event = { "BufReadPre", "BufNewFile" },
     dependencies = {
-      { "folke/neoconf.nvim", cmd = "Neoconf", config = true },
-      { "folke/neodev.nvim", opts = { experimental = { pathStrict = true } } },
+      {
+        "folke/neoconf.nvim",
+        cmd = "Neoconf",
+        config = true,
+      },
+      {
+        "folke/neodev.nvim",
+        opts = { experimental = { pathStrict = true } },
+      },
       { "hrsh7th/cmp-nvim-lsp" },
       { "ray-x/lsp_signature.nvim" },
+
+      { "b0o/SchemaStore.nvim" },
+      { "https://git.sr.ht/~whynothugo/lsp_lines.nvim" },
+
+      { "j-hui/fidget.nvim", opts = {} },
       {
-        "weilbith/nvim-code-action-menu",
-        cmd = 'CodeActionMenu',
+        "aznhe21/actions-preview.nvim",
       },
       { "p00f/clangd_extensions.nvim" },
       { "simrat39/rust-tools.nvim" },
@@ -60,7 +71,7 @@ return {
 
       local servers = opts.servers
       local capabilities =
-      require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
+        require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
       local function setup(server)
         local server_opts = vim.tbl_deep_extend("force", {
@@ -85,61 +96,50 @@ return {
           setup(server)
         end
       end
+
+      vim.keymap.set({ "n", "v" }, "cp", require("actions-preview").code_actions)
+
+      require("lsp_lines").setup()
+      vim.diagnostic.config({ virtual_text = true, virtual_lines = false })
+      vim.keymap.set("", "<leader>l", require("lsp_lines").toggle, { desc = "Toggle lsp_lines" })
     end,
   },
 
   {
-    "jose-elias-alvarez/null-ls.nvim",
-    event = { "BufReadPre", "BufNewFile" },
-    opts = function()
-      local null_ls = require("null-ls")
-      local null_fmt = null_ls.builtins.formatting
-      local null_diag = null_ls.builtins.diagnostics
-      local null_act = null_ls.builtins.code_actions
-      return {
-        root_dir = require("null-ls.utils").root_pattern(
-        ".null-ls-root",
-        ".neoconf.json",
-        "Makefile",
-        ".git"
-        ),
-        sources = {
-          -- lua
-          null_fmt.stylua,
+    "stevearc/conform.nvim",
+    event = { "BufWritePre" },
+    cmd = { "ConformInfo" },
+    keys = {
+      {
+        "<leader>cf",
+        function()
+          require("conform").format({ async = true })
+        end,
+        mode = "",
+        desc = "Format buffer",
+      },
+    },
+    formatters_by_ft = {
+      lua = { "stylua" },
+      -- Conform will run multiple formatters sequentially
+      rust = { "rustfmt", lsp_format = "fallback" },
+      python = { "isort", "black" },
+      go = { "goimports", "gofmt" },
+      bash = { "shfmt" },
+      nix = { "nixpkg_fmt" },
+      -- filetypes without any formatters specified
+      ["_"] = { "trim_whitespace" },
+    },
+  },
 
-          -- shell
-          null_fmt.shfmt,
-          null_diag.shellcheck,
-
-          -- python
-          null_fmt.black,
-          null_fmt.isort,
-          null_diag.flake8,
-
-          -- nix
-          null_diag.statix,
-          null_act.statix,
-
-          -- english writing (tex, markdown)
-          null_act.proselint,
-          null_diag.proselint,
-          null_diag.write_good.with({
-            extra_args = { "--no-passive" },
-          }),
-          null_diag.chktex,
-          -- null_fmt.latexindent,
-
-          -- etc
-          null_fmt.trim_newlines.with({
-            disabled_filetypes = { "rust" }, -- use rustfmt
-          }),
-          null_fmt.trim_whitespace.with({
-            disabled_filetypes = { "rust" }, -- use rustfmt
-          }),
-          null_fmt.prettier.with({
-            filetypes = { "html", "css", "yaml", "markdown", "json" },
-          }),
-        },
+  {
+    "mfussenegger/nvim-lint",
+    config = function ()
+      require("lint").linters_by_ft = {
+        bash = { "shellcheck" },
+        nix = { "statix" },
+        python = { "flake8" },
+        -- TODO: linter for english writing
       }
     end,
   },

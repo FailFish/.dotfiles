@@ -1,6 +1,56 @@
 return {
   { "nvim-tree/nvim-web-devicons", lazy = true },
   {
+    "stevearc/oil.nvim",
+    ---@module 'oil'
+    ---@type oil.SetupOpts
+    opts = {},
+    -- Optional dependencies
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    config = function()
+      CustomOilBar = function()
+        local path = vim.fn.expand("%")
+        path = path:gsub("oil://", "")
+
+        return "  " .. vim.fn.fnamemodify(path, ":.")
+      end
+
+      require("oil").setup({
+        columns = { "icon" },
+        keymaps = {
+          ["<C-h>"] = false,
+          ["<C-l>"] = false,
+          ["<C-k>"] = false,
+          ["<C-j>"] = false,
+          -- "<C-t>" for a new tab
+          ["<C-v>"] = {
+            "actions.select",
+            opts = { vertical = true },
+            desc = "Open the entry in a vertical split",
+          },
+          ["<C-s>"] = {
+            "actions.select",
+            opts = { horizontal = true },
+            desc = "Open the entry in a horizontal split",
+          },
+          ["<CR>"] = "actions.select",
+        },
+        win_options = {
+          winbar = "%{v:lua.CustomOilBar()}",
+        },
+        view_options = {
+          show_hidden = true,
+        },
+      })
+
+      -- Open parent directory in current window
+      vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
+
+      -- Open parent directory in floating window
+      vim.keymap.set("n", "<space>-", require("oil").toggle_float)
+    end,
+  },
+  {
     "ray-x/lsp_signature.nvim",
     config = function()
       require("lsp_signature").setup({})
@@ -86,7 +136,6 @@ return {
     "rhysd/git-messenger.vim",
     cmd = { "GitMessenger" },
     keys = { { "<leader>gm", "<cmd>GitMessenger<cr>", desc = "Git Messenger" } },
-
   },
   { "rhysd/committia.vim" }, -- TODO
 
@@ -127,9 +176,9 @@ return {
     opts = function()
       local configuration = vim.fn["gruvbox_material#get_configuration"]()
       local palette = vim.fn["gruvbox_material#get_palette"](
-      configuration.background,
-      configuration.foreground,
-      configuration.colors_override
+        configuration.background,
+        configuration.foreground,
+        configuration.colors_override
       )
 
       local colors = {

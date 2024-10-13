@@ -17,9 +17,94 @@ return {
     end,
   },
 
+  {
+    "ThePrimeagen/harpoon",
+    branch = "harpoon2",
+    config = function()
+      local harpoon = require("harpoon")
+      harpoon:setup()
+
+      vim.keymap.set("n", "<space>ha", function()
+        harpoon:list():add()
+      end)
+      -- TODO: do I need telescope picker to list things?
+      vim.keymap.set("n", "<space>hl", function()
+        harpoon.ui:toggle_quick_menu(harpoon:list())
+      end)
+
+      -- use 1to5 like WM
+      for _, idx in ipairs({ 1, 2, 3, 4, 5 }) do
+        vim.keymap.set("n", string.format("<space>h%d", idx), function()
+          harpoon:list():select(idx)
+        end)
+      end
+      vim.keymap.set("n", "<space>hp", function()
+        harpoon:list():prev()
+      end)
+      vim.keymap.set("n", "<space>hn", function()
+        harpoon:list():next()
+      end)
+    end,
+  },
+
   { "AndrewRadev/splitjoin.vim" },
+  {
+    "Wansmer/treesj",
+    config = function()
+      require("treesj").setup({
+        use_default_keymaps = false,
+      })
+
+      local langs = require("treesj.langs")["presets"]
+
+      -- fallback
+      vim.api.nvim_create_autocmd({ "FileType" }, {
+        pattern = "*",
+        callback = function()
+          local opts = { buffer = true }
+          if langs[vim.bo.filetype] then
+            vim.keymap.set("n", "gS", "<Cmd>TSJSplit<CR>", opts)
+            vim.keymap.set("n", "gJ", "<Cmd>TSJJoin<CR>", opts)
+          else
+            vim.keymap.set("n", "gS", "<Cmd>SplitjoinSplit<CR>", opts)
+            vim.keymap.set("n", "gJ", "<Cmd>SplitjoinJoin<CR>", opts)
+          end
+        end,
+      })
+    end,
+  },
+
   { "tpope/vim-abolish" },
-  { "tpope/vim-surround" },
+  -- { "tpope/vim-surround" },
+  {
+    "echasnovski/mini.surround",
+    opts = {},
+  },
+  {
+    "echasnovski/mini.ai",
+    config = function()
+      -- TODO: Check if this needs dependencies on TS
+      local spec_ts = require("mini.ai").gen_spec.treesitter
+      require("mini.ai").setup({
+        F = spec_ts({
+          a = "@function.outer",
+          i = "@function.inner",
+        }),
+        C = spec_ts({
+          a = "@class.outer",
+          i = "@class.inner",
+        }),
+        v = spec_ts({
+          a = "@variable.outer",
+          i = "@variable.inner",
+        }),
+        c = spec_ts({
+          a = { "@conditional.outer", "@loop.outer" },
+          i = { "@conditional.inner", "@loop.inner" },
+        }),
+      })
+    end,
+  },
 
   {
     "L3MON4D3/LuaSnip",
@@ -133,7 +218,7 @@ return {
           ["<C-y>"] = cmp.mapping.confirm({
             behavior = cmp.ConfirmBehavior.Replace, -- default is Insert
             select = true,
-          }),                                       -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+          }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
           ["<tab>"] = cmp.config.disable,
         }),
         sources = cmp.config.sources({
@@ -142,7 +227,7 @@ return {
           { name = "luasnip" },
           { name = "copilot" },
           { name = "path" },
-          { name = "buffer",  keyword_length = 5 },
+          { name = "buffer", keyword_length = 5 },
         }),
         formatting = {
           format = require("lspkind").cmp_format({
@@ -217,15 +302,5 @@ return {
         sources = cmp.config.sources({ { name = "path" } }, { { name = "cmdline" } }),
       })
     end,
-  },
-
-  {
-    "zbirenbaum/copilot.lua",
-    cmd = "Copilot",
-    -- build = ":Copilot auth",
-    opts = {
-      suggestion = { enabled = false },
-      panel = { enabled = false },
-    },
   },
 }
