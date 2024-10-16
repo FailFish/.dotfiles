@@ -5,11 +5,11 @@
     // "width": 1280, // Waybar width
     "spacing": 10, // Gaps between modules
     // Choose the order of the modules
-    "modules-left": ["wlr/workspaces", "custom/media"],
+    "modules-left": ["hyprland/workspaces", "custom/media"],
     "modules-center": ["hyprland/window"],
     "modules-right": ["pulseaudio", "network", "cpu", "memory", "temperature", "battery", "clock", "tray"],
     // Modules configuration
-    "wlr/workspaces": {
+    "hyprland/workspaces": {
         "all-outputs": true,
         "format": "{name}: {icon}",
         "format-icons": {

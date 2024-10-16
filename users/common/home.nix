@@ -245,6 +245,11 @@ in
     icons = true;
   };
 
+  programs.yazi = {
+    enable = true;
+    enableBashInteration = true;
+  };
+
   # accounts.email.accounts = {
   #   utmail = {
   #     address = "taehyun@utexas.edu";
