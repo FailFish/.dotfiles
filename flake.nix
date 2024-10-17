@@ -15,9 +15,13 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, darwin, home-manager, ... }@inputs:
+  outputs = { self, nixpkgs, darwin, home-manager, disko, ... }@inputs:
     let
       # https://github.com/Misterio77/nix-starter-configs/issues/29#issuecomment-1516881655
       # instead of passing `overlays`
@@ -59,6 +63,8 @@
 
       nixosConfigurations = {
         ion = mkNixos [ ./machines/ion.nix ];
+
+        s76 = mkNixos [ disko.nixosModules.disko ./machines/s76.nix ];
 
         vm-x86 = mkNixos [ ./machines/vm-x86.nix ];
 
