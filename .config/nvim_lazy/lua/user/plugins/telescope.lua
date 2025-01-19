@@ -65,6 +65,7 @@ end
 return {
   {
     "nvim-telescope/telescope.nvim",
+    enabled = false,
     cmd = "Telescope",
     dependencies = {
       {
@@ -292,28 +293,6 @@ return {
 
       telescope.load_extension("fzf")
       -- telescope.load_extension "notify"
-    end,
-  },
-  {
-    "nvim-telescope/telescope-dap.nvim",
-    cmd = "Telescope dap",
-    dependencies = {
-      "nvim-telescope/telescope.nvim",
-      "mfussenegger/nvim-dap",
-    },
-    config = function()
-      require("telescope").load_extension("dap")
-    end,
-  },
-  {
-    "zane-/cder.nvim",
-    cmd = "Telescope cder",
-    dependencies = "nvim-telescope/telescope.nvim",
-    keys = {
-      { "<leader>fc", "<cmd>Telescope cder<cr>", desc = "Fast CD" },
-    },
-    config = function()
-      require("telescope").load_extension("cder")
     end,
   },
 }
