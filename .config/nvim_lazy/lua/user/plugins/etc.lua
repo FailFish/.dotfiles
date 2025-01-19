@@ -58,71 +58,61 @@ return {
     "LnL7/vim-nix",
     ft = "nix",
   },
-  {
-    "saecki/crates.nvim",
-    event = { "BufRead Cargo.toml" },
-    keys = {
-      -- stylua: ignore start
-      { "<leader>ct", function() require("crates").toggle() end, desc = "Crates Toggle" },
-      { "<leader>cr", function() require("crates").reload() end , desc = "Crates Reload" },
-      { "<leader>cv", function() require("crates").show_versions_popup() end, desc = "Crates: Show Versions" },
-      { "<leader>cd", function() require("crates").show_dependencies_popup() end, desc = "Crates: Show Dependencies" },
-      { "<leader>cF", function() require("crates").show_features_popup() end, desc = "Crates: Show Features" },
-      { "<leader>cR", function() require("crates").open_repository() end, desc = "Crates: Open Repo"   },
-      { "<leader>cD", function() require("crates").open_documentation() end, desc = "Crates: Open Docs"   },
-      { "<leader>cC", function() require("crates").open_crates_io() end, desc = "Crates: Open crates.io"   },
-      -- Code Action: update/upgrade (single/multiple) crates
-      -- stylua: ignore end
-    },
-    opts = {
-      null_ls = {
-        enabled = true,
-        name = "crates.nvim",
-      },
-    },
-    config = function(_, opts)
-      local function show_documentation()
-        local filetype = vim.bo.filetype
-        if vim.tbl_contains({ "vim", "help" }, filetype) then
-          vim.cmd("h " .. vim.fn.expand("<cword>"))
-        elseif vim.tbl_contains({ "man" }, filetype) then
-          vim.cmd("Man " .. vim.fn.expand("<cword>"))
-        elseif vim.fn.expand("%:t") == "Cargo.toml" and require("crates").popup_available() then
-          require("crates").show_popup()
-        else
-          vim.lsp.buf.hover()
-        end
-      end
-
-      vim.keymap.set("n", "K", show_documentation, { noremap = true, silent = true }) -- TODO: how about 'keys'?
-
-      vim.api.nvim_create_autocmd("BufRead Cargo.toml", {
-        group = vim.api.nvim_create_augroup("CmpSourceCargo", { clear = true }),
-        pattern = "Cargo.toml",
-        callback = function()
-          require("cmp").setup.buffer({ sources = { { name = "crates" } } })
-        end,
-      })
-
-      require("crates").setup(opts)
-    end,
-  },
-  {
-    "mickael-menu/zk-nvim",
-    cmd = { "ZkNew", "ZkNotes" },
-    ft = "markdown",
-    keys = {
-      { "<leader>zn", "<cmd>ZkNew { title = vim.fn.input('Title: ') }<CR>", desc = "Zk: New Note" },
-      { "<leader>zo", "<cmd>ZkNotes { sort = { 'modified' } }<CR>", desc = "Zk: Open Notes" },
-      {"<leader>zt", "<Cmd>ZkTags<CR>", desc = "Zk: Open Tagged Notes" },
-      {"<leader>zf", "<Cmd>ZkNotes { sort = { 'modified' }, match = { vim.fn.input('Search: ') } }<CR>", desc = "Zk: Search Word" },
-      {"<leader>zf", ":'<,'>ZkMatch<CR>", desc = "Zk: Search Visual Selection" },
-    },
-    opts = {
-      picker = "telescope",
-    },
-    config = function(_, opts)
-      require("zk").setup(opts)
-    end
-  },
+  -- {
+  --   "saecki/crates.nvim",
+  --   event = { "BufRead Cargo.toml" },
+  --   keys = {
+  --     -- stylua: ignore start
+  --     { "<leader>ct", function() require("crates").toggle() end, desc = "Crates Toggle" },
+  --     { "<leader>cr", function() require("crates").reload() end , desc = "Crates Reload" },
+  --     { "<leader>cv", function() require("crates").show_versions_popup() end, desc = "Crates: Show Versions" },
+  --     { "<leader>cd", function() require("crates").show_dependencies_popup() end, desc = "Crates: Show Dependencies" },
+  --     { "<leader>cF", function() require("crates").show_features_popup() end, desc = "Crates: Show Features" },
+  --     { "<leader>cR", function() require("crates").open_repository() end, desc = "Crates: Open Repo"   },
+  --     { "<leader>cD", function() require("crates").open_documentation() end, desc = "Crates: Open Docs"   },
+  --     { "<leader>cC", function() require("crates").open_crates_io() end, desc = "Crates: Open crates.io"   },
+  --     -- Code Action: update/upgrade (single/multiple) crates
+  --     -- stylua: ignore end
+  --   },
+  --   opts = {
+  --     lsp = {
+  --       enabled = true,
+  --       on_attach = function(client, buffer)
+  --         require("user.configs.keymaps").on_attach(client, buffer)
+  --       end,
+  --       actions = true,
+  --       completion = true,
+  --       hover = true,
+  --     },
+  --     cmp = {
+  --       enabled = true,
+  --     },
+  --   },
+  --   config = function(_, opts)
+  --     local function show_documentation()
+  --       local filetype = vim.bo.filetype
+  --       if vim.tbl_contains({ "vim", "help" }, filetype) then
+  --         vim.cmd("h " .. vim.fn.expand("<cword>"))
+  --       elseif vim.tbl_contains({ "man" }, filetype) then
+  --         vim.cmd("Man " .. vim.fn.expand("<cword>"))
+  --       elseif vim.fn.expand("%:t") == "Cargo.toml" and require("crates").popup_available() then
+  --         require("crates").show_popup()
+  --       else
+  --         vim.lsp.buf.hover()
+  --       end
+  --     end
+  --
+  --     vim.keymap.set("n", "K", show_documentation, { noremap = true, silent = true }) -- TODO: how about 'keys'?
+  --
+  --     vim.api.nvim_create_autocmd("BufRead Cargo.toml", {
+  --       group = vim.api.nvim_create_augroup("CmpSourceCargo", { clear = true }),
+  --       pattern = "Cargo.toml",
+  --       callback = function()
+  --         require("cmp").setup.buffer({ sources = { { name = "crates" } } })
+  --       end,
+  --     })
+  --
+  --     require("crates").setup(opts)
+  --   end,
+  -- },
 }

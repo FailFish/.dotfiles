@@ -24,7 +24,8 @@ return {
         "folke/neodev.nvim",
         opts = { experimental = { pathStrict = true } },
       },
-      { "hrsh7th/cmp-nvim-lsp" },
+      -- { "hrsh7th/cmp-nvim-lsp" },
+      { "saghen/blink.cmp" },
       { "ray-x/lsp_signature.nvim" },
 
       { "b0o/SchemaStore.nvim" },
@@ -70,8 +71,9 @@ return {
       vim.diagnostic.config(opts.diagnostics)
 
       local servers = opts.servers
-      local capabilities =
-        require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
+      -- local capabilities =
+      --   require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
+      local capabilities = require('blink.cmp').get_lsp_capabilities()
 
       local function setup(server)
         local server_opts = vim.tbl_deep_extend("force", {
