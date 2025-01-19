@@ -247,7 +247,7 @@ in
 
   programs.yazi = {
     enable = true;
-    enableBashInteration = true;
+    enableBashIntegration = true;
   };
 
   # accounts.email.accounts = {
