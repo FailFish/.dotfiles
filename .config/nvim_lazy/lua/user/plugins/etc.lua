@@ -55,6 +55,22 @@ return {
     end,
   },
   {
+    "MeanderingProgrammer/render-markdown.nvim",
+    dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' },
+    ft = "markdown",
+    config = function()
+      require("render-markdown").setup({
+        sign = { enabled = false },
+        file_types = { "markdown" },
+        code = {
+          width = "block",
+          right_pad = 4,
+          position = "right",
+        },
+      })
+    end,
+  },
+  {
     "LnL7/vim-nix",
     ft = "nix",
   },
