@@ -34,6 +34,10 @@ in
     '';
   };
   # home.file.".bashrc".source = rootdir + "/.bashrc";
+  programs.starship = {
+    enable = true;
+    enableBashIntegration = true;
+  };
 
   programs.tmux = {
     enable = true;
