@@ -174,7 +174,7 @@ return {
 
   {
     'saghen/blink.cmp',
-    dependencies = 'rafamadriz/friendly-snippets',
+    dependencies = { 'L3MON4D3/LuaSnip' },
 
     version = '*',
     event = { "InsertEnter", "CmdlineEnter" },
@@ -182,11 +182,17 @@ return {
     opts = {
       keymap = { preset = 'default' },
 
+      completion = {
+        list = { selection = { preselect = false, auto_insert = true } },
+        -- ghost_text = { enabled = true }
+      },
       appearance = {
         use_nvim_cmp_as_default = true,
         nerd_font_variant = 'mono'
       },
 
+      -- signature = { enabled = true },
+      snippets = { preset = 'luasnip' },
       sources = {
         default = { 'lsp', 'path', 'snippets', 'buffer' },
       },
