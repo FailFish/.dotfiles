@@ -70,9 +70,6 @@ in
     shell = pkgs.bashInteractive;
   };
 
-  # I don't know what this is
-  services.activate-system.enable = true;
-
   # Auto upgrade nix packages and the daemon services.
   services.nix-daemon.enable = true;
   nix = {
@@ -87,14 +84,12 @@ in
   # programs.info.enable = true;
   # programs.man.enable = true;
   programs.nix-index.enable = true;
-  programs.vim.enable = true;
-  # programs.vim.enableSensible = true;
 
   fonts = {
-    fontDir.enable = true;
-    fonts = with pkgs; [
+    packages = with pkgs; [
       # https://nixos.wiki/wiki/Fonts
-      (nerdfonts.override { fonts = [ "RobotoMono" "JetBrainsMono" ]; })
+      nerd-fonts.roboto-mono
+      nerd-fonts.jetbrains-mono
     ];
   };
 

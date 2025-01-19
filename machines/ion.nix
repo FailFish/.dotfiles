@@ -111,7 +111,8 @@
     fontDir.enable = true;
     packages = with pkgs; [
       # https://nixos.wiki/wiki/Fonts
-      (nerdfonts.override { fonts = [ "RobotoMono" "JetBrainsMono" ]; })
+      nerd-fonts.roboto-mono
+      nerd-fonts.jetbrains-mono
       material-design-icons
       nanum
 

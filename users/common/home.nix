@@ -88,7 +88,7 @@ in
       shellcheck
 
       # python3
-      nodePackages.pyright
+      pyright
       black
       isort
       python3Packages.flake8
@@ -217,7 +217,7 @@ in
   programs.zathura.enable = true;
   xdg.configFile."zathura".source = cfgdir + "/zathura";
 
-  programs.sioyek.enable = true;
+  # programs.sioyek.enable = true;
 
   programs.git = {
     enable = true;
@@ -240,9 +240,10 @@ in
 
   programs.eza = {
     enable = true;
+    enableBashIntegration = true;
     extraOptions = [ "--group-directories-first" "--header" ];
     git = true;
-    icons = true;
+    icons = "auto";
   };
 
   programs.yazi = {
