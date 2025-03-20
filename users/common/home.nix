@@ -32,6 +32,9 @@ in
         eval "$(/opt/homebrew/bin/brew shellenv)"
       fi
     '';
+    sessionVariables = {
+      MANPAGER="nvim +Man!";
+    };
   };
   # home.file.".bashrc".source = rootdir + "/.bashrc";
   programs.starship = {
@@ -282,6 +285,8 @@ in
     enable = true;
     vimKeys = true;
   };
+
+  programs.tealdeer.enable = true;
 
   # Issues: not supported in aarch64-darwin
   # programs.firefox = {

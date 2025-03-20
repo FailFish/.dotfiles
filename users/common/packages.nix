@@ -23,7 +23,6 @@ with pkgs; [
   ripgrep
   sd
   texlive.combined.scheme-full
-  tldr
   tokei
   tree
   unzip
