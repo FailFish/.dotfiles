@@ -70,8 +70,6 @@ in
     shell = pkgs.bashInteractive;
   };
 
-  # Auto upgrade nix packages and the daemon services.
-  services.nix-daemon.enable = true;
   nix = {
     package = pkgs.nix;
     settings.experimental-features = [ "nix-command" "flakes" ];
