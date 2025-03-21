@@ -224,11 +224,31 @@ in
   programs.zathura.enable = true;
   xdg.configFile."zathura".source = cfgdir + "/zathura";
 
-  # programs.sioyek.enable = true;
+  programs.sioyek.enable = true;
 
   programs.git = {
     enable = true;
     delta.enable = true;
+    aliases = {
+      graph = "log --decorate --oneline --graph";
+    };
+    userName = "Taehyun Noh";
+    extraConfig = {
+      init.defaultBranch = "main";
+      merge.conflictStyle = "zdiff3";
+      commit.verbose = true;
+      diff.algorithm = "histogram";
+      log.date = "iso";
+      column.ui = "auto";
+      branch.sort = "committerdate";
+      # Automatically track remote branch
+      # push.autoSetupRemote = true;
+      rerere.enabled = true;
+      transfer.fsckobjects = true;
+      fetch.fsckobjects = true;
+      receive.fsckObjects = true;
+      merge.tool = "nvimdiff";
+    };
   };
   xdg.configFile."git".source = cfgdir + "/git";
 
@@ -256,34 +276,6 @@ in
   programs.yazi = {
     enable = true;
     enableBashIntegration = true;
-  };
-
-  # accounts.email.accounts = {
-  #   utmail = {
-  #     address = "taehyun@utexas.edu";
-  #     flavor = "gmail";
-  #     folders = { };
-  #   };
-  #   utcsmail = {
-  #     address = "taehyun@cs.utexas.edu";
-  #     flavor = "plain";
-  #     folders = { };
-  #   };
-  #   gmail-kr = {
-  #     address = "likeinstein42@gmail.com";
-  #     flavor = "gmail";
-  #     folders = { };
-  #   };
-  #   gmail-us = {
-  #     address = "this.taehyun@gmail.com";
-  #     flavor = "gmail";
-  #     folders = { };
-  #   };
-  # };
-  #
-  programs.neomutt = {
-    enable = true;
-    vimKeys = true;
   };
 
   programs.tealdeer.enable = true;
