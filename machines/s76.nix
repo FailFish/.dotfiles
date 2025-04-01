@@ -1,6 +1,7 @@
 { inputs, outputs, lib, config, pkgs, ... }: {
   imports = [
     ./s76-disk-config.nix
+    ./s76-hardware-configuration.nix
   ];
 
   # boot.loader.systemd-boot.enable = true;
@@ -8,23 +9,24 @@
     enable = true;
     efiSupport = true;
     useOSProber = true;
-    # disko will add devices
-    # device = "nodev";
+    device = "nodev";
   };
   boot.loader.efi.canTouchEfiVariables = true;
 
-  users.users.taehyun = {
+  users.users.noah = {
     isNormalUser = true;
-    description = "taehyun";
+    description = "noah";
     openssh.authorizedKeys.keys = [
       # TODO: Add OpenSSH key(s) here, if you plan on using SSH to connect
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBxvfY93G6+OsoEUyWzNBfhgPx8c5H84qSEJ3CbC7YX3 noah@noahMBA"
       # "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEBuydnea67JVePf4Y9nAxu+G/fwIJxyAkAAt3QWNoha noah@admin"
     ];
+    group = "noah";
     extraGroups = [ "video" "wheel" ];
     shell = pkgs.bashInteractive;
     packages = with pkgs; [];
   };
+  users.groups.noah = {};
 
   services.openssh = {
     enable = true;
@@ -34,10 +36,31 @@
     };
   };
 
-  networking.hostName = "taehyun";
+  networking = {
+    hostName = "taehyun";
+    interfaces = {
+      enp3s0 = {
+        ipv4 = {
+          addresses = [
+            {
+              address = "128.83.143.95";
+              prefixLength = 22;
+            }
+          ];
+        };
+      };
+    };
+    defaultGateway = {
+      address = "128.83.143.1";
+      interface = "enp3s0";
+    };
+    nameservers = [ "128.83.120.181" "128.83.120.30" ];
+  };
   networking.wireless = {
     enable = true;
-    environmentFile = "/home/taehyun/wireless.env";
+    # TODO: Secrets are now handled by the `networking.wireless.secretsFile` and
+    # `networking.wireless.networks.<name>.pskRaw` options.
+    # environmentFile = "/home/taehyun/wireless.env";
     userControlled.enable = true;
 
     networks = {
@@ -57,7 +80,7 @@
   # networking.interfaces.wlo1.wakeOnLan.enable = true;
 
   # Set your time zone.
-  time.timeZone = "US/Austin";
+  time.timeZone = "US/Central";
 
   # Select internationalisation properties.
 
@@ -192,6 +215,7 @@
     brave
   ];
 
+  services.printing.enable = true;
   services.pipewire = {
     enable = true;
     alsa.enable = true;
@@ -224,7 +248,7 @@
 
   # This option will expose GPUs on containers with the `--device` CLI option.
   # supported by Docker >= 25, Podman >= 3.2.0
-  virtualisation.containers.cdi.dynamic.nvidia.enable = true;
+  # virtualisation.containers.cdi.dynamic.nvidia.enable = true;
   virtualisation.podman = {
     enable = true;
     defaultNetwork.settings = {

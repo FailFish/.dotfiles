@@ -47,7 +47,7 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.users.noah = import ./users/noah.nix;
+            home-manager.users.noah = ./users/noah.nix;
 
             # Optionally, use home-manager.extraSpecialArgs to pass
             # arguments to home.nix
@@ -61,9 +61,9 @@
       # homeManagerModules = ...;
 
       nixosConfigurations = {
-        ion = mkNixos [ ./machines/ion.nix ];
-
         s76 = mkNixos [ disko.nixosModules.disko ./machines/s76.nix ];
+
+        ion = mkNixos [ ./machines/ion.nix ];
 
         vm-x86 = mkNixos [ ./machines/vm-x86.nix ];
 
