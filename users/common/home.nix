@@ -280,6 +280,10 @@ in
 
   programs.tealdeer.enable = true;
 
+  programs.zellij = {
+    enable = true;
+  };
+
   # Issues: not supported in aarch64-darwin
   # programs.firefox = {
   #   enable = true;
