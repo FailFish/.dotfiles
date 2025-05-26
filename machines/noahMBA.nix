@@ -17,6 +17,9 @@ in
     config.allowUnsupportedSystem = true;
   };
 
+  # > The user used for options that previously applied to the user running darwin-rebuild.
+  # > This is a transition mechanism as nix-darwin reorganizes its options and will eventually be unnecessary and removed.
+  system.primaryUser = "noah";
   system.stateVersion = 4;
   system.defaults = {
     dock = {
