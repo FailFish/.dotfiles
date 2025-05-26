@@ -73,7 +73,7 @@ return {
       local servers = opts.servers
       -- local capabilities =
       --   require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
-      local capabilities = require('blink.cmp').get_lsp_capabilities()
+      local capabilities = require("blink.cmp").get_lsp_capabilities()
 
       local function setup(server)
         local server_opts = vim.tbl_deep_extend("force", {
@@ -121,22 +121,27 @@ return {
         desc = "Format buffer",
       },
     },
-    formatters_by_ft = {
-      lua = { "stylua" },
-      -- Conform will run multiple formatters sequentially
-      rust = { "rustfmt", lsp_format = "fallback" },
-      python = { "isort", "black" },
-      go = { "goimports", "gofmt" },
-      bash = { "shfmt" },
-      nix = { "nixpkg_fmt" },
-      -- filetypes without any formatters specified
-      ["_"] = { "trim_whitespace" },
+    opts = {
+      formatters_by_ft = {
+        lua = { "stylua" },
+        -- Conform will run multiple formatters sequentially
+        rust = { "rustfmt", lsp_format = "fallback" },
+        python = { "isort", "black" },
+        go = { "goimports", "gofmt" },
+        bash = { "shfmt" },
+        nix = { "nixpkg_fmt" },
+        -- filetypes without any formatters specified
+        ["_"] = { "trim_whitespace" },
+      },
+      default_format_opts = {
+        lsp_format = "fallback",
+      },
     },
   },
 
   {
     "mfussenegger/nvim-lint",
-    config = function ()
+    config = function()
       require("lint").linters_by_ft = {
         bash = { "shellcheck" },
         nix = { "statix" },

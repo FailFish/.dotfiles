@@ -12,8 +12,9 @@ end
 
 function picker.adjust_cwd_and_call(command, opts)
   opts = opts or {}
-  local fzf_lua = require('fzf-lua')
-  local git_root = fzf_lua.path.git_root()
+  local fzf_lua = require("fzf-lua")
+  local path = require("fzf-lua.path")
+  local git_root = path.git_root({})
   local search_dir = opts.cwd == true and vim.loop.cwd() or git_root
   if command == "files" and git_root then
     command = "git_files"
@@ -27,21 +28,39 @@ return {
     cmd = "FzfLua",
     dependencies = { "nvim-tree/nvim-web-devicons" },
     opts = {
+      winopts = {
+        -- disable backdrop
+        backdrop = 100,
+      },
       previewers = {
         builtin = {
           -- The previewer will not add syntax highlighting to files larger than 100KB
           syntax_limit_b = 1024 * 100, -- 100KB
         },
-      }
+      },
+      keymap = {
+        fzf = {
+          ["ctrl-z"] = "abort",
+          ["ctrl-d"] = "half-page-down",
+          ["ctrl-u"] = "half-page-up",
+          -- ["shift-d"]  = "preview-page-down",
+          -- ["shift-up"]    = "preview-page-up",
+        },
+      },
+      -- actions = { },
     },
     keys = {
       -- find
       { "<leader>f;", "<cmd>FzfLua resume<cr>", desc = "Resume" },
       { "<leader>f:", "<cmd>FzfLua command_history<cr>", desc = "Command History" },
       { '<leader>f"', "<cmd>FzfLua registers<cr>", desc = "Registers" },
-      { '<leader>f/', "<cmd>FzfLua search_history<cr>", desc = "Search History" },
+      { "<leader>f/", "<cmd>FzfLua search_history<cr>", desc = "Search History" },
       { "<leader>f?", "<cmd>FzfLua keymaps<cr>", desc = "Key Maps" },
-      { "<leader>fb", "<cmd>FzfLua buffers sort_mru=true sort_lastused=true<cr>", desc = "Buffers" },
+      {
+        "<leader>fb",
+        "<cmd>FzfLua buffers sort_mru=true sort_lastused=true<cr>",
+        desc = "Buffers",
+      },
       { "<leader>ff", picker("files"), desc = "Find Files (root dir)" },
       { "<leader>fF", picker("files", { cwd = true }), desc = "Find Files (cwd)" },
       { "<leader>fr", "<cmd>FzfLua oldfiles<cr>", desc = "Recent" },
@@ -81,5 +100,5 @@ return {
       { "<leader>sw", picker("grep_visual"), mode = "v", desc = "Selection (root dir)" },
       { "<leader>sW", picker("grep_visual", { cwd = true }), mode = "v", desc = "Selection (cwd)" },
     },
-  }
+  },
 }
