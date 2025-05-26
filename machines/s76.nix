@@ -103,7 +103,7 @@
 
       # Xorg defaults
       noto-fonts
-      noto-fonts-cjk
+      noto-fonts-cjk-sans
       noto-fonts-emoji
       font-awesome
       source-han-sans
@@ -208,7 +208,7 @@
 
   services = {
     dbus.packages = [ pkgs.gcr ];
-    udev.packages = [ pkgs.gnome.gnome-settings-daemon ];
+    udev.packages = [ pkgs.gnome-settings-daemon ];
   };
 
   xdg.portal = {

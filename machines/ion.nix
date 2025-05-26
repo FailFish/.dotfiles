@@ -14,30 +14,31 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = "ion";
-  networking.wireless = {
-    enable = true;
-    environmentFile = "/home/noah/wireless.env";
-    userControlled.enable = true;
-
-    networks = {
-      SSLAB-5G = {
-        psk = "@PSK_LAB@";
-      };
-      Nobody-5G = {
-        psk = "@PSK_MIRROR@";
-      };
-      KT_GiGA_5G_89B3 = {
-        psk = "@PSK_HOMEKT@";
-      };
-      SKKU.auth = ''
-        ssid="SKKU"
-        eap=TTLS
-        identity="dove0255@skku.edu"
-        password="@PSK_SKKU_PUBLIC@"
-        phase2="auth=PAP"
-      '';
-    };
-  };
+  # TODO: environmentFile is obsolete.
+  # networking.wireless = {
+  #   enable = true;
+  #   environmentFile = "/home/noah/wireless.env";
+  #   userControlled.enable = true;
+  #
+  #   networks = {
+  #     SSLAB-5G = {
+  #       psk = "@PSK_LAB@";
+  #     };
+  #     Nobody-5G = {
+  #       psk = "@PSK_MIRROR@";
+  #     };
+  #     KT_GiGA_5G_89B3 = {
+  #       psk = "@PSK_HOMEKT@";
+  #     };
+  #     SKKU.auth = ''
+  #       ssid="SKKU"
+  #       eap=TTLS
+  #       identity="dove0255@skku.edu"
+  #       password="@PSK_SKKU_PUBLIC@"
+  #       phase2="auth=PAP"
+  #     '';
+  #   };
+  # };
   # I found systemd.link's WOL does not work on wireless interfaces.
   # networking.interfaces.wlo1.wakeOnLan.enable = true;
 
@@ -118,7 +119,7 @@
 
       # Xorg defaults
       noto-fonts
-      noto-fonts-cjk
+      noto-fonts-cjk-sans
       noto-fonts-emoji
       font-awesome
       source-han-sans
@@ -248,7 +249,7 @@
 
   services = {
     dbus.packages = [ pkgs.gcr ];
-    udev.packages = [ pkgs.gnome.gnome-settings-daemon ];
+    udev.packages = [ pkgs.gnome-settings-daemon ];
   };
 
   xdg.portal = {
@@ -264,7 +265,13 @@
 
   # This option will expose GPUs on containers with the `--device` CLI option.
   # supported by Docker >= 25, Podman >= 3.2.0
-  virtualisation.containers.cdi.dynamic.nvidia.enable = true;
+  # TODO: resolve error:
+  # > `nvidia-container-toolkit` requires nvidia drivers:
+  # > set `hardware.nvidia.datacenter.enable`,
+  # > add "nvidia" to `services.xserver.videoDrivers`, or set
+  # > `hardware.nvidia-container-toolkit.suppressNvidiaDriverAssertion` if the
+  # > driver is provided by another NixOS module (e.g. from NixOS-WSL)
+  # virtualisation.containers.cdi.dynamic.nvidia.enable = true;
   virtualisation.podman = {
     enable = true;
     defaultNetwork.settings = {

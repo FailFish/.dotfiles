@@ -5,7 +5,6 @@
     # https://nixos.wiki/wiki/Nix_channels
     # https://discourse.nixos.org/t/differences-between-nix-channels/13998
     nixpkgs.url = "github:nixos/nixpkgs";
-    nixpkgs-stable.url = "github:nixos/nixpkgs/release-23.05";
     darwin = {
       url = "github:lnl7/nix-darwin/master";
       # this line makes darwin uses same version of `nixpkgs` with nixpkgs flake.
@@ -32,7 +31,7 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.users.noah = import ./users/noah-nixos.nix;
+            home-manager.users.noah = ./users/noah-nixos.nix;
 
             # Optionally, use home-manager.extraSpecialArgs to pass
             # arguments to home.nix

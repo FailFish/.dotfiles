@@ -1,4 +1,3 @@
-{ inputs, ... }:
 { inputs, pkgs, ... }:
 let
   rootdir = ./..;
@@ -14,7 +13,7 @@ in
   xdg.configFile."waybar".source = cfgdir + "/waybar";
 
   i18n = {
-    inputMethod = {
+    inputMethod.type = {
       enabled = "kime";
       kime.extraConfig = "
         daemon:
@@ -31,32 +30,33 @@ in
   services.kanshi = {
     enable = true;
     systemdTarget = "graphical-session.target";
-    profiles = {
-      default = {
-        outputs = [
+    settings = [
+      { profile.name = "default";
+        profile.outputs = [
           {
             # check man 5 kanshi
             criteria = "eDP-1";
             status = "enable";
           }
         ];
-      };
+      }
 
-      external-dp = {
-        outputs = [
-          {
-            criteria = "DP-1";
-            status = "enable";
-            scale = 1.5;
-          }
-          {
-            criteria = "eDP-1";
-            status = "disable";
-          }
-        ];
-        exec = "${pkgs.libnotify}/bin/notify-send --expire-time=3000 --urgency=low 'kanshi: profile 'external-dp-1''";
-      };
-    };
+      # WARN: Syntax might be wrong
+      # { profile.name = "external-dp";
+      #   profile.outputs = [
+      #     {
+      #       criteria = "DP-1";
+      #       status = "enable";
+      #       scale = 1.5;
+      #     }
+      #     {
+      #       criteria = "eDP-1";
+      #       status = "disable";
+      #     }
+      #   ];
+      #   exec = "${pkgs.libnotify}/bin/notify-send --expire-time=3000 --urgency=low 'kanshi: profile 'external-dp-1''";
+      # }
+    ];
   };
 
   # NOTE: temporal fix to make `kanshictl` accessible
@@ -64,7 +64,7 @@ in
 
   services.mako = {
     enable = true;
-    font = "JetBrainsMono Nerd Font 10";
+    settings.font = "JetBrainsMono Nerd Font 10";
   };
   programs.waybar.enable = true;
 }
