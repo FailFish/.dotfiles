@@ -65,9 +65,9 @@
 
         ion = mkNixos [ ./machines/ion.nix ];
 
-        vm-x86 = mkNixos [ ./machines/vm-x86.nix ];
-
-        vm-aarch64 = mkNixos [ ./machines/vm-aarch64.nix ];
+        # vm-x86 = mkNixos [ ./machines/vm-x86.nix ];
+        #
+        # vm-aarch64 = mkNixos [ ./machines/vm-aarch64.nix ];
 
       };
 
