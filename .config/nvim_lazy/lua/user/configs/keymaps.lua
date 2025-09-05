@@ -47,11 +47,11 @@ function M.on_attach(client, bufnr)
   vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts("Goto Declaration"))
   vim.keymap.set("n", "gr", "<cmd>FzfLua lsp_references<cr>", opts("Goto References"))
   vim.keymap.set("n", "gI", "<cmd>FzfLua lsp_implementations<cr>", opts("Goto Implementation"))
+  vim.keymap.set("n", "<space>gO", "<cmd>FzfLua lsp_document_symbols<cr>", opts("Document Symbols"))
   vim.keymap.set("n", "<space>gt", "<cmd>FzfLua lsp_type_definitions<cr>", opts("Goto Type Definition"))
 
   vim.keymap.set("n", "K", vim.lsp.buf.hover, opts("Hover"))
   vim.keymap.set("n", "gK", vim.lsp.buf.signature_help, opts("Signature Help"))
-  vim.keymap.set("i", "<c-h>", vim.lsp.buf.signature_help, opts("Signature Help"))
 
   -- vim.api.nvim_create_user_command("Format", function()
   --   vim.lsp.buf.format({ async = true })
@@ -59,8 +59,8 @@ function M.on_attach(client, bufnr)
   -- vim.keymap.set({"n", "v"}, "<space>cf", function () vim.lsp.buf.format({async = true}) end, opts("Format Document"))
 
   -- ACTION commands
-  vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, opts("Rename Symbol"))
-  vim.keymap.set({"n", "v"}, "<space>ca", vim.lsp.buf.code_action, opts("Code Action"))
+  -- vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, opts("Rename Symbol"))
+  -- vim.keymap.set({"n", "v"}, "<space>ca", vim.lsp.buf.code_action, opts("Code Action"))
   vim.keymap.set("n", "<space>cA", function ()
     vim.lsp.buf.code_action({
       context = {

@@ -43,6 +43,8 @@ return {
           ["ctrl-z"] = "abort",
           ["ctrl-d"] = "half-page-down",
           ["ctrl-u"] = "half-page-up",
+          ["ctrl-a"] = "toggle-all",
+          ["ctrl-q"] = "accept", -- send to quickfix list
           -- ["shift-d"]  = "preview-page-down",
           -- ["shift-up"]    = "preview-page-up",
         },
