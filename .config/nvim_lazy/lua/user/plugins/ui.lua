@@ -170,10 +170,18 @@ return {
       require("symbols-outline").setup()
     end,
   },
+
   {
-    "famiu/feline.nvim",
+    "rebelot/heirline.nvim",
+    enabled = true,
     event = "VeryLazy",
     opts = function()
+      local conditions = require("heirline.conditions")
+      local utils = require("heirline.utils")
+
+      --[[ 1. COLOR PALETTE ]]
+      -- This section is copied directly from your feline config to get colors
+      -- from gruvbox-material.
       local configuration = vim.fn["gruvbox_material#get_configuration"]()
       local palette = vim.fn["gruvbox_material#get_palette"](
         configuration.background,
@@ -193,262 +201,376 @@ return {
         cyan = palette.aqua[1],
       }
 
-      local vi_mode_colors = {
-        NORMAL = colors.green,
-        OP = colors.green,
-        INSERT = colors.red,
-        VISUAL = colors.blue,
-        BLOCK = colors.blue,
-        REPLACE = colors.violet,
-        ["V-REPLACE"] = colors.violet,
-        ENTER = colors.cyan,
-        MORE = colors.cyan,
-        SELECT = colors.orange,
-        COMMAND = colors.green,
-        SHELL = colors.green,
-        TERM = colors.green,
-        NONE = colors.yellow,
+      local ViMode = {
+        -- Use a dictionary to map mode names to colors and text
+        init = function(self)
+          self.mode = vim.api.nvim_get_mode().mode
+        end,
+        static = {
+          -- from astronvim
+          mode_names = {
+            ["n"] = { "NORMAL", "normal" },
+            ["no"] = { "OP", "normal" },
+            ["nov"] = { "OP", "normal" },
+            ["noV"] = { "OP", "normal" },
+            ["no"] = { "OP", "normal" },
+            ["niI"] = { "NORMAL", "normal" },
+            ["niR"] = { "NORMAL", "normal" },
+            ["niV"] = { "NORMAL", "normal" },
+            ["i"] = { "INSERT", "insert" },
+            ["ic"] = { "INSERT", "insert" },
+            ["ix"] = { "INSERT", "insert" },
+            ["t"] = { "TERM", "terminal" },
+            ["nt"] = { "TERM", "terminal" },
+            ["v"] = { "VISUAL", "visual" },
+            ["vs"] = { "VISUAL", "visual" },
+            ["V"] = { "LINES", "visual" },
+            ["Vs"] = { "LINES", "visual" },
+            [""] = { "BLOCK", "visual" },
+            ["s"] = { "BLOCK", "visual" },
+            ["R"] = { "REPLACE", "replace" },
+            ["Rc"] = { "REPLACE", "replace" },
+            ["Rx"] = { "REPLACE", "replace" },
+            ["Rv"] = { "V-REPLACE", "replace" },
+            ["s"] = { "SELECT", "visual" },
+            ["S"] = { "SELECT", "visual" },
+            [""] = { "BLOCK", "visual" },
+            ["c"] = { "COMMAND", "command" },
+            ["cv"] = { "COMMAND", "command" },
+            ["ce"] = { "COMMAND", "command" },
+            ["r"] = { "PROMPT", "inactive" },
+            ["rm"] = { "MORE", "inactive" },
+            ["r?"] = { "CONFIRM", "inactive" },
+            ["!"] = { "SHELL", "inactive" },
+            ["null"] = { "null", "inactive" },
+          },
+          mode_colors = {
+            ["normal"] = colors.green,
+            ["insert"] = colors.red,
+            ["terminal"] = colors.cyan,
+            ["visual"] = colors.blue,
+            ["replace"] = colors.violet,
+            ["command"] = colors.orange,
+            ["inactive"] = colors.yellow,
+          }
+        },
+        provider = function(self)
+          return " " .. (self.mode_names[self.mode][1] or "??") .. " "
+        end,
+        hl = function(self)
+          -- local mode = self.mode:sub(1, 1) -- get only the first mode character
+          local key = self.mode_names[self.mode][2]
+          return { fg = self.mode_colors[key] or colors.fg }
+        end,
       }
 
-      local function file_osinfo()
-        local os = vim.bo.fileformat:upper()
-        local icon
-        if os == "UNIX" then
-          icon = " "
-        elseif os == "MAC" then
-          icon = " "
-        else
-          icon = " "
-        end
-        return icon .. os
-      end
+      local FileNameBlock = {
+        -- let's first set up some attributes needed by this component and its children
+        init = function(self)
+          self.filename = vim.api.nvim_buf_get_name(0)
+        end,
+      }
+      -- We can now define some children separately and add them later
+      local WorkDir = {
+        init = function(self)
+          self.icon = (vim.fn.haslocaldir(0) == 1 and "l" or "g") .. " " .. "  "
+          local cwd = vim.fn.getcwd(0)
+          self.cwd = vim.fn.fnamemodify(cwd, ":~")
+        end,
+        hl = { fg = colors.blue },
 
-      local lsp = require("feline.providers.lsp")
-      local vi_mode_utils = require("feline.providers.vi_mode")
+        flexible = 1,
 
-      local comps = {
-        vi_mode = {
-          left = {
-            provider = function()
-              return  --[["  " ]]" " .. vi_mode_utils.get_vim_mode()
-            end,
-            hl = function()
-              local val = {
-                name = vi_mode_utils.get_mode_highlight_name(),
-                fg = vi_mode_utils.get_mode_color(),
-                -- fg = colors.bg
-              }
-              return val
-            end,
-            right_sep = " ",
-          },
-        },
-        file = {
-          info = {
-            provider = {
-              name = "file_info",
-              opts = {
-                type = "relative-short",
-                file_readonly_icon = "  ",
-                file_modified_icon = "",
-                -- file_modified_icon = "",
-              },
-            },
-            hl = {
-              fg = colors.blue,
-              style = "bold",
-            },
-          },
-          encoding = {
-            provider = "file_encoding",
-            left_sep = " ",
-            hl = {
-              fg = colors.violet,
-              style = "bold",
-            },
-          },
-          type = {
-            provider = "file_type",
-          },
-          os = {
-            provider = file_osinfo,
-            left_sep = " ",
-            hl = {
-              fg = colors.violet,
-              style = "bold",
-            },
-          },
-          position = {
-            provider = "position",
-            left_sep = " ",
-            hl = {
-              fg = colors.cyan,
-              -- style = "bold"
-            },
-          },
-        },
-        left_end = {
-          provider = function()
-            return ""
+        {
+          -- evaluates to the full-lenth path
+          provider = function(self)
+            local trail = self.cwd:sub(-1) == "/" and "" or "/"
+            return self.icon .. self.cwd .. trail .." "
           end,
-          hl = {
-            fg = colors.bg,
-            bg = colors.blue,
-          },
         },
-        line_percentage = {
-          provider = "line_percentage",
-          left_sep = " ",
-          hl = {
-            style = "bold",
-          },
+        {
+          -- evaluates to the shortened path
+          provider = function(self)
+            local cwd = vim.fn.pathshorten(self.cwd)
+            local trail = self.cwd:sub(-1) == "/" and "" or "/"
+            return self.icon .. cwd .. trail .. " "
+          end,
         },
-        scroll_bar = {
-          provider = "scroll_bar",
-          left_sep = " ",
-          hl = {
-            fg = colors.blue,
-            style = "bold",
-          },
+        {
+          -- evaluates to "", hiding the component
+          provider = "",
+        }
+      }
+      local FileName = {
+        init = function(self)
+          self.lfilename = vim.fn.fnamemodify(self.filename, ":.")
+          if self.lfilename == "" then self.lfilename = "[No Name]" end
+        end,
+        hl = { fg = colors.blue, bold = true },
+
+        flexible = 2,
+
+        {
+          provider = function(self)
+            return self.lfilename
+          end,
         },
-        diagnos = {
-          err = {
-            provider = "diagnostic_errors",
-            -- left_sep = " ",
-            enabled = function()
-              return lsp.diagnostics_exist("Error")
-            end,
-            hl = {
-              fg = colors.red,
-            },
-            icon = " ",
-          },
-          warn = {
-            provider = "diagnostic_warnings",
-            -- left_sep = " ",
-            enabled = function()
-              return lsp.diagnostics_exist("Warn")
-            end,
-            hl = {
-              fg = colors.yellow,
-            },
-            icon = " ",
-          },
-          info = {
-            provider = "diagnostic_info",
-            -- left_sep = " ",
-            enabled = function()
-              return lsp.diagnostics_exist("Info")
-            end,
-            hl = {
-              fg = colors.blue,
-            },
-            icon = " ",
-          },
-          hint = {
-            provider = "diagnostic_hints", -- lsp.diagnostic_hints(),
-            -- left_sep = " ",
-            enabled = function()
-              return lsp.diagnostics_exist("Hint")
-            end,
-            hl = {
-              fg = colors.cyan,
-            },
-            icon = " ",
-          },
+        {
+          provider = function(self)
+            return vim.fn.pathshorten(self.lfilename)
+          end,
         },
-        lsp = {
-          name = {
-            provider = "lsp_client_names",
-            left_sep = " ",
-            right_sep = " ",
-            icon = "  ",
-            hl = {
-              fg = colors.yellow,
-            },
-          },
+      }
+      local FileIcon = {
+        init = function(self)
+          local filename = self.filename
+          local extension = vim.fn.fnamemodify(filename, ":e")
+          self.icon, self.icon_color =
+            require("nvim-web-devicons").get_icon_color(filename, extension, { default = true })
+        end,
+        provider = function(self)
+          return self.icon and (self.icon .. " ")
+        end,
+        hl = function(self)
+          return { fg = self.icon_color, bold = true }
+        end,
+      }
+
+      local FileFlags = {
+        {
+          condition = function()
+            return vim.bo.modified
+          end,
+          provider = "  ",
+          hl = { fg = colors.blue },
         },
-        git = {
-          branch = {
-            provider = "git_branch",
-            icon = " ",
-            -- icon = " ",
-            left_sep = " ",
-            hl = {
-              fg = colors.violet,
-              style = "bold",
-            },
-          },
-          add = {
-            provider = "git_diff_added",
-            hl = {
-              fg = colors.green,
-            },
-          },
-          change = {
-            provider = "git_diff_changed",
-            hl = {
-              fg = colors.orange,
-            },
-            icon = " 󰝤 ",
-          },
-          remove = {
-            provider = "git_diff_removed",
-            hl = {
-              fg = colors.red,
-            },
-          },
+        {
+          condition = function()
+            return not vim.bo.modifiable or vim.bo.readonly
+          end,
+          provider = "  ",
+          hl = { fg = colors.blue },
         },
       }
 
-      local components = {
-        active = {
-          {
-            comps.vi_mode.left,
-            comps.file.info,
-            comps.git.branch,
-            comps.git.add,
-            comps.git.change,
-            comps.git.remove,
-          },
-          {},
-          {
-            comps.diagnos.err,
-            comps.diagnos.warn,
-            comps.diagnos.hint,
-            comps.diagnos.info,
-            comps.lsp.name,
-            -- comps.file.os,
-            comps.file.position,
-            comps.line_percentage,
-            -- comps.scroll_bar,
-            comps.vi_mode.right,
-          },
+      -- let's add the children to our FileNameBlock component
+      FileNameBlock = utils.insert(
+        FileNameBlock,
+        WorkDir,
+        FileIcon,
+        FileName,
+        FileFlags,
+        { provider = "%<" } -- this means that the statusline is cut here when there's not enough space
+      )
+
+      local Git = {
+        condition = conditions.is_git_repo,
+
+        init = function(self)
+          self.status_dict = vim.b.gitsigns_status_dict
+          self.has_changes = self.status_dict.added ~= 0
+            or self.status_dict.removed ~= 0
+            or self.status_dict.changed ~= 0
+        end,
+
+        hl = { fg = colors.orange },
+
+        { -- git branch name
+          provider = function(self)
+            return " " .. self.status_dict.head
+          end,
+          hl = { fg = colors.violet, bold = true },
         },
-        inactive = {
-          {
-            comps.file.info,
-          },
-          {},
-          {
-            comps.file.position,
-          },
+        -- You could handle delimiters, icons and counts similar to Diagnostics
+        {
+          condition = function(self)
+            return self.has_changes
+          end,
+          provider = "(",
         },
+        {
+          provider = function(self)
+            local count = self.status_dict.added or 0
+            return count > 0 and ("+" .. count)
+          end,
+          hl = { fg = colors.green },
+        },
+        {
+          provider = function(self)
+            local count = self.status_dict.removed or 0
+            return count > 0 and ("-" .. count)
+          end,
+          hl = { fg = colors.red },
+        },
+        {
+          provider = function(self)
+            local count = self.status_dict.changed or 0
+            return count > 0 and ("~" .. count)
+          end,
+          hl = { fg = colors.orange },
+        },
+        {
+          condition = function(self)
+            return self.has_changes
+          end,
+          provider = ")",
+        },
+      }
+
+      local Diagnostics = {
+        condition = conditions.has_diagnostics,
+        -- Fetching custom diagnostic icons
+        static = {
+          error_icon = "",
+          warn_icon = "",
+          info_icon = " ",
+          hint_icon = "󰌵",
+          -- icon = "▫"
+        },
+        init = function(self)
+          self.count = {}
+          local levels = {
+            errors = "ERROR",
+            warnings = "WARN",
+            info = "INFO",
+            hints = "HINT",
+          }
+
+          for k, level in pairs(levels) do
+            self.count[k] =
+              vim.tbl_count(vim.diagnostic.get(0, { severity = vim.diagnostic.severity[level] }))
+          end
+        end,
+
+        update = { "DiagnosticChanged", "BufEnter" },
+
+        {
+          provider = function(self)
+            -- 0 is just another output, we can decide to print it or not!
+            return self.count.errors > 0 and (self.error_icon .. " " .. self.count.errors .. " ")
+          end,
+          hl = { fg = colors.red },
+        },
+        {
+          provider = function(self)
+            return self.count.warnings > 0 and (self.warn_icon .. " " .. self.count.warnings .. " ")
+          end,
+          hl = { fg = colors.yellow },
+        },
+        {
+          provider = function(self)
+            return self.count.info > 0 and (self.info_icon .. " " .. self.count.info .. " ")
+          end,
+          hl = { fg = colors.blue },
+        },
+        {
+          provider = function(self)
+            return self.count.hints > 0 and (self.hint_icon .. " " .. self.count.hints)
+          end,
+          hl = { fg = colors.cyan },
+        },
+      }
+
+      local LSPActive = {
+        condition = conditions.lsp_attached,
+        update = { "LspAttach", "LspDetach" },
+
+        provider = function()
+          local names = {}
+          for i, server in pairs(vim.lsp.get_clients({ bufnr = 0 })) do
+            table.insert(names, server.name)
+          end
+          return "  [" .. table.concat(names, " ") .. "]"
+        end,
+        hl = { fg = colors.yellow },
+      }
+
+      local CursorPos = {
+        provider = " %l:%c",
+        hl = { fg = colors.cyan },
+      }
+      local LinePercentage = {
+        -- %P = percentage through file of displayed window
+        provider = " %P",
+        hl = { bold = true },
+      }
+      local Space = { provider = " " }
+      local Align = { provider = "%=" }
+
+      local DefaultStatusLine = {
+        -- Set the default background and foreground for the entire statusline
+        hl = { fg = colors.fg, bg = colors.bg },
+        -- Left side
+        ViMode,
+        FileNameBlock,
+        Space,
+        Git,
+        -- Middle (aligns the next components to the right)
+        Align,
+        -- -- Right side
+        Diagnostics,
+        Space,
+        LSPActive,
+        CursorPos,
+        LinePercentage,
+      }
+
+      local InactiveStatusLine = {
+        -- An inactive statusline is simpler
+        condition = conditions.is_not_active,
+        hl = { bg = colors.bg, fg = utils.get_highlight("Comment").fg },
+        FileNameBlock,
+        Align,
+        LinePercentage,
+      }
+
+      local FileType = {
+        provider = function()
+          return string.upper(vim.bo.filetype)
+        end,
+        hl = { fg = utils.get_highlight("Type").fg, bold = true },
+      }
+
+      local HelpFileName = {
+        condition = function()
+          return vim.bo.filetype == "help"
+        end,
+        provider = function()
+          local filename = vim.api.nvim_buf_get_name(0)
+          return vim.fn.fnamemodify(filename, ":t")
+        end,
+        hl = { fg = colors.blue },
+      }
+
+      local SpecialStatusline = {
+        condition = function()
+          return conditions.buffer_matches({
+            buftype = { "nofile", "prompt", "help", "quickfix" },
+            filetype = { "^git.*", "fugitive", "Outline" },
+          })
+        end,
+
+        FileType, Space, HelpFileName, Align
+      }
+
+      local StatusLines = {
+        hl = function()
+          if conditions.is_active() then
+            return "StatusLine"
+          else
+            return "StatusLineNC"
+          end
+        end,
+
+        -- the first statusline with no condition, or which condition returns true is used.
+        -- think of it as a switch case with breaks to stop fallthrough.
+        fallthrough = false,
+
+        SpecialStatusline, InactiveStatusLine, DefaultStatusLine,
       }
 
       return {
-        theme = { bg = colors.bg, fg = colors.fg },
-        components = components,
-        vi_mode_colors = vi_mode_colors,
-        force_inactive = {
-          filetypes = {
-            "^packer$",
-            "^Neogit",
-            "^help$",
-          },
-          buftypes = { "terminal" },
-          bufnames = {},
-        },
+        statusline = StatusLines,
       }
     end,
   },
