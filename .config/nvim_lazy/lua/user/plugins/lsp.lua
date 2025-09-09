@@ -35,7 +35,11 @@ return {
       {
         "aznhe21/actions-preview.nvim",
       },
-      { "p00f/clangd_extensions.nvim" },
+      {
+        "p00f/clangd_extensions.nvim",
+        lazy = true,
+        config = function () end, -- don't need a setup() call
+      },
       { "simrat39/rust-tools.nvim" },
     },
     ---@class PluginLspOpts
@@ -123,6 +127,8 @@ return {
     },
     opts = {
       formatters_by_ft = {
+        c = { "clang-format" },
+        cpp = { "clang-format" },
         lua = { "stylua" },
         -- Conform will run multiple formatters sequentially
         rust = { "rustfmt", lsp_format = "fallback" },

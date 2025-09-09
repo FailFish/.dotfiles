@@ -145,6 +145,7 @@ M.servers = {
       "--completion-style=detailed",
       "--malloc-trim",
       "--offset-encoding=utf-16",
+      "--fallback-style=llvm",
       -- "-j=5",
     },
     -- Required for lsp-status
