@@ -27,6 +27,7 @@ with pkgs; [
   tree
   unzip
   vim
+  vectorcode
   wget
   zip
   zk

@@ -75,6 +75,7 @@ in
     # extraConfig = '' '';
 
     extraPackages = with pkgs; [
+      gnumake
 
       # lua
       lua-language-server
@@ -128,91 +129,8 @@ in
     ];
 
 
-    plugins = with pkgs.vimPlugins; if true then [ ] else [
-      # dev
-      plenary-nvim
-      popup-nvim
-      impatient-nvim
-
-      # navigation
-      vim-matchup
-      # leap-nvim
-
-      # editing
-      comment-nvim
-      splitjoin-vim
-      vim-abolish
-      vim-surround
-
-      # lsp
-      nvim-lspconfig
-      symbols-outline-nvim
-      null-ls-nvim
-      lsp_signature-nvim
-      nvim-code-action-menu
-      clangd_extensions-nvim
-      rust-tools-nvim
-
-      # debug
-      # nvim-gdb
-      nvim-dap
-      nvim-dap-ui
-      nvim-dap-virtual-text
-      telescope-dap-nvim
-      nvim-dap-python
-      # one-small-step-for-vimkind # not supported
-
-      # completion-related
-      nvim-cmp
-      cmp-buffer
-      cmp-path
-      cmp-nvim-lua
-      cmp-nvim-lsp
-      cmp-nvim-lsp-document-symbol
-      cmp-cmdline
-      lspkind-nvim
-
-      # Snippets
-      luasnip
-      friendly-snippets
-      cmp_luasnip
-
-      # telescope
-      telescope-nvim
-      telescope-file-browser-nvim
-      telescope-fzf-native-nvim
-      # cder-nvim
-
-      # treesitter
-      nvim-treesitter
-      nvim-treesitter-textobjects
-      nvim-treesitter-context
-
-      # git-related
-      neogit
-      diffview-nvim
-      gitsigns-nvim
-      git-messenger-vim
-      committia-vim
-      gitlinker-nvim
-      # lazygit-nvim
-
-      # appearance
-      gruvbox-material
-      nvim-web-devicons
-      feline-nvim
-      toggleterm-nvim
-      trouble-nvim
-      alpha-nvim
-      twilight-nvim
-      zen-mode-nvim
-
-      # etc
-      neorg
-      vimtex
-      vim-nix
-      firenvim
-    ];
+    # use its own plugin manager
+    plugins = with pkgs.vimPlugins; [ ];
   };
 
   # excluding nvim/plugin
