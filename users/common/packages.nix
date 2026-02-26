@@ -29,6 +29,8 @@ with pkgs; [
   vim
   vectorcode
   wget
+  claude-code
+  codex-cli
   zip
   zk
   zoxide

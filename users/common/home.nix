@@ -64,7 +64,7 @@ in
 
   programs.neovim = {
     enable = true;
-    # package = 
+    package = pkgs.neovim; # nightly via neovim-nightly overlay
     viAlias = false;
     vimAlias = false;
     withNodeJs = true;

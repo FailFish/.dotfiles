@@ -4,7 +4,7 @@
   inputs = {
     # https://nixos.wiki/wiki/Nix_channels
     # https://discourse.nixos.org/t/differences-between-nix-channels/13998
-    nixpkgs.url = "github:nixos/nixpkgs";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     darwin = {
       url = "github:lnl7/nix-darwin/master";
       # this line makes darwin uses same version of `nixpkgs` with nixpkgs flake.
@@ -18,80 +18,74 @@
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    neovim-nightly-overlay = {
+      url = "github:nix-community/neovim-nightly-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    claude-code-nix = {
+      url = "github:sadjow/claude-code-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    codex-cli-nix = {
+      url = "github:sadjow/codex-cli-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-utils.follows = "claude-code-nix/flake-utils";
+    };
   };
 
   outputs = { self, nixpkgs, darwin, home-manager, disko, ... }@inputs:
     let
-      # https://github.com/Misterio77/nix-starter-configs/issues/29#issuecomment-1516881655
-      # instead of passing `overlays`
       inherit (self) outputs;
-      mkNixos = extraModules : nixpkgs.lib.nixosSystem {
-        modules = [
-          inputs.home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.noah = ./users/noah-nixos.nix;
+      overlays = import ./overlays { inherit inputs; };
 
-            # Optionally, use home-manager.extraSpecialArgs to pass
-            # arguments to home.nix
-          }
-        ] ++ extraModules;
+      mkNixos = extraModules: nixpkgs.lib.nixosSystem {
+        modules = extraModules;
         specialArgs = { inherit inputs outputs; };
       };
+
       mkDarwin = extraModules: darwin.lib.darwinSystem {
         inherit inputs;
         system = "aarch64-darwin"; # FIXME: option for intel macs
-        modules = [
-          inputs.home-manager.darwinModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.noah = ./users/noah.nix;
+        modules = extraModules;
+        specialArgs = { inherit inputs outputs; };
+      };
 
-            # Optionally, use home-manager.extraSpecialArgs to pass
-            # arguments to home.nix
-          }
-        ] ++ extraModules;
-        specialArgs = { inherit outputs; };
+      mkHome = system: modules: home-manager.lib.homeManagerConfiguration {
+        pkgs = import nixpkgs {
+          inherit system;
+          config.allowUnfree = true;
+          overlays = with overlays; [
+            modifications
+            neovim-nightly
+            claude-code
+            codex-cli
+          ];
+        };
+        extraSpecialArgs = { inherit inputs outputs; };
+        inherit modules;
       };
     in
     {
-      # nixosModules = ...;
-      # homeManagerModules = ...;
+      overlays = overlays;
 
       nixosConfigurations = {
         s76 = mkNixos [ disko.nixosModules.disko ./machines/s76.nix ];
-
         ion = mkNixos [ ./machines/ion.nix ];
 
         # vm-x86 = mkNixos [ ./machines/vm-x86.nix ];
-        #
         # vm-aarch64 = mkNixos [ ./machines/vm-aarch64.nix ];
-
       };
 
       darwinConfigurations = {
         noahMBA = mkDarwin [ ./machines/noahMBA.nix ];
-
       };
 
-      homeConfigurations =
-        let
-          system = "x86_64-linux";
-          pkgs = import nixpkgs { inherit system; };
-        in
-        {
-          blurry = home-manager.lib.homeManagerConfiguration {
-            modules = [ ./users/blurry.nix ];
-            inherit pkgs;
-            extraSpecialArgs = { inherit inputs outputs; };
-          };
-          taehyun = home-manager.lib.homeManagerConfiguration {
-            modules = [ ./users/taehyun.nix ];
-            inherit pkgs;
-            extraSpecialArgs = { inherit inputs outputs; };
-          };
-        };
+      homeConfigurations = {
+        "noah@noahMBA" = mkHome "aarch64-darwin" [ ./users/noah.nix ];
+        "noah@s76"     = mkHome "x86_64-linux"   [ ./users/noah-nixos.nix ];
+        "noah@ion"     = mkHome "x86_64-linux"   [ ./users/noah-nixos.nix ];
+        blurry         = mkHome "x86_64-linux"   [ ./users/blurry.nix ];
+        taehyun        = mkHome "x86_64-linux"   [ ./users/taehyun.nix ];
+      };
     };
 }
