@@ -68,6 +68,25 @@
     {
       overlays = overlays;
 
+      templates = {
+        rust = {
+          path = ./templates/rust;
+          description = "Rust development shell with Fenix toolchain";
+        };
+        rust-overlay = {
+          path = ./templates/rust-overlay;
+          description = "Rust development shell with oxalica/rust-overlay (rust-toolchain.toml)";
+        };
+        c = {
+          path = ./templates/c;
+          description = "C/C++ development shell with clang and CMake";
+        };
+        go = {
+          path = ./templates/go;
+          description = "Go development shell";
+        };
+      };
+
       nixosConfigurations = {
         s76 = mkNixos [ disko.nixosModules.disko ./machines/s76.nix ];
         ion = mkNixos [ ./machines/ion.nix ];
