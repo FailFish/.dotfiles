@@ -3,6 +3,9 @@
     ./common/home.nix
   ];
 
+  home.username = "noah";
+  home.homeDirectory = "/Users/noah";
+
   accounts.email.accounts = {
     personal = {
       primary = true;

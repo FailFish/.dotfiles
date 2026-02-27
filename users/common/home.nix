@@ -11,6 +11,8 @@ in
 
   programs.home-manager.enable = true;
   programs.nix-index.enable = true;
+  # disable man here because it collides with the host's man
+  programs.man.enable = false;
 
   programs.bash = {
     enable = true;
@@ -34,6 +36,8 @@ in
     '';
     sessionVariables = {
       MANPAGER="nvim +Man!";
+      LC_COLLATE = "C";
+      LC_CTYE = "C.UTF-8";
     };
   };
   # home.file.".bashrc".source = rootdir + "/.bashrc";
@@ -42,21 +46,6 @@ in
     enableBashIntegration = true;
   };
 
-  programs.tmux = {
-    enable = true;
-    # BUG: https://github.com/nix-community/home-manager/issues/3555
-    # TODO: https://github.com/nix-community/home-manager/pull/3801
-    # extraConfig = builtins.readFile (cfgdir + "/tmux/tmux.conf");
-    # plugins = with pkgs.tmuxPlugins; [
-    #   cpu
-    #   prefix-highlight
-    #   tmux-fzf
-    #   yank
-    #   tmux-thumbs
-    #   resurrect
-    #   continuum
-    # ];
-  };
   xdg.configFile."tmux".source =
     config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/tmux";
 
@@ -127,7 +116,6 @@ in
 
     ] ++ lib.optionals pkgs.stdenv.isLinux [
       # packages only available in Linux
-      ltex-ls
     ];
 
 
@@ -138,38 +126,46 @@ in
   xdg.configFile."nvim".source =
     config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/nvim_lazy";
 
-  programs.zathura.enable = true;
+  # programs.zathura.enable = true;
   xdg.configFile."zathura".source =
     config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/zathura";
 
   programs.sioyek.enable = true;
 
+  programs.delta.enableGitIntegration = true;
   programs.git = {
     enable = true;
-    delta.enable = true;
+    userName = "Taehyun Noh";
+    userEmail = "taehyun@utexas.edu";
+    delta = {
+      enable = true; # sets core.pager and interactive.diffFilter automatically
+      options = {
+        syntax-theme = "gruvbox-dark";
+        navigate = true;
+        light = false;
+        line-numbers = true;
+      };
+    };
     aliases = {
       graph = "log --decorate --oneline --graph";
     };
-    userName = "Taehyun Noh";
     extraConfig = {
       init.defaultBranch = "main";
+      add.interactive.useBuiltin = false; # required for git 2.37.0
       merge.conflictStyle = "zdiff3";
+      merge.tool = "nvimdiff";
       commit.verbose = true;
       diff.algorithm = "histogram";
+      diff.colorMoved = "default";
       log.date = "iso";
       column.ui = "auto";
       branch.sort = "committerdate";
-      # Automatically track remote branch
-      # push.autoSetupRemote = true;
       rerere.enabled = true;
       transfer.fsckobjects = true;
       fetch.fsckobjects = true;
       receive.fsckObjects = true;
-      merge.tool = "nvimdiff";
     };
   };
-  xdg.configFile."git".source =
-    config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/git";
 
   programs.gh = {
     enable = true;

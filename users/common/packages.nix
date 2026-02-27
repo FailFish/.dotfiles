@@ -25,12 +25,12 @@ with pkgs; [
   texlive.combined.scheme-full
   tokei
   tree
+  tmux
   unzip
   vim
-  vectorcode
   wget
   claude-code
-  codex-cli
+  codex
   zip
   zk
   zoxide

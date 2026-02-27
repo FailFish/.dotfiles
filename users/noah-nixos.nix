@@ -4,6 +4,9 @@
     ./common/home.nix
   ];
 
+  home.username = "noah";
+  home.homeDirectory = "/home/noah";
+
   # NixOS-only
   xdg.configFile."hypr".source =
     config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/.config/hypr";
