@@ -19,7 +19,7 @@
     openssh.authorizedKeys.keys = [
       # TODO: Add OpenSSH key(s) here, if you plan on using SSH to connect
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBxvfY93G6+OsoEUyWzNBfhgPx8c5H84qSEJ3CbC7YX3 noah@noahMBA"
-      # "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEBuydnea67JVePf4Y9nAxu+G/fwIJxyAkAAt3QWNoha noah@admin"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJCMUcAfXr9iliR5wHVMwHgpQyrPJ7y+v1jP/2kSFa7+ taehyun@rashford"
     ];
     group = "noah";
     extraGroups = [ "video" "wheel" ];
@@ -32,8 +32,15 @@
     enable = true;
     settings = {
       PasswordAuthentication = false; # key only
+      KbdInteractiveAuthentication = false;
+      UseDns = true;
+      X11Forwarding = true;
       PermitRootLogin = "no";
     };
+    extraConfig = ''
+    Match Host *.cs.utexas.edu,*.csres.utexas.edu,wireless*public.utexas.edu,*.vpn.utexas.edu
+      PasswordAuthentication yes
+    '';
   };
 
   networking = {
@@ -117,11 +124,10 @@
       # Xorg defaults
       noto-fonts
       noto-fonts-cjk-sans
-      noto-fonts-emoji
+      noto-fonts-color-emoji
       font-awesome
       source-han-sans
-      source-han-sans-japanese
-      source-han-serif-japanese
+      source-han-serif
     ];
     fontconfig.defaultFonts = {
       serif = [ "Noto Serif" "Source Han Serif" ];

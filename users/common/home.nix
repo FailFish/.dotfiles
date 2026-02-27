@@ -46,6 +46,11 @@ in
     enableBashIntegration = true;
   };
 
+  programs.atuin = {
+    enable = true;
+    enableBashIntegration = true;
+  };
+
   xdg.configFile."tmux".source =
     config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/tmux";
 
