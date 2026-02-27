@@ -5,7 +5,7 @@
 }:
 stdenv.mkDerivation rec {
   pname = "aerospace";
-  version = "0.14.2-Beta";
+  version = "0.20.2-Beta";
   nativeBuildInputs = [ installShellFiles ];
   buildPhase = "";
   installPhase = ''
@@ -28,6 +28,6 @@ stdenv.mkDerivation rec {
   src = fetchzip {
     url =
       "https://github.com/nikitabobko/AeroSpace/releases/download/v${version}/AeroSpace-v${version}.zip";
-    hash = "sha256-v2D/IV9Va0zbGHEwSGt6jvDqQYqha290Lm6u+nZTS3A=";
+    hash = "sha256-PyWHtM38XPNkkEZ0kACPia0doR46FRpmSoNdsOhU4uw=";
   };
 }
