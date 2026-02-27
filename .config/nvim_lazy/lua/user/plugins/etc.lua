@@ -61,7 +61,7 @@ return {
     config = function()
       require("render-markdown").setup({
         sign = { enabled = false },
-        file_types = { "markdown", "codecompanion" },
+        file_types = { "markdown" },
         code = {
           width = "block",
           right_pad = 4,
