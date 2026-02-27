@@ -159,7 +159,6 @@ M.servers = {
   bashls = {},
   pyright = {},
   texlab = {},
-  ltex = {},
   nixd = {},
   zls = {},
   gopls = {},

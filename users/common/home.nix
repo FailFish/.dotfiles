@@ -102,7 +102,8 @@ in
       # nix
       nixd
       statix
-      nixpkgs-fmt
+      nixfmt
+      alejandra
 
       # general writting
       nodePackages.write-good

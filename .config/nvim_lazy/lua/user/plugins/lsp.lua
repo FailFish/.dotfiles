@@ -135,7 +135,7 @@ return {
         python = { "isort", "black" },
         go = { "goimports", "gofmt" },
         bash = { "shfmt" },
-        nix = { "nixpkg_fmt" },
+        nix = { "alejandra" },
         -- filetypes without any formatters specified
         ["_"] = { "trim_whitespace" },
       },
