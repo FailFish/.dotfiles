@@ -1,7 +1,7 @@
-{ pkgs, lib, ... }:
+{ pkgs, lib, config, ... }:
 let
   rootdir = ./../..;
-  cfgdir = rootdir + "/.config";
+  dotfiles = "${config.home.homeDirectory}/.dotfiles";
 in
 {
   home = {
@@ -57,10 +57,12 @@ in
     #   continuum
     # ];
   };
-  xdg.configFile."tmux".source = cfgdir + "/tmux";
+  xdg.configFile."tmux".source =
+    config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/tmux";
 
   programs.alacritty.enable = true;
-  xdg.configFile."alacritty".source = cfgdir + "/alacritty";
+  xdg.configFile."alacritty".source =
+    config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/alacritty";
 
   programs.neovim = {
     enable = true;
@@ -133,14 +135,12 @@ in
     plugins = with pkgs.vimPlugins; [ ];
   };
 
-  # excluding nvim/plugin
-  xdg.configFile."nvim" = {
-    recursive = true;
-    source = cfgdir + "/nvim_lazy";
-  };
+  xdg.configFile."nvim".source =
+    config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/nvim_lazy";
 
   programs.zathura.enable = true;
-  xdg.configFile."zathura".source = cfgdir + "/zathura";
+  xdg.configFile."zathura".source =
+    config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/zathura";
 
   programs.sioyek.enable = true;
 
@@ -168,7 +168,8 @@ in
       merge.tool = "nvimdiff";
     };
   };
-  xdg.configFile."git".source = cfgdir + "/git";
+  xdg.configFile."git".source =
+    config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/git";
 
   programs.gh = {
     enable = true;

@@ -1,16 +1,14 @@
-{ inputs, pkgs, ... }:
-let
-  rootdir = ./..;
-  cfgdir = rootdir + "/.config";
-in
+{ inputs, pkgs, config, ... }:
 {
   imports = [
     ./common/home.nix
   ];
 
   # NixOS-only
-  xdg.configFile."hypr".source = cfgdir + "/hypr";
-  xdg.configFile."waybar".source = cfgdir + "/waybar";
+  xdg.configFile."hypr".source =
+    config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/.config/hypr";
+  xdg.configFile."waybar".source =
+    config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/.config/waybar";
 
   i18n = {
     inputMethod.type = {
