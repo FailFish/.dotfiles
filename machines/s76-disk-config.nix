@@ -23,13 +23,10 @@
               content = {
                 type = "luks";
                 name = "crypted";
-                # disable settings.keyFile if you want to use interactive password entry
-                #passwordFile = "/tmp/secret.key"; # Interactive
-                settings = {
-                  allowDiscards = true;
-                  keyFile = "/tmp/secret.key";
-                };
-                additionalKeyFiles = [ "/tmp/additionalSecret.key" ];
+                # passwordFile only decides the initial password for interactive login.
+                # Before running disko: echo -n "yourpassphrase" > /tmp/secret.key
+                passwordFile = "/tmp/secret.key";
+                settings.allowDiscards = true;
                 content = {
                   type = "btrfs";
                   extraArgs = [ "-f" ]; # override existing partition
