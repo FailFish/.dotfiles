@@ -64,16 +64,6 @@
     userControlled.enable = true;
 
     networks = {
-      # KT_GiGA_5G_89B3 = {
-      #   psk = "@PSK_HOMEKT@";
-      # };
-      # SKKU.auth = ''
-      #   ssid="SKKU"
-      #   eap=TTLS
-      #   identity="dove0255@skku.edu"
-      #   password="@PSK_SKKU_PUBLIC@"
-      #   phase2="auth=PAP"
-      # '';
     };
   };
   # I found systemd.link's WOL does not work on wireless interfaces.
@@ -141,6 +131,7 @@
 
   nixpkgs.config.allowUnfree = true;
 
+  programs.nix-ld.enable = true;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # Non-privileged users reboot/poweroff
