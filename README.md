@@ -1,41 +1,22 @@
-## Nix-powered
-```
-repo
-- flake.nix
-- modules/
-  - darwin/ : macos
-    - default.nix : system-wide darwin-nix config
-    - packages.nix : a list of darwin-only packages
-  - linux/ : nixos
-  - common/ : platform-independent
-    - home.nix : user-specific home-manager config
-    - packages.nix : a list of common packages
-```
-
+# Nix-powered
 
 ## Darwin
 
 ```sh
 # initial setup
-nix --experimental-features "nix-command flakes" build ".#darwinConfigurations.noahMBA.system"
-./result/sw/bin/darwin-rebuild switch --flake ~/.nixpkgs
+sudo nix --extra-experimental-features "nix-command flakes" run nix-darwin/master#darwin-rebuild -- switch --flake ~/.dotfiles/flake.nix
 
 # updates
-nix build .#darwinConfigurations.noahMBA.system --show-trace --verbose
-./result/sw/bin/darwin-rebuild switch --flake .
+sudo darwin-rebuild switch --flake ~/.dotfiles/flake.nix
 ```
 
 ## Home-manager standalone
 
 ```sh
-# initial setup
-nix --experimental-features "nix-command flakes" build ".#homeConfigurations.blurry.activationPackage"
-./result/activate
-
-# updates
-home-manager switch --flake .#homeConfigurations.blurry
-# or
-home-manager switch --flake .#blurry
+# install home-manager
+nix run home-manager/master -- init --switch
+# update
+home-manager switch --flake .#<username@hostname>
 ```
 
 ## NixOS
@@ -58,13 +39,3 @@ sudo nixos-install --flake github:FailFish/.dotfiles#noahNixos
 ## Font
 
 System/UI: Inter Nerd Font
-
-## Issue
-
-- bspwm: have an issue with firefox[:the post on github issue](https://github.com/baskerville/bspwm/issues/1015)
-
-Extra
----
-- elementary-planner
-  put `database.db` at `~/.local/share/com.github.alainm23.planner/database.db`
-  or `~/.var/app/com.github.alainm23.planner/data/com.github.alainm23.planner/database.db` in the case of flatpak
