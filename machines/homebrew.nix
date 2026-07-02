@@ -6,9 +6,8 @@ in {
   homebrew = {
     # enabling does not install homebrew!
     enable = true;
+    enableFishIntegration = true;
     taps = [
-      "homebrew/cask"
-      "homebrew/cask-versions"
     ];
     casks = [
       "obsidian"
@@ -17,7 +16,6 @@ in {
       "aldente"
       "spotify"
       "iterm2"
-      "vmware-fusion-tech-preview" # from cask-versions
       "zotero"
       "firefox"
       "google-chrome"

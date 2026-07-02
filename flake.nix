@@ -97,10 +97,12 @@
 
       darwinConfigurations = {
         noahMBA = mkDarwin [ ./machines/noahMBA.nix ];
+        taehyunM5A = mkDarwin [ ./machines/taehyunM5A.nix ];
       };
 
       homeConfigurations = {
         "noah@noahMBA" = mkHome "aarch64-darwin" [ ./users/noah.nix ];
+        "taehyun@taehyunM5A" = mkHome "aarch64-darwin" [ ./users/taehyun-macos.nix ];
         "noah@s76"     = mkHome "x86_64-linux"   [ ./users/noah-nixos.nix ];
         "noah@ion"     = mkHome "x86_64-linux"   [ ./users/noah-nixos.nix ];
         blurry         = mkHome "x86_64-linux"   [ ./users/blurry.nix ];
