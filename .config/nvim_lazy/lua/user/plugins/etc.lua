@@ -22,24 +22,6 @@ return {
   },
 
   {
-    "nvim-neorg/neorg",
-    ft = "norg",
-    opts = {
-      load = {
-        ["core.defaults"] = {},
-        ["core.norg.completion"] = {
-          config = {
-            engine = "nvim-cmp",
-          },
-        },
-        ["core.norg.concealer"] = {},
-      },
-    },
-    config = function(_, opts)
-      require("neorg").setup(opts)
-    end,
-  },
-  {
     "lervag/vimtex",
     ft = { "tex" },
     keys = {

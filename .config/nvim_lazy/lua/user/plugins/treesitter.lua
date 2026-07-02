@@ -34,7 +34,7 @@ return {
         "llvm",
         "make",
         "nix",
-        "norg",
+        -- "norg",
         "python",
         "rust",
         "toml",
