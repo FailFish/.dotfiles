@@ -5,7 +5,7 @@ let
 in
 {
   home = {
-    stateVersion = "23.05";
+    stateVersion = "26.05";
     packages = pkgs.callPackage ./packages.nix {};
   };
 
@@ -61,6 +61,7 @@ in
   programs.neovim = {
     enable = true;
     package = pkgs.neovim; # nightly via neovim-nightly overlay
+    sideloadInitLua = true;
     viAlias = false;
     vimAlias = false;
     withNodeJs = true;
@@ -87,7 +88,7 @@ in
       clippy
 
       # bash
-      nodePackages.bash-language-server
+      bash-language-server
       shfmt
       shellcheck
 
@@ -111,14 +112,14 @@ in
       alejandra
 
       # general writting
-      nodePackages.write-good
+      # nodePackages.write-good
 
       # etc
       zls
       gopls
       vscode-langservers-extracted
       vim-language-server
-      nodePackages.prettier
+      prettier
 
     ] ++ lib.optionals pkgs.stdenv.isLinux [
       # packages only available in Linux
@@ -141,21 +142,21 @@ in
   programs.delta.enableGitIntegration = true;
   programs.git = {
     enable = true;
-    userName = "Taehyun Noh";
-    userEmail = "taehyun@utexas.edu";
-    delta = {
-      enable = true; # sets core.pager and interactive.diffFilter automatically
-      options = {
-        syntax-theme = "gruvbox-dark";
-        navigate = true;
-        light = false;
-        line-numbers = true;
+    settings = {
+      user.name = "Taehyun Noh";
+      user.email = "taehyun@utexas.edu";
+      delta = {
+        enable = true; # sets core.pager and interactive.diffFilter automatically
+        options = {
+          syntax-theme = "gruvbox-dark";
+          navigate = true;
+          light = false;
+          line-numbers = true;
+        };
       };
-    };
-    aliases = {
-      graph = "log --decorate --oneline --graph";
-    };
-    extraConfig = {
+      aliases = {
+        graph = "log --decorate --oneline --graph";
+      };
       init.defaultBranch = "main";
       add.interactive.useBuiltin = false; # required for git 2.37.0
       merge.conflictStyle = "zdiff3";
