@@ -8,7 +8,9 @@ with pkgs; [
   coreutils
   curl
   fd
-  fzf
+  fishPlugins.done
+  # fishPlugins.fzf-fish
+  fishPlugins.hydro
   gcc
   git
   glow
@@ -33,7 +35,6 @@ with pkgs; [
   codex
   zip
   zk
-  zoxide
 ]
 # ++ lib.optionals (pkgs.stdenv.isDarwin) [
 # ]

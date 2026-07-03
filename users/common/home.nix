@@ -41,14 +41,27 @@ in
     };
   };
   # home.file.".bashrc".source = rootdir + "/.bashrc";
-  programs.starship = {
+  programs.fish = {
     enable = true;
-    enableBashIntegration = true;
+    interactiveShellInit = ''
+        set fish_greeting # Disable greeting
+    '';
+  };
+  programs.fzf = {
+    enable = true;
+    enableFishIntegration = true;
+    historyWidget.command = "";
+  };
+
+  programs.zoxide = {
+    enable = true;
+    enableFishIntegration = true;
   };
 
   programs.atuin = {
     enable = true;
     enableBashIntegration = true;
+    enableFishIntegration = true;
   };
 
   xdg.configFile."tmux".source =
@@ -73,6 +86,8 @@ in
 
     extraPackages = with pkgs; [
       gnumake
+      luajitPackages.tree-sitter-cli
+      luajitPackages.luarocks
 
       # lua
       lua-language-server
@@ -190,6 +205,7 @@ in
   programs.eza = {
     enable = true;
     enableBashIntegration = true;
+    enableFishIntegration = true;
     extraOptions = [ "--group-directories-first" "--header" ];
     git = true;
     icons = "auto";
@@ -198,6 +214,7 @@ in
   programs.yazi = {
     enable = true;
     enableBashIntegration = true;
+    enableFishIntegration = true;
   };
 
   programs.tealdeer.enable = true;
