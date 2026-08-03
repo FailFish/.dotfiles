@@ -146,7 +146,7 @@ in
   };
 
   xdg.configFile."nvim".source =
-    config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/nvim_lazy";
+    config.lib.file.mkOutOfStoreSymlink "${dotfiles}/.config/nvim_mini";
 
   # programs.zathura.enable = true;
   xdg.configFile."zathura".source =
