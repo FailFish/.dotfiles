@@ -115,6 +115,10 @@
     "vim-nix": {
       "rev": "7235c7ce2cea530cb6b59bc3e46d4bfe917d15c8",
       "src": "https://github.com/LnL7/vim-nix"
+    },
+    "vimtex": {
+      "rev": "b5ea577037fdb30ca2f13e3a795f863a90e761ea",
+      "src": "https://github.com/lervag/vimtex"
     }
   }
 }

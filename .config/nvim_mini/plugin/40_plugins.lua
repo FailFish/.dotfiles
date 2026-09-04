@@ -3,7 +3,7 @@
 -- └─────────────────────────┘
 
 local add = vim.pack.add
-local now_if_args, later = Config.now_if_args, Config.later
+local now, now_if_args, later = Config.now, Config.now_if_args, Config.later
 
 -- Tree-sitter ================================================================
 -- Add these plugins now if file (and not 'mini.starter') is shown after startup.
@@ -168,12 +168,11 @@ Config.on_filetype('nix', function()
 end)
 
 -- LaTeX editing.
-Config.on_filetype('tex', function()
+now(function()
   add({ 'https://github.com/lervag/vimtex' })
   vim.g.vimtex_view_forward_search_on_start = 0
   vim.g.vimtex_view_method = 'sioyek'
   vim.g.vimtex_compiler_latexmk = { build_dir = 'build' }
-  reload_ftplugin() -- vim plugin
 end)
 
 Config.on_filetype('markdown', function()
