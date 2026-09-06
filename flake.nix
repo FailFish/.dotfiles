@@ -29,7 +29,6 @@
     codex-cli-nix = {
       url = "github:sadjow/codex-cli-nix";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-utils.follows = "claude-code-nix/flake-utils";
     };
   };
 
